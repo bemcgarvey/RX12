@@ -4,30 +4,6 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <logicalFolder name="f1" displayName="config" projectFiles="true">
-        <logicalFolder name="f1" displayName="default" projectFiles="true">
-          <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
-            <logicalFolder name="f1" displayName="clk" projectFiles="true">
-              <itemPath>../src/config/default/peripheral/clk/plib_clk.h</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f3" displayName="evic" projectFiles="true">
-              <itemPath>../src/config/default/peripheral/evic/plib_evic.h</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f2" displayName="gpio" projectFiles="true">
-              <itemPath>../src/config/default/peripheral/gpio/plib_gpio.h</itemPath>
-            </logicalFolder>
-          </logicalFolder>
-          <itemPath>../src/config/default/toolchain_specifics.h</itemPath>
-          <itemPath>../src/config/default/definitions.h</itemPath>
-        </logicalFolder>
-      </logicalFolder>
-      <logicalFolder name="f2" displayName="packs" projectFiles="true">
-        <logicalFolder name="f1"
-                       displayName="PIC32MK1024GPE064_DFP"
-                       projectFiles="true">
-          <itemPath>../src/packs/PIC32MK1024GPE064_DFP/device.h</itemPath>
-        </logicalFolder>
-      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -36,25 +12,6 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <logicalFolder name="f1" displayName="config" projectFiles="true">
-        <logicalFolder name="f1" displayName="default" projectFiles="true">
-          <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
-            <logicalFolder name="f1" displayName="clk" projectFiles="true">
-              <itemPath>../src/config/default/peripheral/clk/plib_clk.c</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f3" displayName="evic" projectFiles="true">
-              <itemPath>../src/config/default/peripheral/evic/plib_evic.c</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f2" displayName="gpio" projectFiles="true">
-              <itemPath>../src/config/default/peripheral/gpio/plib_gpio.c</itemPath>
-            </logicalFolder>
-          </logicalFolder>
-          <itemPath>../src/config/default/initialization.c</itemPath>
-          <itemPath>../src/config/default/interrupts.c</itemPath>
-          <itemPath>../src/config/default/exceptions.c</itemPath>
-        </logicalFolder>
-      </logicalFolder>
-      <itemPath>../src/main.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -112,8 +69,7 @@
         <property key="enable-symbols" value="true"/>
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories"
-                  value="../src;../src/config/default;../src/packs/PIC32MK1024GPE064_DFP;;../src/mips"/>
+        <property key="extra-include-directories" value=""/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -148,11 +104,10 @@
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-cross-reference-file" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
-        <property key="heap-size" value="0"/>
+        <property key="heap-size" value=""/>
         <property key="input-libraries" value=""/>
         <property key="linker-symbols" value=""/>
         <property key="map-file" value="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"/>
-        <property key="no-device-startup-code" value="true"/>
         <property key="no-startup-files" value="false"/>
         <property key="oXC32ld-extra-opts" value=""/>
         <property key="optimization-level" value=""/>
