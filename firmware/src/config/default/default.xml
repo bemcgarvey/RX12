@@ -33,292 +33,302 @@
             <User dnOrder="0" value="DIGITAL"/>
           </Values>
         </String>
-        <String dnOrder="6" id="BSP_PIN_1_FUNCTION_TYPE">
+        <String dnOrder="6" id="BSP_PIN_16_FUNCTION_TYPE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="AN3"/>
+          </Values>
+        </String>
+        <String dnOrder="7" id="BSP_PIN_1_FUNCTION_TYPE">
           <Values dnOrder="0">
             <User dnOrder="0" value="OC4"/>
           </Values>
         </String>
-        <String dnOrder="7" id="BSP_PIN_1_MODE">
+        <String dnOrder="8" id="BSP_PIN_1_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="DIGITAL"/>
           </Values>
         </String>
-        <String dnOrder="8" id="BSP_PIN_21_FUNCTION_TYPE">
+        <String dnOrder="9" id="BSP_PIN_21_FUNCTION_TYPE">
           <Values dnOrder="0">
             <User dnOrder="0" value="U3RX"/>
           </Values>
         </String>
-        <String dnOrder="9" id="BSP_PIN_21_MODE">
+        <String dnOrder="10" id="BSP_PIN_21_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="DIGITAL"/>
           </Values>
         </String>
-        <String dnOrder="10" id="BSP_PIN_29_FUNCTION_TYPE">
+        <String dnOrder="11" id="BSP_PIN_29_FUNCTION_TYPE">
           <Values dnOrder="0">
             <User dnOrder="0" value="U1RX"/>
           </Values>
         </String>
-        <String dnOrder="11" id="BSP_PIN_29_MODE">
+        <String dnOrder="12" id="BSP_PIN_29_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="DIGITAL"/>
           </Values>
         </String>
-        <String dnOrder="12" id="BSP_PIN_2_FUNCTION_TYPE">
+        <String dnOrder="13" id="BSP_PIN_2_FUNCTION_TYPE">
           <Values dnOrder="0">
             <User dnOrder="0" value="OC3"/>
           </Values>
         </String>
-        <String dnOrder="13" id="BSP_PIN_2_MODE">
+        <String dnOrder="14" id="BSP_PIN_2_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="DIGITAL"/>
           </Values>
         </String>
-        <String dnOrder="14" id="BSP_PIN_31_FUNCTION_TYPE">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="U2RX"/>
-          </Values>
-        </String>
-        <String dnOrder="15" id="BSP_PIN_31_MODE">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="DIGITAL"/>
-          </Values>
-        </String>
-        <String dnOrder="16" id="BSP_PIN_32_MODE">
-          <Values dnOrder="0">
-            <User dnOrder="0" value="DIGITAL"/>
-          </Values>
-        </String>
-        <String dnOrder="17" id="BSP_PIN_33_FUNCTION_TYPE">
+        <String dnOrder="15" id="BSP_PIN_31_FUNCTION_TYPE">
           <Values dnOrder="0">
             <User dnOrder="0" value=""/>
           </Values>
         </String>
-        <String dnOrder="18" id="BSP_PIN_34_MODE">
+        <String dnOrder="16" id="BSP_PIN_31_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="DIGITAL"/>
           </Values>
         </String>
-        <String dnOrder="19" id="BSP_PIN_39_FUNCTION_TYPE">
+        <String dnOrder="17" id="BSP_PIN_32_FUNCTION_TYPE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="U6RX"/>
+          </Values>
+        </String>
+        <String dnOrder="18" id="BSP_PIN_32_MODE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="DIGITAL"/>
+          </Values>
+        </String>
+        <String dnOrder="19" id="BSP_PIN_33_FUNCTION_TYPE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value=""/>
+          </Values>
+        </String>
+        <String dnOrder="20" id="BSP_PIN_34_MODE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="DIGITAL"/>
+          </Values>
+        </String>
+        <String dnOrder="21" id="BSP_PIN_39_FUNCTION_TYPE">
           <Values dnOrder="0">
             <User dnOrder="0" value="OSC1"/>
           </Values>
         </String>
-        <String dnOrder="20" id="BSP_PIN_39_MODE">
+        <String dnOrder="22" id="BSP_PIN_39_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="DIGITAL"/>
           </Values>
         </String>
-        <String dnOrder="21" id="BSP_PIN_3_FUNCTION_TYPE">
+        <String dnOrder="23" id="BSP_PIN_3_FUNCTION_TYPE">
           <Values dnOrder="0">
             <User dnOrder="0" value="OC1"/>
           </Values>
         </String>
-        <String dnOrder="22" id="BSP_PIN_3_MODE">
+        <String dnOrder="24" id="BSP_PIN_3_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="DIGITAL"/>
           </Values>
         </String>
-        <String dnOrder="23" id="BSP_PIN_40_FUNCTION_TYPE">
+        <String dnOrder="25" id="BSP_PIN_40_FUNCTION_TYPE">
           <Values dnOrder="0">
             <User dnOrder="0" value="OSC2"/>
           </Values>
         </String>
-        <String dnOrder="24" id="BSP_PIN_40_MODE">
+        <String dnOrder="26" id="BSP_PIN_40_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="DIGITAL"/>
           </Values>
         </String>
-        <String dnOrder="25" id="BSP_PIN_43_MODE">
+        <String dnOrder="27" id="BSP_PIN_43_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="DIGITAL"/>
           </Values>
         </String>
-        <String dnOrder="26" id="BSP_PIN_44_MODE">
+        <String dnOrder="28" id="BSP_PIN_44_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="DIGITAL"/>
           </Values>
         </String>
-        <String dnOrder="27" id="BSP_PIN_49_FUNCTION_TYPE">
+        <String dnOrder="29" id="BSP_PIN_49_FUNCTION_TYPE">
           <Values dnOrder="0">
             <User dnOrder="0" value="OC11"/>
           </Values>
         </String>
-        <String dnOrder="28" id="BSP_PIN_49_MODE">
+        <String dnOrder="30" id="BSP_PIN_49_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="DIGITAL"/>
           </Values>
         </String>
-        <String dnOrder="29" id="BSP_PIN_4_FUNCTION_TYPE">
+        <String dnOrder="31" id="BSP_PIN_4_FUNCTION_TYPE">
           <Values dnOrder="0">
             <User dnOrder="0" value="OC7"/>
           </Values>
         </String>
-        <String dnOrder="30" id="BSP_PIN_4_MODE">
+        <String dnOrder="32" id="BSP_PIN_4_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="DIGITAL"/>
           </Values>
         </String>
-        <String dnOrder="31" id="BSP_PIN_50_FUNCTION_TYPE">
+        <String dnOrder="33" id="BSP_PIN_50_FUNCTION_TYPE">
           <Values dnOrder="0">
             <User dnOrder="0" value="OC10"/>
           </Values>
         </String>
-        <String dnOrder="32" id="BSP_PIN_50_MODE">
+        <String dnOrder="34" id="BSP_PIN_50_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="DIGITAL"/>
           </Values>
         </String>
-        <String dnOrder="33" id="BSP_PIN_51_MODE">
+        <String dnOrder="35" id="BSP_PIN_51_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="DIGITAL"/>
           </Values>
         </String>
-        <String dnOrder="34" id="BSP_PIN_52_FUNCTION_TYPE">
+        <String dnOrder="36" id="BSP_PIN_52_FUNCTION_TYPE">
           <Values dnOrder="0">
             <User dnOrder="0" value="OC9"/>
           </Values>
         </String>
-        <String dnOrder="35" id="BSP_PIN_52_MODE">
+        <String dnOrder="37" id="BSP_PIN_52_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="DIGITAL"/>
           </Values>
         </String>
-        <String dnOrder="36" id="BSP_PIN_53_FUNCTION_TYPE">
+        <String dnOrder="38" id="BSP_PIN_53_FUNCTION_TYPE">
           <Values dnOrder="0">
             <User dnOrder="0" value="OC13"/>
           </Values>
         </String>
-        <String dnOrder="37" id="BSP_PIN_53_MODE">
+        <String dnOrder="39" id="BSP_PIN_53_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="DIGITAL"/>
           </Values>
         </String>
-        <String dnOrder="38" id="BSP_PIN_54_FUNCTION_TYPE">
+        <String dnOrder="40" id="BSP_PIN_54_FUNCTION_TYPE">
           <Values dnOrder="0">
             <User dnOrder="0" value="OC2"/>
           </Values>
         </String>
-        <String dnOrder="39" id="BSP_PIN_54_MODE">
+        <String dnOrder="41" id="BSP_PIN_54_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="DIGITAL"/>
           </Values>
         </String>
-        <String dnOrder="40" id="BSP_PIN_55_FUNCTION_TYPE">
+        <String dnOrder="42" id="BSP_PIN_55_FUNCTION_TYPE">
           <Values dnOrder="0">
             <User dnOrder="0" value="OC6"/>
           </Values>
         </String>
-        <String dnOrder="41" id="BSP_PIN_55_MODE">
+        <String dnOrder="43" id="BSP_PIN_55_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="DIGITAL"/>
           </Values>
         </String>
-        <String dnOrder="42" id="BSP_PIN_58_MODE">
+        <String dnOrder="44" id="BSP_PIN_58_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="DIGITAL"/>
           </Values>
         </String>
-        <String dnOrder="43" id="BSP_PIN_59_MODE">
+        <String dnOrder="45" id="BSP_PIN_59_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="DIGITAL"/>
           </Values>
         </String>
-        <String dnOrder="44" id="BSP_PIN_60_MODE">
+        <String dnOrder="46" id="BSP_PIN_60_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="DIGITAL"/>
           </Values>
         </String>
-        <String dnOrder="45" id="BSP_PIN_61_MODE">
+        <String dnOrder="47" id="BSP_PIN_61_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="DIGITAL"/>
           </Values>
         </String>
-        <String dnOrder="46" id="BSP_PIN_62_FUNCTION_TYPE">
+        <String dnOrder="48" id="BSP_PIN_62_FUNCTION_TYPE">
           <Values dnOrder="0">
             <User dnOrder="0" value="OC8"/>
           </Values>
         </String>
-        <String dnOrder="47" id="BSP_PIN_62_MODE">
+        <String dnOrder="49" id="BSP_PIN_62_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="DIGITAL"/>
           </Values>
         </String>
-        <String dnOrder="48" id="BSP_PIN_63_FUNCTION_TYPE">
+        <String dnOrder="50" id="BSP_PIN_63_FUNCTION_TYPE">
           <Values dnOrder="0">
             <User dnOrder="0" value="OC5"/>
           </Values>
         </String>
-        <String dnOrder="49" id="BSP_PIN_63_MODE">
+        <String dnOrder="51" id="BSP_PIN_63_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="DIGITAL"/>
           </Values>
         </String>
-        <String dnOrder="50" id="BSP_PIN_64_MODE">
+        <String dnOrder="52" id="BSP_PIN_64_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="DIGITAL"/>
           </Values>
         </String>
-        <String dnOrder="51" id="BSP_PIN_6_FUNCTION_TYPE">
+        <String dnOrder="53" id="BSP_PIN_6_FUNCTION_TYPE">
           <Values dnOrder="0">
-            <User dnOrder="0" value="AN17"/>
+            <User dnOrder="0" value=""/>
           </Values>
         </String>
-        <String dnOrder="52" id="BSP_PIN_7_MODE">
+        <String dnOrder="54" id="BSP_PIN_7_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value="DIGITAL"/>
           </Values>
         </String>
-        <KeyValueSet dnOrder="53" id="COMPILER_CHOICE">
+        <KeyValueSet dnOrder="55" id="COMPILER_CHOICE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
         </KeyValueSet>
-        <Hex dnOrder="54" id="PMD6_REG_VALUE">
+        <Hex dnOrder="56" id="PMD6_REG_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="4294963455"/>
           </Values>
         </Hex>
-        <Hex dnOrder="55" id="PMD7_REG_VALUE">
+        <Hex dnOrder="57" id="PMD7_REG_VALUE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="4294967279"/>
           </Values>
         </Hex>
-        <Hex dnOrder="56" id="SYS_PORT_A_ANSEL">
+        <Hex dnOrder="58" id="SYS_PORT_A_ANSEL">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="4354"/>
           </Values>
         </Hex>
-        <Hex dnOrder="57" id="SYS_PORT_B_ANSEL">
+        <Hex dnOrder="59" id="SYS_PORT_B_ANSEL">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="513"/>
           </Values>
         </Hex>
-        <Hex dnOrder="58" id="SYS_PORT_C_ANSEL">
+        <Hex dnOrder="60" id="SYS_PORT_C_ANSEL">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="36865"/>
           </Values>
         </Hex>
-        <Hex dnOrder="59" id="SYS_PORT_E_ANSEL">
+        <Hex dnOrder="61" id="SYS_PORT_E_ANSEL">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="16384"/>
           </Values>
         </Hex>
-        <Hex dnOrder="60" id="SYS_PORT_G_ANSEL">
+        <Hex dnOrder="62" id="SYS_PORT_G_ANSEL">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="64"/>
           </Values>
         </Hex>
-        <Combo dnOrder="61" id="SYS_PORT_PPS_INPUT_FUNCTION_0">
+        <Combo dnOrder="63" id="SYS_PORT_PPS_INPUT_FUNCTION_0">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
           <Values dnOrder="1">
-            <User dnOrder="0" value="U2RX"/>
+            <User dnOrder="0" value="U6RX"/>
           </Values>
         </Combo>
-        <Combo dnOrder="62" id="SYS_PORT_PPS_INPUT_FUNCTION_1">
+        <Combo dnOrder="64" id="SYS_PORT_PPS_INPUT_FUNCTION_1">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -328,7 +338,7 @@
             <User dnOrder="0" value="U4RX"/>
           </Values>
         </Combo>
-        <Combo dnOrder="63" id="SYS_PORT_PPS_INPUT_FUNCTION_2">
+        <Combo dnOrder="65" id="SYS_PORT_PPS_INPUT_FUNCTION_2">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -338,7 +348,7 @@
             <User dnOrder="0" value="U3RX"/>
           </Values>
         </Combo>
-        <Combo dnOrder="64" id="SYS_PORT_PPS_INPUT_FUNCTION_3">
+        <Combo dnOrder="66" id="SYS_PORT_PPS_INPUT_FUNCTION_3">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -348,17 +358,17 @@
             <User dnOrder="0" value="U1RX"/>
           </Values>
         </Combo>
-        <KeyValueSet dnOrder="65" id="SYS_PORT_PPS_INPUT_PIN_0">
+        <KeyValueSet dnOrder="67" id="SYS_PORT_PPS_INPUT_PIN_0">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
           <Values dnOrder="1">
-            <User dnOrder="0" value="38"/>
+            <User dnOrder="0" value="25"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="66" id="SYS_PORT_PPS_INPUT_PIN_1">
+        <KeyValueSet dnOrder="68" id="SYS_PORT_PPS_INPUT_PIN_1">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -368,7 +378,7 @@
             <User dnOrder="0" value="7"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="67" id="SYS_PORT_PPS_INPUT_PIN_2">
+        <KeyValueSet dnOrder="69" id="SYS_PORT_PPS_INPUT_PIN_2">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -378,7 +388,7 @@
             <User dnOrder="0" value="35"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="68" id="SYS_PORT_PPS_INPUT_PIN_3">
+        <KeyValueSet dnOrder="70" id="SYS_PORT_PPS_INPUT_PIN_3">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -388,7 +398,7 @@
             <User dnOrder="0" value="2"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="69" id="SYS_PORT_PPS_OUTPUT_FUNCTION_0">
+        <KeyValueSet dnOrder="71" id="SYS_PORT_PPS_OUTPUT_FUNCTION_0">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -398,7 +408,7 @@
             <User dnOrder="0" value="38"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="70" id="SYS_PORT_PPS_OUTPUT_FUNCTION_1">
+        <KeyValueSet dnOrder="72" id="SYS_PORT_PPS_OUTPUT_FUNCTION_1">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -408,7 +418,7 @@
             <User dnOrder="0" value="35"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="71" id="SYS_PORT_PPS_OUTPUT_FUNCTION_10">
+        <KeyValueSet dnOrder="73" id="SYS_PORT_PPS_OUTPUT_FUNCTION_10">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -418,7 +428,7 @@
             <User dnOrder="0" value="45"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="72" id="SYS_PORT_PPS_OUTPUT_FUNCTION_11">
+        <KeyValueSet dnOrder="74" id="SYS_PORT_PPS_OUTPUT_FUNCTION_11">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -428,7 +438,7 @@
             <User dnOrder="0" value="37"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="73" id="SYS_PORT_PPS_OUTPUT_FUNCTION_12">
+        <KeyValueSet dnOrder="75" id="SYS_PORT_PPS_OUTPUT_FUNCTION_12">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -438,7 +448,7 @@
             <User dnOrder="0" value="44"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="74" id="SYS_PORT_PPS_OUTPUT_FUNCTION_2">
+        <KeyValueSet dnOrder="76" id="SYS_PORT_PPS_OUTPUT_FUNCTION_2">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -448,7 +458,7 @@
             <User dnOrder="0" value="32"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="75" id="SYS_PORT_PPS_OUTPUT_FUNCTION_3">
+        <KeyValueSet dnOrder="77" id="SYS_PORT_PPS_OUTPUT_FUNCTION_3">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -458,7 +468,7 @@
             <User dnOrder="0" value="39"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="76" id="SYS_PORT_PPS_OUTPUT_FUNCTION_4">
+        <KeyValueSet dnOrder="78" id="SYS_PORT_PPS_OUTPUT_FUNCTION_4">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -468,7 +478,7 @@
             <User dnOrder="0" value="24"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="77" id="SYS_PORT_PPS_OUTPUT_FUNCTION_5">
+        <KeyValueSet dnOrder="79" id="SYS_PORT_PPS_OUTPUT_FUNCTION_5">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -478,7 +488,7 @@
             <User dnOrder="0" value="30"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="78" id="SYS_PORT_PPS_OUTPUT_FUNCTION_6">
+        <KeyValueSet dnOrder="80" id="SYS_PORT_PPS_OUTPUT_FUNCTION_6">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -488,7 +498,7 @@
             <User dnOrder="0" value="43"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="79" id="SYS_PORT_PPS_OUTPUT_FUNCTION_7">
+        <KeyValueSet dnOrder="81" id="SYS_PORT_PPS_OUTPUT_FUNCTION_7">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -498,7 +508,7 @@
             <User dnOrder="0" value="26"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="80" id="SYS_PORT_PPS_OUTPUT_FUNCTION_8">
+        <KeyValueSet dnOrder="82" id="SYS_PORT_PPS_OUTPUT_FUNCTION_8">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -508,7 +518,7 @@
             <User dnOrder="0" value="36"/>
           </Values>
         </KeyValueSet>
-        <KeyValueSet dnOrder="81" id="SYS_PORT_PPS_OUTPUT_FUNCTION_9">
+        <KeyValueSet dnOrder="83" id="SYS_PORT_PPS_OUTPUT_FUNCTION_9">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -518,7 +528,7 @@
             <User dnOrder="0" value="41"/>
           </Values>
         </KeyValueSet>
-        <Combo dnOrder="82" id="SYS_PORT_PPS_OUTPUT_PIN_0">
+        <Combo dnOrder="84" id="SYS_PORT_PPS_OUTPUT_PIN_0">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -528,7 +538,7 @@
             <User dnOrder="0" value="RPA7"/>
           </Values>
         </Combo>
-        <Combo dnOrder="83" id="SYS_PORT_PPS_OUTPUT_PIN_1">
+        <Combo dnOrder="85" id="SYS_PORT_PPS_OUTPUT_PIN_1">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -538,7 +548,7 @@
             <User dnOrder="0" value="RPB14"/>
           </Values>
         </Combo>
-        <Combo dnOrder="84" id="SYS_PORT_PPS_OUTPUT_PIN_10">
+        <Combo dnOrder="86" id="SYS_PORT_PPS_OUTPUT_PIN_10">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -548,7 +558,7 @@
             <User dnOrder="0" value="RPB12"/>
           </Values>
         </Combo>
-        <Combo dnOrder="85" id="SYS_PORT_PPS_OUTPUT_PIN_11">
+        <Combo dnOrder="87" id="SYS_PORT_PPS_OUTPUT_PIN_11">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -558,7 +568,7 @@
             <User dnOrder="0" value="RPB13"/>
           </Values>
         </Combo>
-        <Combo dnOrder="86" id="SYS_PORT_PPS_OUTPUT_PIN_12">
+        <Combo dnOrder="88" id="SYS_PORT_PPS_OUTPUT_PIN_12">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -568,7 +578,7 @@
             <User dnOrder="0" value="RPA1"/>
           </Values>
         </Combo>
-        <Combo dnOrder="87" id="SYS_PORT_PPS_OUTPUT_PIN_2">
+        <Combo dnOrder="89" id="SYS_PORT_PPS_OUTPUT_PIN_2">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -578,7 +588,7 @@
             <User dnOrder="0" value="RPB15"/>
           </Values>
         </Combo>
-        <Combo dnOrder="88" id="SYS_PORT_PPS_OUTPUT_PIN_3">
+        <Combo dnOrder="90" id="SYS_PORT_PPS_OUTPUT_PIN_3">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -588,7 +598,7 @@
             <User dnOrder="0" value="RPG6"/>
           </Values>
         </Combo>
-        <Combo dnOrder="89" id="SYS_PORT_PPS_OUTPUT_PIN_4">
+        <Combo dnOrder="91" id="SYS_PORT_PPS_OUTPUT_PIN_4">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -598,7 +608,7 @@
             <User dnOrder="0" value="RPB9"/>
           </Values>
         </Combo>
-        <Combo dnOrder="90" id="SYS_PORT_PPS_OUTPUT_PIN_5">
+        <Combo dnOrder="92" id="SYS_PORT_PPS_OUTPUT_PIN_5">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -608,7 +618,7 @@
             <User dnOrder="0" value="RPC6"/>
           </Values>
         </Combo>
-        <Combo dnOrder="91" id="SYS_PORT_PPS_OUTPUT_PIN_6">
+        <Combo dnOrder="93" id="SYS_PORT_PPS_OUTPUT_PIN_6">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -618,7 +628,7 @@
             <User dnOrder="0" value="RPC8"/>
           </Values>
         </Combo>
-        <Combo dnOrder="92" id="SYS_PORT_PPS_OUTPUT_PIN_7">
+        <Combo dnOrder="94" id="SYS_PORT_PPS_OUTPUT_PIN_7">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -628,7 +638,7 @@
             <User dnOrder="0" value="RPD5"/>
           </Values>
         </Combo>
-        <Combo dnOrder="93" id="SYS_PORT_PPS_OUTPUT_PIN_8">
+        <Combo dnOrder="95" id="SYS_PORT_PPS_OUTPUT_PIN_8">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -638,7 +648,7 @@
             <User dnOrder="0" value="RPD6"/>
           </Values>
         </Combo>
-        <Combo dnOrder="94" id="SYS_PORT_PPS_OUTPUT_PIN_9">
+        <Combo dnOrder="96" id="SYS_PORT_PPS_OUTPUT_PIN_9">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
@@ -648,92 +658,92 @@
             <User dnOrder="0" value="RPC9"/>
           </Values>
         </Combo>
-        <Boolean dnOrder="95" id="USE_PPS_INPUT_0">
+        <Boolean dnOrder="97" id="USE_PPS_INPUT_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="96" id="USE_PPS_INPUT_1">
+        <Boolean dnOrder="98" id="USE_PPS_INPUT_1">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="97" id="USE_PPS_INPUT_2">
+        <Boolean dnOrder="99" id="USE_PPS_INPUT_2">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="98" id="USE_PPS_INPUT_3">
+        <Boolean dnOrder="100" id="USE_PPS_INPUT_3">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="99" id="USE_PPS_OUTPUT_0">
+        <Boolean dnOrder="101" id="USE_PPS_OUTPUT_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="100" id="USE_PPS_OUTPUT_1">
+        <Boolean dnOrder="102" id="USE_PPS_OUTPUT_1">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="101" id="USE_PPS_OUTPUT_10">
+        <Boolean dnOrder="103" id="USE_PPS_OUTPUT_10">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="102" id="USE_PPS_OUTPUT_11">
+        <Boolean dnOrder="104" id="USE_PPS_OUTPUT_11">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="103" id="USE_PPS_OUTPUT_12">
+        <Boolean dnOrder="105" id="USE_PPS_OUTPUT_12">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="104" id="USE_PPS_OUTPUT_2">
+        <Boolean dnOrder="106" id="USE_PPS_OUTPUT_2">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="105" id="USE_PPS_OUTPUT_3">
+        <Boolean dnOrder="107" id="USE_PPS_OUTPUT_3">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="106" id="USE_PPS_OUTPUT_4">
+        <Boolean dnOrder="108" id="USE_PPS_OUTPUT_4">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="107" id="USE_PPS_OUTPUT_5">
+        <Boolean dnOrder="109" id="USE_PPS_OUTPUT_5">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="108" id="USE_PPS_OUTPUT_6">
+        <Boolean dnOrder="110" id="USE_PPS_OUTPUT_6">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="109" id="USE_PPS_OUTPUT_7">
+        <Boolean dnOrder="111" id="USE_PPS_OUTPUT_7">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="110" id="USE_PPS_OUTPUT_8">
+        <Boolean dnOrder="112" id="USE_PPS_OUTPUT_8">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="111" id="USE_PPS_OUTPUT_9">
+        <Boolean dnOrder="113" id="USE_PPS_OUTPUT_9">
           <Values dnOrder="0">
             <User dnOrder="0" value="true"/>
           </Values>
         </Boolean>
-        <KeyValueSet dnOrder="112" id="clkSvcMode">
+        <KeyValueSet dnOrder="114" id="clkSvcMode">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="core" value="0"/>
           </Values>
@@ -743,12 +753,12 @@
     <UniqueComponent dnOrder="1" id="dfp"/>
   </Components>
   <UserData>
-    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
-    <ComponentGraph dnOrder="1" id="__ROOTVIEW">
+    <ComponentGraph dnOrder="0" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
         <ElementPosition dnOrder="0" id="core" x="30" y="60"/>
         <ElementPosition dnOrder="1" id="dfp" x="20" y="20"/>
       </ElementPositions>
     </ComponentGraph>
+    <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="1"/>
   </UserData>
 </Configuration>
