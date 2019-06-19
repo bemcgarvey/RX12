@@ -3,10 +3,10 @@
 *.map
 *.d
 *.bak
-**/Ultiboard Exports/*.zip
 **/nbproject/private
 **/nbproject/Makefile-*
 **/nbproject/Package-*
 **/debug
 **/dist
 **/build
+PCB/Ultiboard Exports/RX12.zip
