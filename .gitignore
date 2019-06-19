@@ -3,6 +3,7 @@
 *.map
 *.d
 *.bak
+**/Ultiboard Exports/*.zip
 **/nbproject/private
 **/nbproject/Makefile-*
 **/nbproject/Package-*
