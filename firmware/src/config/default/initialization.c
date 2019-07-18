@@ -160,27 +160,14 @@ void SYS_Initialize ( void* data )
 {
     /* Start out with interrupts disabled before configuring any modules */
     __builtin_disable_interrupts();
-
-  
     CLK_Initialize();
-	GPIO_Initialize();
-
+	//GPIO_Initialize();
     /* Configure CP0.K0 for optimal performance (cached instruction pre-fetch) */
     __builtin_mtc0(16, 0,(__builtin_mfc0(16, 0) | 0x3));
-
     /* Configure Wait States and Prefetch */
     CHECONbits.PFMWS = 3;
     CHECONbits.PREFEN = 0;
-
-
-
-
-
-
     EVIC_Initialize();
-
-
-
 }
 
 

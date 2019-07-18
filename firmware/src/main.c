@@ -38,11 +38,13 @@ int main ( void )
 {
     /* Initialize all modules */
     SYS_Initialize ( NULL );
+    GPIO_Initialize();
 
     while ( true )
     {
-        /* Maintain state machines of all polled MPLAB Harmony modules. */
-        SYS_Tasks ( );
+        int i;
+        for (i = 0; i < 30000000; ++i);
+        LATEbits.LATE13 ^= 1;
     }
 
     /* Execution should not come here during normal operation */
