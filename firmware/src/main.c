@@ -26,7 +26,7 @@
 #include <stdbool.h>                    // Defines true
 #include <stdlib.h>                     // Defines EXIT_FAILURE
 #include "definitions.h"                // SYS function prototypes
-
+#include "startup.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -38,8 +38,14 @@ int main ( void )
 {
     /* Initialize all modules */
     SYS_Initialize ( NULL );
+    DetectStartupMode();
     GPIO_Initialize();
-
+    if (startupMode == START_BIND) {
+        LATAbits.LATA8 = 1;
+    }
+    if (startupMode == START_SERIAL) {
+        LATCbits.LATC1 = 1;
+    }
     while ( true )
     {
         int i;

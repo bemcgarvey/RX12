@@ -42,6 +42,7 @@
 //DOM-IGNORE-END
 
 #include "plib_gpio.h"
+#include "../src/startup.h"
 
 
 
@@ -95,8 +96,12 @@ void GPIO_Initialize ( void )
     SYSKEY = 0x556699AA;
     CFGCONbits.IOLOCK = 0;
 
+    if (startupMode == START_SERIAL) {
+        U4RXR = 2;  //setup USART4
+        RPA1R = 2;
+    }
+    
     /* PPS Input Remapping */
-    U4RXR = 2;
     U3RXR = 6;
     U1RXR = 8;
     U6RXR = 2;
@@ -114,8 +119,7 @@ void GPIO_Initialize ( void )
     RPB12R = 6;
     RPB13R = 6;
     RPD6R = 5;
-    RPA1R = 2;
-
+    
     /* Lock back the system after PPS configuration */
     SYSKEY = 0x00000000;
     SYSKEY = 0xAA996655;
