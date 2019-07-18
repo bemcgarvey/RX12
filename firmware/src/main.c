@@ -27,6 +27,8 @@
 #include <stdlib.h>                     // Defines EXIT_FAILURE
 #include "definitions.h"                // SYS function prototypes
 #include "startup.h"
+#include "satellite.h"
+#include "led.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -39,18 +41,22 @@ int main ( void )
     /* Initialize all modules */
     SYS_Initialize ( NULL );
     DetectStartupMode();
+    DetectConnectedSatellites();
     GPIO_Initialize();
-    if (startupMode == START_BIND) {
-        LATAbits.LATA8 = 1;
+    if (activeSatellites[SAT1]) {
+        LED1On();
     }
-    if (startupMode == START_SERIAL) {
-        LATCbits.LATC1 = 1;
+    if (activeSatellites[SAT2]) {
+        LED2On();
+    }
+    if (activeSatellites[SAT3]) {
+        LED3On();
     }
     while ( true )
     {
-        int i;
-        for (i = 0; i < 30000000; ++i);
-        LATEbits.LATE13 ^= 1;
+//        int i;
+//        for (i = 0; i < 30000000; ++i);
+//        LATEbits.LATE13 ^= 1;
     }
 
     /* Execution should not come here during normal operation */
