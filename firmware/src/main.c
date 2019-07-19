@@ -36,36 +36,39 @@
 // *****************************************************************************
 // *****************************************************************************
 
-int main ( void )
-{
+int main(void) {
     /* Initialize all modules */
-    SYS_Initialize ( NULL );
+    SYS_Initialize(NULL);
     DetectStartupMode();
     DetectConnectedSatellites();
+    if (startupMode == START_SERIAL) {
+        while(true);
+        //TODO Implement serial main loop
+    }
+    if (startupMode == START_BIND) {
+        SendBindPulses(DSMX_11);
+    }
     GPIO_Initialize();
-    if (activeSatellites[SAT1]) {
+    if (connectedSatellites[SAT1]) {
         LED1On();
     }
-    if (activeSatellites[SAT2]) {
+    if (connectedSatellites[SAT2]) {
         LED2On();
     }
-    if (activeSatellites[SAT3]) {
+    if (connectedSatellites[SAT3]) {
         LED3On();
     }
-    while ( true )
-    {
-//        int i;
-//        for (i = 0; i < 30000000; ++i);
-//        LATEbits.LATE13 ^= 1;
+    while (true) {
+
     }
 
     /* Execution should not come here during normal operation */
 
-    return ( EXIT_FAILURE );
+    return ( EXIT_FAILURE);
 }
 
 
 /*******************************************************************************
  End of File
-*/
+ */
 

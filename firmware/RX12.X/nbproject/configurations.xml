@@ -31,6 +31,7 @@
       <itemPath>../src/startup.h</itemPath>
       <itemPath>../src/satellite.h</itemPath>
       <itemPath>../src/led.h</itemPath>
+      <itemPath>../src/timers.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -59,6 +60,7 @@
       <itemPath>../src/startup.c</itemPath>
       <itemPath>../src/satellite.c</itemPath>
       <itemPath>../src/led.c</itemPath>
+      <itemPath>../src/timers.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -238,6 +240,7 @@
         <property key="relaxed-math" value="false"/>
         <property key="save-temps" value="false"/>
         <property key="wpo-lto" value="false"/>
+        <appendMe value="-std=c99"/>
       </C32Global>
       <PICkit3PlatformTool>
         <property key="ADC" value="true"/>
