@@ -167,7 +167,7 @@ void SYS_Initialize ( void* data )
     /* Configure Wait States and Prefetch */
     CHECONbits.PFMWS = 3;
     CHECONbits.PREFEN = 0;
-    EVIC_Initialize();
+    INTCONbits.MVEC = 1;
 }
 
 

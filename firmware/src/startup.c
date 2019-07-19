@@ -7,7 +7,7 @@ StartupMode startupMode = START_NORMAL;
 void DetectStartupMode(void) {
     startupMode = START_NORMAL;
     ANSELBbits.ANSB0 = 0;
-    ANSELAbits.ANSA8 = 0;
+    ANSELAbits.ANSA1 = 0;
     LATAbits.LATA1 = 0;
     LATBbits.LATB0 = 0;
     TRISBbits.TRISB0 = 1;

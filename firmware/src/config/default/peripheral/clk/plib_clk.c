@@ -104,13 +104,13 @@ void CLK_Initialize( void )
   
     //TODO Turn off unused modules
     /* Peripheral Module Disable Configuration */
-    PMD1SET = 0xffffffff;
-    PMD2SET = 0xffffffff;
-    PMD3SET = 0xffffffff;
-    PMD4SET = 0xffffffff;
-    PMD5SET = 0xffffffff;
-    PMD6SET = 0xfffff0ff;
-    PMD7SET = 0xffffffef;
+//    PMD1SET = 0xffffffff;
+//    PMD2SET = 0xffffffff;
+//    PMD3SET = 0xffffffff;
+//    PMD4SET = 0xffffffff;
+//    PMD5SET = 0xffffffff;
+//    PMD6SET = 0xfffff0ff;
+//    PMD7SET = 0xffffffef;
 
     /* Lock system since done with clock configuration */
     int_flag = (bool)__builtin_disable_interrupts();

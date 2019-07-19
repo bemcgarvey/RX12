@@ -29,6 +29,7 @@
 #include "startup.h"
 #include "satellite.h"
 #include "led.h"
+#include "timers.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -41,14 +42,14 @@ int main(void) {
     SYS_Initialize(NULL);
     DetectStartupMode();
     DetectConnectedSatellites();
-    if (startupMode == START_SERIAL) {
-        while(true);
-        //TODO Implement serial main loop
-    }
     if (startupMode == START_BIND) {
         SendBindPulses(DSMX_11);
     }
     GPIO_Initialize();
+    if (startupMode == START_SERIAL) {
+        while(true);
+        //TODO Implement serial main loop
+    }
     if (connectedSatellites[SAT1]) {
         LED1On();
     }
@@ -58,8 +59,12 @@ int main(void) {
     if (connectedSatellites[SAT3]) {
         LED3On();
     }
+    __builtin_set_isr_state(0);
+    __builtin_enable_interrupts();
+    startSystemTickTimer();
+    startOCTimer(PERIOD_11MS);
     while (true) {
-
+        
     }
 
     /* Execution should not come here during normal operation */
