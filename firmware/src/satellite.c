@@ -15,8 +15,7 @@ void DetectConnectedSatellites(void) {
     CNPDEbits.CNPDE14 = 1;
     CNPDBbits.CNPDB4 = 1;
     CNPDCbits.CNPDC0 = 1;
-    int i;
-    for (i = 0; i < 1000000; ++i);
+    for (int i = 0; i < 1000000; ++i);
     if (PORTEbits.RE14 == 1) {
         connectedSatellites[SAT1] = true;
     }

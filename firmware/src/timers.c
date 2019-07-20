@@ -19,7 +19,6 @@ void startSystemTickTimer(void) {
     T8CONbits.TCKPS = 0b010; //1:4
     TMR8 = 0;
     PR8 = MS_COUNT / 4;
-    PRISSbits.PRI7SS = 1;
     IPC21bits.T8IP = 7;
     IPC21bits.T8IS = 0;
     IFS2bits.T8IF = 0;
@@ -27,7 +26,7 @@ void startSystemTickTimer(void) {
     T8CONbits.ON = 1;
 }
     
-void __ISR(_TIMER_8_VECTOR, IPL7SRS) Timer8Isr(void) {
+void __ISR(_TIMER_8_VECTOR, IPL7SOFT) Timer8Isr(void) {
     ++systemTickCount;
     IFS2bits.T8IF = 0;
 }
@@ -42,6 +41,7 @@ void startOCTimer(unsigned int period) {
     } else {
         PR2 = MS_COUNT * 22 / 64;
     }
+    PRISSbits.PRI4SS = 1;
     IPC2bits.T2IP = 4;
     IPC2bits.T2IS = 0;
     IFS0bits.T2IF = 0;
