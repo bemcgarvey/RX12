@@ -29,6 +29,8 @@ extern "C" {
     } BindType;
 
     extern bool connectedSatellites[3];
+    extern volatile unsigned int lastRxTime[3];
+    
     void DetectConnectedSatellites(void);
     void SendBindPulses(BindType type);
 

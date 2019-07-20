@@ -30,6 +30,7 @@
 #include "satellite.h"
 #include "led.h"
 #include "timers.h"
+#include "uart.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -50,21 +51,37 @@ int main(void) {
         while(true);
         //TODO Implement serial main loop
     }
-    if (connectedSatellites[SAT1]) {
-        LED1On();
+    int blinks = 5;
+    if (startupMode == START_BIND) {
+        blinks = 10;
     }
-    if (connectedSatellites[SAT2]) {
-        LED2On();
-    }
-    if (connectedSatellites[SAT3]) {
+    for (int i = 0; i < blinks; ++i) {
         LED3On();
+        delay_us(200000);
+        LED3Off();
+        delay_us(200000);
     }
+//    if (connectedSatellites[SAT1]) {
+//        LED1On();
+//    }
+//    if (connectedSatellites[SAT2]) {
+//        LED2On();
+//    }
+//    if (connectedSatellites[SAT3]) {
+//        LED3On();
+//    }
     __builtin_set_isr_state(0);
     __builtin_enable_interrupts();
     startSystemTickTimer();
     startOCTimer(PERIOD_11MS);
+    //initUARTs();
+    while (systemTickCount < 10000);
     while (true) {
-        
+        if (systemTickCount < 30000) {
+            LED1On();
+        } else {
+            LED1Off();
+        }
     }
 
     /* Execution should not come here during normal operation */

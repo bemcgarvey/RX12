@@ -4,6 +4,7 @@
 #include "timers.h"
 
 bool connectedSatellites[3] = {false, false, false};
+volatile unsigned int lastRxTime[3] = {0, 0, 0};
 
 void DetectConnectedSatellites(void) {
     ANSELEbits.ANSE14 = 0;

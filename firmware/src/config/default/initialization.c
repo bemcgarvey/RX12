@@ -160,8 +160,15 @@ void SYS_Initialize ( void* data )
 {
     /* Start out with interrupts disabled before configuring any modules */
     __builtin_disable_interrupts();
-    CLK_Initialize();
-	//GPIO_Initialize();
+    SYSKEY = 0x00000000;
+    SYSKEY = 0xAA996655;
+    SYSKEY = 0x556699AA;
+    OSCCONbits.FRCDIV = 0;
+    //TODO Turn off PB6 clock?
+    PB6DIVbits.PBDIV = 0b11;  //See errata 
+    //TODO set PMD bits here
+    SYSKEY = 0x33333333;
+	
     /* Configure CP0.K0 for optimal performance (cached instruction pre-fetch) */
     __builtin_mtc0(16, 0,(__builtin_mfc0(16, 0) | 0x3));
     /* Configure Wait States and Prefetch */
