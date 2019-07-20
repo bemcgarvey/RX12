@@ -12,6 +12,8 @@
 extern "C" {
 #endif
 
+    extern volatile unsigned int uart1PacketCount;
+    
     void initUARTs(void);
 
 

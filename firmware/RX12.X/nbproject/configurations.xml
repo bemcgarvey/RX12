@@ -27,6 +27,8 @@
       <itemPath>../src/led.h</itemPath>
       <itemPath>../src/timers.h</itemPath>
       <itemPath>../src/uart.h</itemPath>
+      <itemPath>../src/datapacket.h</itemPath>
+      <itemPath>../src/servos.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -51,6 +53,8 @@
       <itemPath>../src/led.c</itemPath>
       <itemPath>../src/timers.c</itemPath>
       <itemPath>../src/uart.c</itemPath>
+      <itemPath>../src/datapacket.c</itemPath>
+      <itemPath>../src/servos.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -316,6 +320,7 @@
         <property key="UART5" value="true"/>
         <property key="UART6" value="true"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="firmware.download.all" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="false"/>
