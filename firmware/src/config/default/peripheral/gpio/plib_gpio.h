@@ -165,6 +165,7 @@ typedef enum
 
 } GPIO_PIN;
 
+//TODO Move GPIO_Initialize to my code and eliminate this file and .c file
 
 void GPIO_Initialize(void);
 

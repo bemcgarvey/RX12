@@ -32,6 +32,7 @@
 #include "timers.h"
 #include "uart.h"
 #include "datapacket.h"
+#include "output.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -66,7 +67,8 @@ int main(void) {
     __builtin_set_isr_state(0);
     __builtin_enable_interrupts();
     startSystemTickTimer();
-    startOCTimer(PERIOD_11MS);
+    initOutputs();
+    startOCTimer(PERIOD_22MS);
     initUARTs();
     while (true) {
         if (packetQueueHead != packetQueueTail) {

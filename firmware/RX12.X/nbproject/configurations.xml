@@ -29,6 +29,7 @@
       <itemPath>../src/uart.h</itemPath>
       <itemPath>../src/datapacket.h</itemPath>
       <itemPath>../src/servos.h</itemPath>
+      <itemPath>../src/output.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -55,6 +56,7 @@
       <itemPath>../src/uart.c</itemPath>
       <itemPath>../src/datapacket.c</itemPath>
       <itemPath>../src/servos.c</itemPath>
+      <itemPath>../src/output.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
