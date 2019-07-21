@@ -33,6 +33,7 @@
 #include "uart.h"
 #include "datapacket.h"
 #include "output.h"
+#include "pins.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -43,12 +44,13 @@
 int main(void) {
     /* Initialize all modules */
     SYS_Initialize(NULL);
+    initPins();
     DetectStartupMode();
     DetectConnectedSatellites();
     if (startupMode == START_BIND) {
         SendBindPulses(DSMX_11);
     }
-    GPIO_Initialize();
+    setPPS();
     if (startupMode == START_SERIAL) {
         while (true);
         //TODO Implement serial main loop
@@ -57,7 +59,7 @@ int main(void) {
     if (startupMode == START_BIND) {
         blinks = 10;
     }
-    //TODO remove startup blinks from final code
+    //TODO set startup blinks based on frame rate and DSMX/DSM2?
     for (int i = 0; i < blinks; ++i) {
         LED3On();
         delay_us(200000);
