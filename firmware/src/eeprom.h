@@ -10,11 +10,16 @@
 
 #include <stdint.h>
 
+//Error codes returned by read/write
 #define EEPROM_SUCCESS      0
 #define EEPROM_VERIFY_ERROR 1
 #define EEPROM_BAD_COMMAND  2
 #define EEPROM_BOR_ERROR    3
 #define EEPROM_NOT_READY    4
+
+//Addresses
+#define ADDRESS_FRAME_RATE      0x00
+#define ADDRESS_DSM_TYPE        0x04
 
 #ifdef	__cplusplus
 extern "C" {

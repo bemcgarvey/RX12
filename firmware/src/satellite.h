@@ -18,12 +18,12 @@ extern "C" {
         SAT1 = 0, SAT2 = 1, SAT3 = 2
     };
 
-    enum {
+    typedef enum {
         DSMX_INTERNAL_11MS = 9, DSMX_EXTERNAL_11MS = 10, DSMX_INTERNAL_22MS = 7
         , DSMX_EXTERNAL_22MS = 8, DSM2_INTERNAL_22MS = 3, DSM2_EXTERNAL_22MS = 4
         , DSM2_INTERNAL_11MS = 5, DSM2_EXTERNAL_11MS = 6
-    };
-
+    } BindPulses;
+    
     typedef enum {
         DSMX_22 = 1, DSMX_11 = 2, DSM2_22 = 3, DSM2_11 = 3
     } BindType;

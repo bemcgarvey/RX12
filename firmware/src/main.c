@@ -1,26 +1,3 @@
-/*******************************************************************************
-  Main Source File
-
-  Company:
-    Microchip Technology Inc.
-
-  File Name:
-    main.c
-
-  Summary:
-    This file contains the "main" function for a project.
-
-  Description:
-    This file contains the "main" function for a project.  The
-    "main" function calls the "SYS_Initialize" function to initialize the state
-    machines of all modules in the system
- *******************************************************************************/
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Included Files
-// *****************************************************************************
-// *****************************************************************************
 
 #include <stddef.h>                     // Defines NULL
 #include <stdbool.h>                    // Defines true
@@ -37,17 +14,11 @@
 #include "failsafe.h"
 #include "eeprom.h"
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Main Entry Point
-// *****************************************************************************
-// *****************************************************************************
 unsigned int lastSat1;
 unsigned int lastSat2;
 unsigned int lastSat3;
 
 int main(void) {
-    /* Initialize all modules */
     SYS_Initialize(NULL);
     initPins();
     initEEPROM();
@@ -55,13 +26,27 @@ int main(void) {
     DetectConnectedSatellites();
     if (startupMode == START_BIND) {
         SendBindPulses(DSMX_11);
+        writeEEPROM(ADDRESS_FRAME_RATE, frameMode);
     }
     setPPS();
     if (startupMode == START_SERIAL) {
+        LED3On();
         while (true);
         //TODO Implement serial main loop
     }
-    unsigned int blinks = 2;
+    FrameMode savedFrameMode = 0;
+    int result = readEEPROM(ADDRESS_FRAME_RATE, &savedFrameMode);
+    if (result == EEPROM_SUCCESS) {
+        if (savedFrameMode == FRAME_22MS || savedFrameMode == FRAME_11MS) {
+            frameMode = savedFrameMode;
+        } else {
+            writeEEPROM(ADDRESS_FRAME_RATE, frameMode);
+        }
+    }
+    unsigned int blinks = 0;
+    if (frameMode == FRAME_11MS) {
+        blinks = 2;
+    }
     if (startupMode == START_BIND) {
         blinks = 10;
     }
@@ -76,7 +61,11 @@ int main(void) {
     __builtin_enable_interrupts();
     startSystemTickTimer();
     initOutputs();
-    startOCTimer(PERIOD_22MS);
+    if (frameMode == FRAME_22MS) {
+        startOCTimer(PERIOD_22MS);
+    } else {
+        startOCTimer(PERIOD_11MS);
+    }
     initUARTs();
     while (true) {
         if (packetQueueHead != packetQueueTail) {
@@ -115,9 +104,6 @@ int main(void) {
             outputsActivated = true;
         }
     }
-
-    /* Execution should not come here during normal operation */
-
     return ( EXIT_FAILURE);
 }
 

@@ -3,6 +3,8 @@
 #include "timers.h"
 
 StartupMode startupMode = START_NORMAL;
+FrameMode frameMode = FRAME_22MS;
+BindType bindType = DSMX_11;
 
 void DetectStartupMode(void) {
     startupMode = START_NORMAL;
@@ -23,6 +25,15 @@ void DetectStartupMode(void) {
         if (PORTBbits.RB0 == 0) {
             startupMode = START_BIND;
         }
+        //Check for 11ms frame
+        TRISGbits.TRISG6 = 1;
+        CNPUGbits.CNPUG6 = 1;
+        delay_us(1);
+        if (PORTGbits.RG6 == 0) {
+            frameMode = FRAME_11MS;
+        }
+        CNPUGbits.CNPUG6 = 0;
+        TRISGbits.TRISG6 = 0;
     }
     CNPDBbits.CNPDB0 = 0; //Make sure pull-ups and pull-downs are off
     CNPUBbits.CNPUB0 = 0;
