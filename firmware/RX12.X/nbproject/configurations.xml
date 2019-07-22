@@ -23,9 +23,9 @@
       <itemPath>../src/timers.h</itemPath>
       <itemPath>../src/uart.h</itemPath>
       <itemPath>../src/datapacket.h</itemPath>
-      <itemPath>../src/servos.h</itemPath>
       <itemPath>../src/output.h</itemPath>
       <itemPath>../src/pins.h</itemPath>
+      <itemPath>../src/failsafe.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -46,9 +46,9 @@
       <itemPath>../src/timers.c</itemPath>
       <itemPath>../src/uart.c</itemPath>
       <itemPath>../src/datapacket.c</itemPath>
-      <itemPath>../src/servos.c</itemPath>
       <itemPath>../src/output.c</itemPath>
       <itemPath>../src/pins.c</itemPath>
+      <itemPath>../src/failsafe.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

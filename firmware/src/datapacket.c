@@ -1,11 +1,12 @@
 #include <xc.h>
 #include "datapacket.h"
 #include "led.h"
-#include "servos.h"
+#include "output.h"
 
 volatile DataPacket packetQueue[PACKET_QUEUE_LENGTH];
 volatile int packetQueueHead = 0;
 volatile int packetQueueTail = 0;
+unsigned int packetsReceived = 0;
 
 void processCurrentPacket(void) {
     for (int i = 0; i < 7; ++i) {
@@ -19,4 +20,5 @@ void processCurrentPacket(void) {
     if (packetQueueTail == PACKET_QUEUE_LENGTH) {
         packetQueueTail = 0;
     }
+    ++packetsReceived;
 }

@@ -31,6 +31,7 @@ extern "C" {
     extern volatile DataPacket packetQueue[PACKET_QUEUE_LENGTH];
     extern volatile int packetQueueHead;
     extern volatile int packetQueueTail;
+    extern unsigned int packetsReceived;
 
     void processCurrentPacket(void);
 

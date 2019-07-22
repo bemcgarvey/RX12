@@ -1,8 +1,7 @@
 #include <xc.h>
 #include "timers.h"
 #include <sys/attribs.h>
-#include "led.h"
-#include "servos.h"
+#include "output.h"
 
 volatile unsigned int systemTickCount = 0;
 
@@ -34,6 +33,8 @@ void __ISR(_TIMER_8_VECTOR, IPL7SOFT) Timer8Isr(void) {
 
 void startOCTimer(unsigned int period) {
     //Timer 2/3 in 32bit mode
+    T2CONbits.ON = 0;
+    Nop();
     T2CONbits.T32 = 1; //32 bit
     T2CONbits.TCKPS = 0; //1:1
     TMR2 = 0;
@@ -51,7 +52,8 @@ void startOCTimer(unsigned int period) {
 }
 
 void __ISR(_TIMER_2_VECTOR, IPL4SRS) Timer2Isr(void) {
-    OC11RS = (903 + ((1194 * servos[0])) / 2048) * US_COUNT;
-    OC2RS = (903 + ((1194 * servos[4])) / 2048) * US_COUNT;
+    for (int i = 0; i < MAX_CHANNEL; ++i) {
+        *pulseRegister[i] = pulseOffsets[i] + ((1194 * US_COUNT) * servos[i]) / 2048;
+    }
     IFS0bits.T2IF = 0;
 }

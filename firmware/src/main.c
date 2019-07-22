@@ -34,12 +34,16 @@
 #include "datapacket.h"
 #include "output.h"
 #include "pins.h"
+#include "failsafe.h"
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: Main Entry Point
 // *****************************************************************************
 // *****************************************************************************
+unsigned int lastSat1;
+unsigned int lastSat2;
+unsigned int lastSat3;
 
 int main(void) {
     /* Initialize all modules */
@@ -55,16 +59,16 @@ int main(void) {
         while (true);
         //TODO Implement serial main loop
     }
-    int blinks = 5;
+    int blinks = 2;
     if (startupMode == START_BIND) {
         blinks = 10;
     }
     //TODO set startup blinks based on frame rate and DSMX/DSM2?
     for (int i = 0; i < blinks; ++i) {
         LED3On();
-        delay_us(200000);
+        delay_us(100000);
         LED3Off();
-        delay_us(200000);
+        delay_us(100000);
     }
     __builtin_set_isr_state(0);
     __builtin_enable_interrupts();
@@ -77,21 +81,36 @@ int main(void) {
             processCurrentPacket();
         }
         if (systemTickCount > 100) {
-            if (systemTickCount - lastRxTime[SAT1] < 100) {
+            lastSat1 = systemTickCount - lastRxTime[SAT1];
+            lastSat2 = systemTickCount - lastRxTime[SAT2];
+            lastSat3 = systemTickCount - lastRxTime[SAT3];
+            if (lastSat1 < 100) {
                 LED1On();
             } else {
                 LED1Off();
             }
-            if (systemTickCount - lastRxTime[SAT2] < 100) {
+            if (lastSat2 < 100) {
                 LED2On();
             } else {
                 LED2Off();
             }
-            if (systemTickCount - lastRxTime[SAT3] < 100) {
+            if (lastSat3 < 100) {
                 LED3On();
             } else {
                 LED3Off();
             }
+            if (!failsafeEngaged && lastSat1 > 100 && lastSat2 > 100 && lastSat3 > 100) {
+                disableThrottle();
+                failsafeEngaged = true;
+            }
+            if (failsafeEngaged && servos[THROTTLE] != 0xffff) {
+                enableThrottle();
+                failsafeEngaged = false;
+            }
+        }
+        if (!outputsActivated && packetsReceived > 100) {
+            enableActiveOutputs();
+            outputsActivated = true;
         }
     }
 
