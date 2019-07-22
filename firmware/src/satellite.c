@@ -7,8 +7,6 @@ bool connectedSatellites[3] = {false, false, false};
 volatile unsigned int lastRxTime[3] = {0, 0, 0};
 
 void DetectConnectedSatellites(void) {
-    ANSELEbits.ANSE14 = 0;
-    ANSELCbits.ANSC0 = 0;
     TRISEbits.TRISE14 = 1;
     TRISBbits.TRISB4 = 1;
     TRISCbits.TRISC0 = 1;
@@ -28,6 +26,9 @@ void DetectConnectedSatellites(void) {
     CNPDEbits.CNPDE14 = 0;
     CNPDBbits.CNPDB4 = 0;
     CNPDCbits.CNPDC0 = 0;
+    TRISEbits.TRISE14 = 0;
+    TRISBbits.TRISB4 = 0;
+    TRISCbits.TRISC0 = 0;
 }
 
 void SendBindPulses(BindType type) {
