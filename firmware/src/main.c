@@ -35,6 +35,7 @@
 #include "output.h"
 #include "pins.h"
 #include "failsafe.h"
+#include "eeprom.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -49,6 +50,7 @@ int main(void) {
     /* Initialize all modules */
     SYS_Initialize(NULL);
     initPins();
+    initEEPROM();
     DetectStartupMode();
     DetectConnectedSatellites();
     if (startupMode == START_BIND) {
@@ -59,12 +61,12 @@ int main(void) {
         while (true);
         //TODO Implement serial main loop
     }
-    int blinks = 2;
+    unsigned int blinks = 2;
     if (startupMode == START_BIND) {
         blinks = 10;
     }
     //TODO set startup blinks based on frame rate and DSMX/DSM2?
-    for (int i = 0; i < blinks; ++i) {
+    for (unsigned int i = 0; i < blinks; ++i) {
         LED3On();
         delay_us(100000);
         LED3Off();
