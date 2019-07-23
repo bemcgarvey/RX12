@@ -25,7 +25,7 @@ int main(void) {
     DetectStartupMode();
     DetectConnectedSatellites();
     if (startupMode == START_BIND) {
-        SendBindPulses(DSMX_11);
+        SendBindPulses(bindType);
         writeEEPROM(ADDRESS_FRAME_RATE, frameMode);
     }
     setPPS();

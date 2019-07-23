@@ -25,7 +25,7 @@ extern "C" {
     } BindPulses;
     
     typedef enum {
-        DSMX_22 = 1, DSMX_11 = 2, DSM2_22 = 3, DSM2_11 = 3
+        DSMX_22 = 1, DSMX_11 = 2, DSM2_22 = 3, DSM2_11 = 4
     } BindType;
 
     extern bool connectedSatellites[3];

@@ -34,6 +34,19 @@ void DetectStartupMode(void) {
         }
         CNPUGbits.CNPUG6 = 0;
         TRISGbits.TRISG6 = 0;
+        //Check for DSM2
+        TRISBbits.TRISB13 = 1;
+        CNPUBbits.CNPUB13 = 1;
+        delay_us(1);
+        if (PORTBbits.RB13 == 0) {
+            if (frameMode == FRAME_11MS) {
+                bindType = DSM2_11;
+            } else {
+                bindType = DSM2_11;  //Use DSM2_11 for now.  DMS2_22 requires modification servo parsing
+            }
+        }
+        CNPUBbits.CNPUB13 = 0;
+        TRISBbits.TRISB13 = 0;
     }
     CNPDBbits.CNPDB0 = 0; //Make sure pull-ups and pull-downs are off
     CNPUBbits.CNPUB0 = 0;
