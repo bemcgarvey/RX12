@@ -77,7 +77,7 @@
 #pragma config POSCMOD =    EC
 #pragma config OSCIOFNC =   OFF
 #pragma config FCKSM =      CSDCMD
-#pragma config WDTPS =      PS1048576
+#pragma config WDTPS =      PS64
 #pragma config WDTSPGM =    STOP
 #pragma config FWDTEN =     OFF
 #pragma config WINDIS =     NORMAL

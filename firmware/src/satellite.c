@@ -7,11 +7,6 @@ bool connectedSatellites[3] = {false, false, false};
 volatile unsigned int lastRxTime[3] = {0, 0, 0};
 
 void DetectConnectedSatellites(void) {
-    ANSELEbits.ANSE14 = 0;
-    ANSELCbits.ANSC0 = 0;
-    TRISEbits.TRISE14 = 1;
-    TRISBbits.TRISB4 = 1;
-    TRISCbits.TRISC0 = 1;
     CNPDEbits.CNPDE14 = 1;
     CNPDBbits.CNPDB4 = 1;
     CNPDCbits.CNPDC0 = 1;

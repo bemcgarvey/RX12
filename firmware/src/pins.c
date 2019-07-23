@@ -27,6 +27,10 @@ void initPins(void) {
     TRISE = 0;
     TRISF = 0;
     TRISG = 0;
+    //UART pins should be inputs
+    TRISEbits.TRISE14 = 1;
+    TRISBbits.TRISB4 = 1;
+    TRISCbits.TRISC0 = 1;
 }
 
 void setPPS(void) {

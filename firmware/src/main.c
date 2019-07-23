@@ -1,4 +1,4 @@
-
+#include <xc.h>
 #include <stddef.h>                     // Defines NULL
 #include <stdbool.h>                    // Defines true
 #include <stdlib.h>                     // Defines EXIT_FAILURE
@@ -19,12 +19,18 @@ unsigned int lastSat2;
 unsigned int lastSat3;
 
 int main(void) {
+    startupMode = START_NORMAL;
+    if (RCONbits.WDTO == 1) {
+        startupMode = START_WDTO;
+    }
     SYS_Initialize(NULL);
     initPins();
     initEEPROM();
-    DetectStartupMode();
-    DetectConnectedSatellites();
+    if (startupMode != START_WDTO) {
+        DetectStartupMode();
+    }
     if (startupMode == START_BIND) {
+        DetectConnectedSatellites();
         SendBindPulses(bindType);
         writeEEPROM(ADDRESS_FRAME_RATE, frameMode);
     }
@@ -44,13 +50,18 @@ int main(void) {
         }
     }
     unsigned int blinks = 0;
-    if (frameMode == FRAME_11MS) {
+    if (frameMode == FRAME_11MS && startupMode != START_WDTO) {
         blinks = 2;
     }
     if (startupMode == START_BIND) {
         blinks = 10;
     }
-    //TODO set startup blinks based on frame rate and DSMX/DSM2?
+    
+    //TODO For test purposes.  Remove when tested
+    if (startupMode == START_WDTO) {
+        blinks = 30;
+    }
+    
     for (unsigned int i = 0; i < blinks; ++i) {
         LED3On();
         delay_us(100000);
@@ -67,6 +78,9 @@ int main(void) {
         startOCTimer(PERIOD_11MS);
     }
     initUARTs();
+    WDTCONbits.WDTCLRKEY = 0x5743;
+    RCONbits.WDTO = 0;
+    WDTCONbits.ON = 1; //Turn on WDT
     while (true) {
         if (packetQueueHead != packetQueueTail) {
             processCurrentPacket();
@@ -103,6 +117,7 @@ int main(void) {
             enableActiveOutputs();
             outputsActivated = true;
         }
+        WDTCONbits.WDTCLRKEY = 0x5743;
     }
     return ( EXIT_FAILURE);
 }

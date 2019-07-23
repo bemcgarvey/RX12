@@ -7,7 +7,6 @@ FrameMode frameMode = FRAME_22MS;
 BindType bindType = DSMX_11;
 
 void DetectStartupMode(void) {
-    startupMode = START_NORMAL;
     ANSELBbits.ANSB0 = 0;
     ANSELAbits.ANSA1 = 0;
     LATAbits.LATA1 = 0;
@@ -42,7 +41,7 @@ void DetectStartupMode(void) {
             if (frameMode == FRAME_11MS) {
                 bindType = DSM2_11;
             } else {
-                bindType = DSM2_11;  //Use DSM2_11 for now.  DMS2_22 requires modification servo parsing
+                bindType = DSM2_11;  //Use DSM2_11 for now.  DMS2_22 requires modification to servo parsing
             }
         }
         CNPUBbits.CNPUB13 = 0;
