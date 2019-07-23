@@ -53,7 +53,7 @@ void startOCTimer(unsigned int period) {
 
 void __ISR(_TIMER_2_VECTOR, IPL4SRS) Timer2Isr(void) {
     for (int i = 0; i < MAX_CHANNEL; ++i) {
-        *pulseRegister[i] = pulseOffsets[i] + ((1194 * US_COUNT) * servos[i]) / 2048;
+        *pulseRegister[i] = outputPulses[i]; 
     }
     IFS0bits.T2IF = 0;
 }

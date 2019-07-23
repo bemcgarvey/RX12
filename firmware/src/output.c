@@ -8,6 +8,8 @@
 uint16_t servos[MAX_CHANNEL] = {0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff,
     0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff};
 
+uint32_t outputPulses[MAX_CHANNEL];
+
 const unsigned int startOffsets[MAX_CHANNEL] = {0, OFFSET, 0, OFFSET, 0, OFFSET,
     0, OFFSET, 2 * OFFSET, 2 * OFFSET, 2 * OFFSET, 2 * OFFSET};
 
@@ -68,7 +70,8 @@ void initOutputs(void) {
     OC7CONbits.OCM = 0b101;
     for (int i = 0; i < MAX_CHANNEL; ++i) {
         *startRegister[i] = startOffsets[i];
-        *pulseRegister[i] = (903 + ((1194 * 1024)) / 2048) * US_COUNT;
+        outputPulses[i] = pulseOffsets[i] + ((1194 * US_COUNT) * 1024) / 2048;  //Mid
+        *pulseRegister[i] = outputPulses[i];
     }
 }
 

@@ -22,6 +22,7 @@ extern "C" {
     };
     
     extern uint16_t servos[MAX_CHANNEL];
+    extern uint32_t outputPulses[MAX_CHANNEL];
     extern const unsigned int startOffsets[MAX_CHANNEL];
     extern const unsigned int pulseOffsets[MAX_CHANNEL];
     extern volatile unsigned int* const pulseRegister[MAX_CHANNEL]; 
