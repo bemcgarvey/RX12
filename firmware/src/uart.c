@@ -109,10 +109,6 @@ void __ISR(_UART1_RX_VECTOR, IPL1SOFT) uart1Isr(void) {
                 if (packetQueueHead == PACKET_QUEUE_LENGTH) {
                     packetQueueHead = 0;
                 }
-                //TODO Need to handle queue overrun or do we?
-//                if (packetQueueHead == packetQueueTail) {
-//                    LED3On();
-//                }
             }
             uart1PacketGood = false;
             uart1Pos = 0;
@@ -161,9 +157,6 @@ void __ISR(_UART6_RX_VECTOR, IPL1SOFT) uart6Isr(void) {
                 if (packetQueueHead == PACKET_QUEUE_LENGTH) {
                     packetQueueHead = 0;
                 }
-//                if (packetQueueHead == packetQueueTail) {
-//                    LED3On();
-//                }
             }
             uart6PacketGood = false;
             uart6Pos = 0;
@@ -212,9 +205,6 @@ void __ISR(_UART3_RX_VECTOR, IPL1SOFT) uart3Isr(void) {
                 if (packetQueueHead == PACKET_QUEUE_LENGTH) {
                     packetQueueHead = 0;
                 }
-//                if (packetQueueHead == packetQueueTail) {
-//                    LED3On();
-//                }
             }
             uart3PacketGood = false;
             uart3Pos = 0;

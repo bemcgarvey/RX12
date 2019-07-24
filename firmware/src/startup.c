@@ -39,11 +39,7 @@ void DetectStartupMode(void) {
         CNPUBbits.CNPUB13 = 1;
         delay_us(1);
         if (PORTBbits.RB13 == 0) {
-            if (frameMode == FRAME_11MS) {
-                bindType = DSM2_11;
-            } else {                 //TODO Can we use DSM2_11 for both 1024 and 2048?
-                bindType = DSM2_11;  
-            }
+            bindType = DSM2_11;
         }
         CNPUBbits.CNPUB13 = 0;
         TRISBbits.TRISB13 = 0;
