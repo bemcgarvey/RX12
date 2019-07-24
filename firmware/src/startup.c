@@ -5,6 +5,7 @@
 StartupMode startupMode = START_NORMAL;
 FrameMode frameMode = FRAME_22MS;
 BindType bindType = DSMX_11;
+DSMSystemType systemType = SYSTEM_TYPE_NONE;
 
 void DetectStartupMode(void) {
     ANSELBbits.ANSB0 = 0;
@@ -40,8 +41,8 @@ void DetectStartupMode(void) {
         if (PORTBbits.RB13 == 0) {
             if (frameMode == FRAME_11MS) {
                 bindType = DSM2_11;
-            } else {
-                bindType = DSM2_11;  //Use DSM2_11 for now.  DMS2_22 requires modification to servo parsing
+            } else {                 //TODO Can we use DSM2_11 for both 1024 and 2048?
+                bindType = DSM2_11;  
             }
         }
         CNPUBbits.CNPUB13 = 0;

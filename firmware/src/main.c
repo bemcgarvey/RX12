@@ -56,12 +56,12 @@ int main(void) {
     if (startupMode == START_BIND) {
         blinks = 10;
     }
-    
+
     //TODO For test purposes.  Remove when tested
     if (startupMode == START_WDTO) {
         blinks = 30;
     }
-    
+
     for (unsigned int i = 0; i < blinks; ++i) {
         LED3On();
         delay_us(100000);
@@ -78,12 +78,38 @@ int main(void) {
         startOCTimer(PERIOD_11MS);
     }
     initUARTs();
+    if (startupMode == START_BIND) {
+        while (startupMode == START_BIND) {
+            if (packetQueueHead != packetQueueTail) {
+                systemType = checkPacketType(primarySatellite);
+            }
+            if (systemType != SYSTEM_TYPE_NONE) {
+                startupMode = START_NORMAL;
+            }
+        }
+        writeEEPROM(ADDRESS_DSM_TYPE, systemType);
+    } else {
+        systemType = SYSTEM_TYPE_DSMX_11;
+        DSMSystemType savedSystemType;
+        if (readEEPROM(ADDRESS_DSM_TYPE, &savedSystemType) == EEPROM_SUCCESS) {
+            if (savedSystemType == SYSTEM_TYPE_DSM2_1024 ||
+                    savedSystemType == SYSTEM_TYPE_DSM2_2048 ||
+                    savedSystemType == SYSTEM_TYPE_DSMX_11 ||
+                    savedSystemType == SYSTEM_TYPE_DSMX_22) {
+                systemType = savedSystemType;
+            }
+        }
+    }
     WDTCONbits.WDTCLRKEY = 0x5743;
     RCONbits.WDTO = 0;
     WDTCONbits.ON = 1; //Turn on WDT
     while (true) {
         if (packetQueueHead != packetQueueTail) {
             processCurrentPacket();
+        }
+        if (!outputsActivated && packetsReceived > 10) {
+            enableActiveOutputs();
+            outputsActivated = true;
         }
         if (systemTickCount > 100) {
             lastSat1 = systemTickCount - lastRxTime[SAT1];
@@ -112,10 +138,6 @@ int main(void) {
                 enableThrottle();
                 failsafeEngaged = false;
             }
-        }
-        if (!outputsActivated && packetsReceived > 100) {
-            enableActiveOutputs();
-            outputsActivated = true;
         }
         WDTCONbits.WDTCLRKEY = 0x5743;
     }

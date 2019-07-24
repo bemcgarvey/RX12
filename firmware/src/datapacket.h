@@ -9,6 +9,7 @@
 #define	DATAPACKET_H
 
 #include "stdint.h"
+#include "satellite.h"
 
 #ifdef	__cplusplus
 extern "C" {
@@ -26,6 +27,7 @@ extern "C" {
             uint32_t data[4];
         };
         unsigned int timeStamp;
+        unsigned int satellite;
     } DataPacket;
 
     extern volatile DataPacket packetQueue[PACKET_QUEUE_LENGTH];
@@ -34,6 +36,7 @@ extern "C" {
     extern unsigned int packetsReceived;
 
     void processCurrentPacket(void);
+    DSMSystemType checkPacketType(unsigned int primary);
 
 #ifdef	__cplusplus
 }

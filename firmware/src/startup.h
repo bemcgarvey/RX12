@@ -22,6 +22,7 @@ extern "C" {
     extern StartupMode startupMode;
     extern FrameMode frameMode;
     extern BindType bindType;
+    extern DSMSystemType systemType;
 
 #ifdef	__cplusplus
 }

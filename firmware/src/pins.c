@@ -13,7 +13,7 @@ void initPins(void) {
     LATF = 0;
     LATG = 0;
     ANSELA = 0;
-    ANSELB = 0x00000008;
+    ANSELB = 0;
     ANSELC = 0;
     ANSELD = 0;
     ANSELE = 0;
@@ -21,12 +21,14 @@ void initPins(void) {
     ANSELG = 0;
     TRISA = 0;
     TRISB = 0;
-    TRISB = 0x00000008;
     TRISC = 0;
     TRISD = 0;
     TRISE = 0;
     TRISF = 0;
     TRISG = 0;
+    //AN25/RB7
+    ANSELBbits.ANSB7 = 1;
+    TRISBbits.TRISB7 = 1;
     //UART pins should be inputs
     TRISEbits.TRISE14 = 1;
     TRISBbits.TRISB4 = 1;
@@ -43,6 +45,7 @@ void setPPS(void) {
     if (startupMode == START_SERIAL) {
         U4RXR = 2;  //setup USART4
         RPA1R = 2;
+        //TODO Set U4RX as input
     }
     
     /* PPS Input Remapping */

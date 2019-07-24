@@ -5,6 +5,7 @@
 
 bool connectedSatellites[3] = {false, false, false};
 volatile unsigned int lastRxTime[3] = {0, 0, 0};
+unsigned int primarySatellite = SAT1;
 
 void DetectConnectedSatellites(void) {
     CNPDEbits.CNPDE14 = 1;
@@ -23,6 +24,12 @@ void DetectConnectedSatellites(void) {
     CNPDEbits.CNPDE14 = 0;
     CNPDBbits.CNPDB4 = 0;
     CNPDCbits.CNPDC0 = 0;
+    for (int i = SAT1; i <= SAT3; ++i) {
+        if (connectedSatellites[i]) {
+            primarySatellite = i;
+            break;
+        }
+    }
 }
 
 void SendBindPulses(BindType type) {
@@ -32,13 +39,6 @@ void SendBindPulses(BindType type) {
     TRISEbits.TRISE14 = 0;
     TRISBbits.TRISB4 = 0;
     TRISCbits.TRISC0 = 0;
-    int primary = SAT1;
-    for (int i = SAT1; i <= SAT3; ++i) {
-        if (connectedSatellites[i]) {
-            primary = i;
-            break;
-        }
-    }
     delay_us(50000);
     int pulseCount;
     if (type == DSMX_11) {
@@ -53,21 +53,21 @@ void SendBindPulses(BindType type) {
         pulseCount = DSMX_EXTERNAL_11MS;
     }
     for (int i = 0; i < pulseCount; ++i) {
-        if (primary == SAT1) {
+        if (primarySatellite == SAT1) {
             if (i < pulseCount - 1) {
                 LATEbits.LATE14 = 0;
             }
         } else {
             LATEbits.LATE14 = 0;
         }
-        if (primary == SAT2) {
+        if (primarySatellite == SAT2) {
             if (i < pulseCount - 1) {
                 LATBbits.LATB4 = 0;
             }
         } else {
             LATBbits.LATB4 = 0;
         }
-        if (primary == SAT3) {
+        if (primarySatellite == SAT3) {
             if (i < pulseCount - 1) {
                 LATCbits.LATC0 = 0;
             }

@@ -104,11 +104,12 @@ void __ISR(_UART1_RX_VECTOR, IPL1SOFT) uart1Isr(void) {
                     packetQueue[packetQueueHead].data[i] = uart1Packet.packet[i]; 
                 }
                 packetQueue[packetQueueHead].timeStamp = systemTickCount;
+                packetQueue[packetQueueHead].satellite = SAT1;
                 ++packetQueueHead;
                 if (packetQueueHead == PACKET_QUEUE_LENGTH) {
                     packetQueueHead = 0;
                 }
-                //TODO Need to handle queue overrun
+                //TODO Need to handle queue overrun or do we?
 //                if (packetQueueHead == packetQueueTail) {
 //                    LED3On();
 //                }
@@ -155,6 +156,7 @@ void __ISR(_UART6_RX_VECTOR, IPL1SOFT) uart6Isr(void) {
                     packetQueue[packetQueueHead].data[i] = uart6Packet.packet[i]; 
                 }
                 packetQueue[packetQueueHead].timeStamp = systemTickCount;
+                packetQueue[packetQueueHead].satellite = SAT2;
                 ++packetQueueHead;
                 if (packetQueueHead == PACKET_QUEUE_LENGTH) {
                     packetQueueHead = 0;
@@ -205,6 +207,7 @@ void __ISR(_UART3_RX_VECTOR, IPL1SOFT) uart3Isr(void) {
                     packetQueue[packetQueueHead].data[i] = uart3Packet.packet[i]; 
                 }
                 packetQueue[packetQueueHead].timeStamp = systemTickCount;
+                packetQueue[packetQueueHead].satellite = SAT3;
                 ++packetQueueHead;
                 if (packetQueueHead == PACKET_QUEUE_LENGTH) {
                     packetQueueHead = 0;

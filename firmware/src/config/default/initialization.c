@@ -163,10 +163,11 @@ void SYS_Initialize ( void* data )
     SYSKEY = 0x00000000;
     SYSKEY = 0xAA996655;
     SYSKEY = 0x556699AA;
+    //TODO set up FRC here so it is ready if we need it for a clock switch on oscillator fail.
     OSCCONbits.FRCDIV = 0;
     //TODO Turn off PB6 clock?
     PB6DIVbits.PBDIV = 0b11;  //See errata 
-    //TODO set PMD bits here and lock PMD
+    //TODO set PMD bits here and lock PMD - need to clear PMDLOCK first
     
     
     SYSKEY = 0x33333333;
