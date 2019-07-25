@@ -167,9 +167,21 @@ void SYS_Initialize ( void* data )
     OSCCONbits.FRCDIV = 0;
     //TODO Turn off PB6 clock?
     PB6DIVbits.PBDIV = 0b11;  //See errata 
-    //TODO set PMD bits here and lock PMD - need to clear PMDLOCK first
     
+    PMD1SET = 0xffffffff;
+    PMD1bits.ADCMD = 0;
+    PMD1bits.EEMD = 0;
+    PMD2SET = 0xffffffff;
+    PMD3SET = 0x0000ffff;
+    PMD4SET = 0xfffffe7d;
+    PMD5SET = 0xffffffd2;
+    PMD6SET = 0xffffffff;
+    PMD7SET = 0xffffffff;
     
+    SYSKEY = 0x00000000;
+    SYSKEY = 0xAA996655;
+    SYSKEY = 0x556699AA;
+    CFGCONbits.PMDLOCK = 1;
     SYSKEY = 0x33333333;
 	
     /* Configure CP0.K0 for optimal performance (cached instruction pre-fetch) */
