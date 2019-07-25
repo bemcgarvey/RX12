@@ -72,12 +72,13 @@ void initUARTs(void) {
     IEC1bits.U3EIE = 1;
     U3STAbits.OERR = 0;
 
+    PRISSbits.PRI1SS = 1;
     U1MODEbits.ON = 1;
     U6MODEbits.ON = 1;
     U3MODEbits.ON = 1;
 }
 
-void __ISR(_UART1_RX_VECTOR, IPL1SOFT) uart1Isr(void) {
+void __ISR(_UART1_RX_VECTOR, IPL1SRS) uart1Isr(void) {
     uint8_t rxByte;
     unsigned int elapsedTime;
     elapsedTime = systemTickCount - lastRxTime[SAT1];
@@ -125,7 +126,7 @@ void __ISR(_UART1_FAULT_VECTOR, IPL2SOFT) uart1ErrorIsr(void) {
     IFS1bits.U1EIF = 0;
 }
 
-void __ISR(_UART6_RX_VECTOR, IPL1SOFT) uart6Isr(void) {
+void __ISR(_UART6_RX_VECTOR, IPL1SRS) uart6Isr(void) {
     uint8_t rxByte;
     unsigned int elapsedTime;
     elapsedTime = systemTickCount - lastRxTime[SAT2];
@@ -173,7 +174,7 @@ void __ISR(_UART6_FAULT_VECTOR, IPL2SOFT) uart6ErrorIsr(void) {
     IFS5bits.U6EIF = 0;
 }
 
-void __ISR(_UART3_RX_VECTOR, IPL1SOFT) uart3Isr(void) {
+void __ISR(_UART3_RX_VECTOR, IPL1SRS) uart3Isr(void) {
     uint8_t rxByte;
     unsigned int elapsedTime;
     elapsedTime = systemTickCount - lastRxTime[SAT3];
