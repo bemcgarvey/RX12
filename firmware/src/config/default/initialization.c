@@ -87,7 +87,7 @@
 
 /*** DEVCFG2 ***/
 #pragma config FPLLIDIV =   DIV_3
-#pragma config FPLLRNG =    RANGE_13_26_MHZ
+#pragma config FPLLRNG =    RANGE_5_10_MHZ
 #pragma config FPLLICLK =   PLL_POSC
 #pragma config FPLLMULT =   MUL_60
 #pragma config FPLLODIV =   DIV_4
