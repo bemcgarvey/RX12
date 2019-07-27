@@ -14,11 +14,16 @@
 extern "C" {
 #endif
 
-    typedef enum {START_NORMAL = 0, START_BIND = 1, START_SERIAL = 2, START_WDTO} StartupMode;
-    typedef enum {FRAME_22MS = 0x22, FRAME_11MS = 0x11} FrameMode;
-    
+    typedef enum {
+        START_NORMAL = 0, START_BIND = 1, START_SERIAL = 2, START_WDTO = 3
+    } StartupMode;
+
+    typedef enum {
+        FRAME_22MS = 0x22, FRAME_11MS = 0x11
+    } FrameMode;
+
     void DetectStartupMode(void);
-    
+
     extern StartupMode startupMode;
     extern FrameMode frameMode;
     extern BindType bindType;

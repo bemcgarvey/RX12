@@ -57,7 +57,7 @@ int main(void) {
         blinks = 10;
     }
 
-    //TODO For test purposes.  Remove when tested
+    //FIXME For test purposes.  Remove when tested
     if (startupMode == START_WDTO) {
         blinks = 30;
     }
@@ -142,6 +142,31 @@ int main(void) {
         WDTCONbits.WDTCLRKEY = 0x5743;
     }
     return ( EXIT_FAILURE);
+}
+
+void _nmi_handler(void) {
+    int wdtFlag;
+    wdtFlag = WDTCONbits.ON;
+    WDTCONbits.ON = 0;
+    if (RNMICONbits.CF == 1) {
+        SYSKEY = 0x00000000;
+        SYSKEY = 0xAA996655;
+        SYSKEY = 0x556699AA;
+        SPLLCONbits.PLLIDIV = 0b000; //according to datasheet PLLIDIV is ignored when FRC is selected
+        SPLLCONbits.PLLICLK = 1;
+        OSCCONbits.FRCDIV = 0;
+        OSCCONbits.NOSC = 0b001;
+        OSCCONbits.OSWEN = 1;
+        OSCCONbits.CF = 0;
+        RNMICONbits.CF = 0;
+        SYSKEY = 0x33333333;
+        while (OSCCONbits.OSWEN == 1);
+    }
+    //Clear BEV flag
+    _CP0_BIC_STATUS(_CP0_STATUS_BEV_MASK);
+    WDTCONbits.WDTCLRKEY = 0x5743;
+    WDTCONbits.ON = wdtFlag;
+    __asm__("ERET");
 }
 
 /*******************************************************************************
