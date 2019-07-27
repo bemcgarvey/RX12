@@ -18,7 +18,7 @@ bool loadFailsafePresets(void) {
 
 void saveFailsafePresets(void) {
     for (int i = 0; i < MAX_CHANNEL; ++i) {
-        while (!readyEEPROM());
         writeEEPROM(ADDRESS_FAILSAFE_VALUES + (4 * i), presetOutputPulses[i]);
+        while (!readyEEPROM());
     }
 }
