@@ -1,6 +1,10 @@
 #include <xc.h>
 #include "startup.h"
 #include "timers.h"
+#include <sys/attribs.h>
+#include "failsafe.h"
+#include "output.h"
+#include "eeprom.h"
 
 StartupMode startupMode = START_NORMAL;
 FrameMode frameMode = FRAME_22MS;
@@ -44,8 +48,46 @@ void DetectStartupMode(void) {
             TRISBbits.TRISB13 = 0;
         }
     }
-    CNPDBbits.CNPDB0 = 0; //Make sure pull-ups and pull-downs are off
-    CNPUBbits.CNPUB0 = 0;
-    TRISBbits.TRISB0 = 0;
-    LATBbits.LATB0 = 0;
+    if (startupMode == START_BIND) {
+        //Assume hold failsafe
+        failsafeType = HOLD_FAILSAFE;
+        writeEEPROM(ADDRESS_FAILSAFE_TYPE, failsafeType);
+        while (!readyEEPROM());
+        //setup change notification on RB0 to check for preset failsafe
+        CNCONBbits.ON = 1;
+        int temp = PORTB;
+        IPC11bits.CNBIP = 6;
+        IPC11bits.CNBIS = 0;
+        CNCONBbits.EDGEDETECT = 1;
+        CNENBbits.CNIEB0 = 1;
+        IFS1bits.CNBIF = 0;
+        IEC1bits.CNBIE = 1;
+    } else {
+        CNPDBbits.CNPDB0 = 0; //Make sure pull-ups and pull-downs are off
+        CNPUBbits.CNPUB0 = 0;
+        TRISBbits.TRISB0 = 0;
+        LATBbits.LATB0 = 0;
+    }
+}
+
+
+void __ISR(_CHANGE_NOTICE_B_VECTOR, IPL6SOFT) ChangeBISR(void) {
+        int temp = PORTB;
+        temp = WDTCONbits.ON;
+        WDTCONbits.ON = 0;
+        IFS1bits.CNBIF = 0;
+        IEC1bits.CNBIE = 0;
+        CNCONBbits.ON = 0;
+        CNPDBbits.CNPDB0 = 0; //Make sure pull-ups and pull-downs are off
+        CNPUBbits.CNPUB0 = 0;
+        LATBbits.LATB0 = 0;
+        TRISBbits.TRISB0 = 0;
+        failsafeType = PRESET_FAILSAFE;
+        writeEEPROM(ADDRESS_FAILSAFE_TYPE, failsafeType);
+        while (!readyEEPROM());
+        for (int i = 0; i < MAX_CHANNEL; ++i) {
+            presetOutputPulses[i] = outputPulses[i];
+        }
+        saveFailsafePresets();
+        WDTCONbits.ON = temp;
 }

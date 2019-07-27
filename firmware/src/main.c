@@ -65,7 +65,7 @@ int main(void) {
     if (failsafeType == PRESET_FAILSAFE) {
         if (!loadFailsafePresets()) {
             failsafeType = HOLD_FAILSAFE;
-        };
+        }
     }
     unsigned int blinks = 0;
     if (frameMode == FRAME_11MS && startupMode != START_WDTO) {
