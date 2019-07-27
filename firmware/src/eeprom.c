@@ -54,3 +54,11 @@ void executeWrite(unsigned int addr, uint32_t data) {
     EECONSET = _EECON_RW_MASK;
     while (EECONbits.RW == 1);
 }
+
+bool readyEEPROM(void) {
+    if (EECONbits.RDY == 0 || EECONbits.RW == 1) {
+        return false;
+    } else {
+        return true;
+    }
+}

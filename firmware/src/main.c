@@ -13,6 +13,7 @@
 #include "pins.h"
 #include "failsafe.h"
 #include "eeprom.h"
+#include "failsafe.h"
 
 unsigned int lastSat1;
 unsigned int lastSat2;
@@ -33,6 +34,7 @@ int main(void) {
         DetectConnectedSatellites();
         SendBindPulses(bindType);
         writeEEPROM(ADDRESS_FRAME_RATE, frameMode);
+        while (!readyEEPROM()); //Wait for write to finish
     }
     setPPS();
     if (startupMode == START_SERIAL) {
@@ -47,7 +49,23 @@ int main(void) {
             frameMode = savedFrameMode;
         } else {
             writeEEPROM(ADDRESS_FRAME_RATE, frameMode);
+            while (!readyEEPROM()); //Wait for write to finish
         }
+    }
+    FailsafeType savedFailsafeType = HOLD_FAILSAFE;
+    result = readEEPROM(ADDRESS_FAILSAFE_TYPE, &savedFailsafeType);
+    if (result == EEPROM_SUCCESS) {
+        if (savedFailsafeType == HOLD_FAILSAFE || savedFailsafeType == PRESET_FAILSAFE) {
+            failsafeType = savedFailsafeType;
+        } else {
+            writeEEPROM(ADDRESS_FAILSAFE_TYPE, failsafeType);
+            while (!readyEEPROM()); //Wait for write to finish
+        }
+    }
+    if (failsafeType == PRESET_FAILSAFE) {
+        if (!loadFailsafePresets()) {
+            failsafeType = HOLD_FAILSAFE;
+        };
     }
     unsigned int blinks = 0;
     if (frameMode == FRAME_11MS && startupMode != START_WDTO) {
@@ -67,6 +85,14 @@ int main(void) {
         delay_us(100000);
         LED3Off();
         delay_us(100000);
+    }
+    if (failsafeType == PRESET_FAILSAFE && startupMode != START_WDTO) {
+        for (unsigned int i = 0; i < 2; ++i) {
+            LED2On();
+            delay_us(100000);
+            LED2Off();
+            delay_us(100000);
+        }
     }
     __builtin_set_isr_state(0);
     __builtin_enable_interrupts();
@@ -131,11 +157,20 @@ int main(void) {
                 LED3Off();
             }
             if (!failsafeEngaged && lastSat1 > 100 && lastSat2 > 100 && lastSat3 > 100) {
-                disableThrottle();
+                if (failsafeType == PRESET_FAILSAFE) {
+                    for (int i = 0; i < MAX_CHANNEL; ++i) {
+                        outputPulses[i] = presetOutputPulses[i];
+                    }
+                } else {
+                    disableThrottle();
+                }
+                servos[0] = 0xffff; //Mark throttle as inactive
                 failsafeEngaged = true;
             }
             if (failsafeEngaged && servos[THROTTLE] != 0xffff) {
-                enableThrottle();
+                if (failsafeType == HOLD_FAILSAFE) {
+                    enableThrottle();
+                }
                 failsafeEngaged = false;
             }
         }

@@ -9,6 +9,7 @@
 #define	EEPROM_H
 
 #include <stdint.h>
+#include <stdbool.h>
 
 //Error codes returned by read/write
 #define EEPROM_SUCCESS      0
@@ -18,8 +19,13 @@
 #define EEPROM_NOT_READY    4
 
 //Addresses
+#define EEPROM_SIZE             0x1000
 #define ADDRESS_FRAME_RATE      0x00
 #define ADDRESS_DSM_TYPE        0x04
+#define ADDRESS_FAILSAFE_TYPE   0x08
+#define ADDRESS_FAILSAFE_VALUES 0x0c
+#define ADDRESS_RESERVED        (ADDRESS_FAILSAFE_VALUES + 12 * 4)
+#define ADDRESS_LOG             (ADDRESS_RESERVED + 12 * 4)
 
 #ifdef	__cplusplus
 extern "C" {
@@ -28,6 +34,7 @@ extern "C" {
     void initEEPROM(void);
     int readEEPROM(unsigned int address, uint32_t *data);
     int writeEEPROM(unsigned int address, uint32_t data);
+    bool readyEEPROM(void);
 
 #ifdef	__cplusplus
 }

@@ -85,7 +85,6 @@ void enableActiveOutputs(void) {
 
 void disableThrottle(void) {
     *OCxCONCLRRegister[THROTTLE] = 0x8000; //clear ON bit
-    servos[0] = 0xffff; //Mark throttle as inactive
 }
 
 void enableThrottle(void) {

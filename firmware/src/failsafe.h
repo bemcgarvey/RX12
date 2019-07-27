@@ -9,6 +9,7 @@
 #define	FAILSAFE_H
 
 #include <stdbool.h>
+#include "output.h"
 
 #ifdef	__cplusplus
 extern "C" {
@@ -20,6 +21,10 @@ extern "C" {
     
     extern FailsafeType failsafeType;
     extern bool failsafeEngaged;
+    extern uint32_t presetOutputPulses[MAX_CHANNEL];
+    
+    bool loadFailsafePresets(void);
+    void saveFailsafePresets(void);
 
 
 #ifdef	__cplusplus
