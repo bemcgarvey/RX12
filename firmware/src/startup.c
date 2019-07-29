@@ -55,7 +55,7 @@ void DetectStartupMode(void) {
         while (!readyEEPROM());
         //setup change notification on RB0 to check for preset failsafe
         CNCONBbits.ON = 1;
-        int temp = PORTB;
+        PORTB;
         IPC11bits.CNBIP = 6;
         IPC11bits.CNBIS = 0;
         CNCONBbits.EDGEDETECT = 1;
@@ -72,9 +72,9 @@ void DetectStartupMode(void) {
 
 
 void __ISR(_CHANGE_NOTICE_B_VECTOR, IPL6SOFT) ChangeBISR(void) {
-        int temp = PORTB;
-        temp = WDTCONbits.ON;
+        int temp = WDTCONbits.ON;
         WDTCONbits.ON = 0;
+        PORTB;
         IFS1bits.CNBIF = 0;
         IEC1bits.CNBIE = 0;
         CNCONBbits.ON = 0;

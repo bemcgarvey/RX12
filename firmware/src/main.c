@@ -14,6 +14,7 @@
 #include "failsafe.h"
 #include "eeprom.h"
 #include "failsafe.h"
+#include "logging.h"
 
 unsigned int lastSat1;
 unsigned int lastSat2;
@@ -124,6 +125,10 @@ int main(void) {
                     savedSystemType == SYSTEM_TYPE_DSMX_22) {
                 systemType = savedSystemType;
             }
+        }
+        checkLoggingActive();
+        if (logging) {
+            startLogging();
         }
     }
     WDTCONbits.WDTCLRKEY = 0x5743;

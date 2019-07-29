@@ -27,6 +27,7 @@
       <itemPath>../src/pins.h</itemPath>
       <itemPath>../src/failsafe.h</itemPath>
       <itemPath>../src/eeprom.h</itemPath>
+      <itemPath>../src/logging.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -51,6 +52,7 @@
       <itemPath>../src/pins.c</itemPath>
       <itemPath>../src/failsafe.c</itemPath>
       <itemPath>../src/eeprom.c</itemPath>
+      <itemPath>../src/logging.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

@@ -24,7 +24,9 @@
 #define ADDRESS_DSM_TYPE        0x04
 #define ADDRESS_FAILSAFE_TYPE   0x08
 #define ADDRESS_FAILSAFE_VALUES 0x0c
-#define ADDRESS_RESERVED        (ADDRESS_FAILSAFE_VALUES + 12 * 4)
+#define ADDRESS_LOGGING_ACTIVE  0x10
+#define ADDRESS_RESERVED        0x14
+//Start of log data, reserve 12 words
 #define ADDRESS_LOG             (ADDRESS_RESERVED + 12 * 4)
 
 #ifdef	__cplusplus
