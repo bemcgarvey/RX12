@@ -63,11 +63,11 @@ void initUARTs(void) {
     U3MODEbits.BRGH = 1;
     U3STAbits.URXEN = 1;
     IPC15bits.U3RXIP = 1;
-    IPC15bits.U3RXIS = 3;
+    IPC15bits.U3RXIS = 1;
     IFS1bits.U3RXIF = 0;
     IEC1bits.U3RXIE = 1;
     IPC15bits.U3EIP = 2;
-    IPC15bits.U3EIS = 3;
+    IPC15bits.U3EIS = 1;
     IFS1bits.U3EIF = 0;
     IEC1bits.U3EIE = 1;
     U3STAbits.OERR = 0;
