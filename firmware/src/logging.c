@@ -3,6 +3,8 @@
 #include "eeprom.h"
 #include "timers.h"
 #include <sys/attribs.h>
+#include "startup.h"
+#include "adc.h"
 
 #define LOGGING_MAGIC_NUMBER    0x12398745
 
@@ -30,12 +32,20 @@ bool loadLogData(LogData *data, unsigned int eeAddress) {
 }
 
 void startLogging(void) {
-    //Enable ADC5
-    
-    //Initialize the loggingData struct
-    //If WDTO set flag otherwise start new
-   
-    //Timer 5
+    initADC();
+    if (startupMode == START_WDTO) {
+        currentFlightLog.statusFlags |= STATUS_WDTO;
+    } else {
+        currentFlightLog.duration = 0;
+        currentFlightLog.sat1Fades = 0xffff;
+        currentFlightLog.sat2Fades = 0xffff;
+        currentFlightLog.sat3Fades = 0xffff;
+        currentFlightLog.statusFlags = 0;
+        currentFlightLog.totalPackets = 0;
+        currentFlightLog.rxHighVoltage = 0;
+        currentFlightLog.rxLowVoltage = 0xffff;
+        currentFlightLog.sequenceNumber = 1; //TODO initialize this appropriately
+    }  
     T5CONbits.T32 = 0;
     T5CONbits.TCKPS = 0b010; //1:4
     TMR5 = 0;
@@ -51,7 +61,7 @@ void __ISR(_TIMER_5_VECTOR, IPL3SOFT) Timer5Isr(void) {
     ++loggingTimer;
     if (loggingTimer >= LOGGING_INTERVAL) {
         loggingTimer = 0;
-        //Save log data to EEPROM
+        saveLogData();
     }
     IFS0bits.T5IF = 0;
 }
