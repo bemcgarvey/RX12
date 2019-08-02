@@ -15,6 +15,7 @@
 #include "eeprom.h"
 #include "failsafe.h"
 #include "logging.h"
+#include "serial.h"
 
 unsigned int lastSat1;
 unsigned int lastSat2;
@@ -40,8 +41,8 @@ int main(void) {
     setPPS();
     if (startupMode == START_SERIAL) {
         LED3On();
+        initSerial();
         while (true);
-        //TODO Implement serial main loop
     }
     FrameMode savedFrameMode = 0;
     int result = readEEPROM(ADDRESS_FRAME_RATE, &savedFrameMode);

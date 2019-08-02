@@ -9,7 +9,7 @@
 #define LOGGING_MAGIC_NUMBER    0x12398745
 
 LogData __attribute__((persistent)) currentFlightLog;
-uint16_t adcCalibration;
+uint32_t adcCalibration;
 bool logging = false;
 
 volatile uint32_t loggingTimer = 0;
@@ -61,7 +61,7 @@ void __ISR(_TIMER_5_VECTOR, IPL3SOFT) Timer5Isr(void) {
     ++loggingTimer;
     if (loggingTimer >= LOGGING_INTERVAL) {
         loggingTimer = 0;
-        saveLogData();
+        saveLogData(&currentFlightLog, ADDRESS_LOG);
     }
     IFS0bits.T5IF = 0;
 }

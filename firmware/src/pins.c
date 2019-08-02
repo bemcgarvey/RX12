@@ -43,9 +43,9 @@ void setPPS(void) {
     CFGCONbits.IOLOCK = 0;
 
     if (startupMode == START_SERIAL) {
+        TRISBbits.TRISB0 = 1;
         U4RXR = 2;  //setup USART4
         RPA1R = 2;
-        //TODO Set U4RX as input
     }
     
     /* PPS Input Remapping */

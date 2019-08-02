@@ -29,6 +29,7 @@
       <itemPath>../src/eeprom.h</itemPath>
       <itemPath>../src/logging.h</itemPath>
       <itemPath>../src/adc.h</itemPath>
+      <itemPath>../src/serial.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -55,6 +56,7 @@
       <itemPath>../src/eeprom.c</itemPath>
       <itemPath>../src/logging.c</itemPath>
       <itemPath>../src/adc.c</itemPath>
+      <itemPath>../src/serial.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

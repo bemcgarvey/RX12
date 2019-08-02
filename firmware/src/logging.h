@@ -18,13 +18,13 @@ extern "C" {
     typedef struct {
         uint32_t sequenceNumber;
         uint32_t totalPackets;
-        uint16_t rxLowVoltage;
-        uint16_t rxHighVoltage;
+        uint32_t rxLowVoltage;
+        uint32_t rxHighVoltage;
         uint32_t duration;
-        uint16_t sat1Fades;
-        uint16_t sat2Fades;
-        uint16_t sat3Fades;
-        uint16_t statusFlags;
+        uint32_t sat1Fades;
+        uint32_t sat2Fades;
+        uint32_t sat3Fades;
+        uint32_t statusFlags;
         uint32_t reserved;
     } LogData;
 
@@ -32,7 +32,7 @@ extern "C" {
         STATUS_NONE = 0, STATUS_WDTO = 0x01, STATUS_CF = 0x02, STATUS_FAIL_SAFE = 0x04
     } StatusFlags;
 
-    extern uint16_t adcCalibration;
+    extern uint32_t adcCalibration;
     extern LogData currentFlightLog;
     extern bool logging;
 

@@ -25,7 +25,8 @@
 #define ADDRESS_FAILSAFE_TYPE   0x08
 #define ADDRESS_FAILSAFE_VALUES 0x0c
 #define ADDRESS_LOGGING_ACTIVE  0x10
-#define ADDRESS_RESERVED        0x14
+#define ADDRESS_ADC_CALIBRATION 0x14
+#define ADDRESS_RESERVED        0x18
 //Start of log data, reserve 12 words
 #define ADDRESS_LOG             (ADDRESS_RESERVED + 12 * 4)
 
