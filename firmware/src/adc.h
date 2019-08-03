@@ -13,6 +13,8 @@ extern "C" {
 #endif
 
     void initADC(void);
+    void initADCSingleSample(void);
+    unsigned int readADC(void);
 
 
 #ifdef	__cplusplus

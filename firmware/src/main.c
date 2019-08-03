@@ -42,6 +42,8 @@ int main(void) {
     if (startupMode == START_SERIAL) {
         LED3On();
         initSerial();
+        __builtin_set_isr_state(0);
+        __builtin_enable_interrupts();
         while (true);
     }
     FrameMode savedFrameMode = 0;

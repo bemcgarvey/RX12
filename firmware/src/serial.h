@@ -17,7 +17,7 @@ extern "C" {
     enum {
         ENABLE_LOGGING = 0x20, DISABLE_LOGGING = 0x21, GET_SETTINGS = 0x22,
         SET_FRAME_22 = 0x23, SET_FRAME_11 = 0x24, GET_LOG = 0x25, CLEAR_LOG = 0x26, 
-        SET_VOLTAGE_CALIBRATION = 0x27
+        SET_VOLTAGE_CALIBRATION = 0x27, GET_VOLTAGE = 0x28
     };
 
 #ifdef	__cplusplus

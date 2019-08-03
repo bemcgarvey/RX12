@@ -6,6 +6,7 @@
 #include "eeprom.h"
 #include "startup.h"
 #include "failsafe.h"
+#include "adc.h"
 
 static volatile enum {WAIT_COMMAND = 0, RX_DATA = 1} state;
 static volatile int command;
@@ -15,6 +16,7 @@ static volatile uint8_t buffer[64]; //TODO adjust this to the best size
 
 static void transmitSettings(void);
 static void transmitLog(void);
+static void transmitVoltage(void);
 static void processCommand(void);
 static void postProcessCommand(void);
 
@@ -29,6 +31,7 @@ void initSerial(void) {
     IEC2bits.U4RXIE = 1;
     U4STAbits.OERR = 0;
     state = WAIT_COMMAND;
+    initADCSingleSample();
 }
     
 void processCommand(void) {
@@ -58,6 +61,9 @@ void processCommand(void) {
             break;
         case CLEAR_LOG:
             //TODO mark log as clear?
+            break;
+        case GET_VOLTAGE:
+            transmitVoltage();
             break;
         default:
             break;            
@@ -121,4 +127,9 @@ void transmitSettings(void) {
 
 void transmitLog(void) {
     
+}
+
+void transmitVoltage(void) {
+    *(uint32_t *)&buffer[0] = readADC();
+    transmitData(4);
 }
