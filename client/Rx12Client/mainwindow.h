@@ -22,11 +22,19 @@ private:
     QLabel *portLabel;
     QLabel *connectedLabel;
     QSerialPort *port;
+    enum {IDLE, WAIT_SETTINGS, WAIT_LOG} state;
+    int bytesNeeded;
+    char buffer[64];
+    int bufferPos;
+    void setSettingsButtons(unsigned int *values);
+    double calculateVoltage(unsigned int calibration, unsigned int value);
 
 private slots:
     void updatePortMenu(void);
     void comPortSelected(void);
     void on_actionExit_triggered();
+    void on_readButton_clicked();
+    void on_readyRead(void);
 };
 
 #endif // MAINWINDOW_H

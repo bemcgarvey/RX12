@@ -3,11 +3,12 @@
 
 #include <QSerialPortInfo>
 #include <QDebug>
+#include "commands.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    port(nullptr)
+    port(nullptr), state(IDLE)
 {
     ui->setupUi(this);
     portLabel = new QLabel();
@@ -55,11 +56,16 @@ void MainWindow::comPortSelected()
         port->setParity(QSerialPort::NoParity);
         port->setStopBits(QSerialPort::OneStop);
         portLabel->setText(action->text());
+        connect(port, &QSerialPort::readyRead, this, &MainWindow::on_readyRead);
+        ui->readButton->setEnabled(true);
+        ui->saveButton->setEnabled(true);
     } else {
         delete port;
         port = nullptr;
         portLabel->setText("----");
         connectedLabel->setText("Not Connected");
+        ui->readButton->setEnabled(false);
+        ui->saveButton->setEnabled(false);
     }
 }
 
@@ -67,4 +73,79 @@ void MainWindow::comPortSelected()
 void MainWindow::on_actionExit_triggered()
 {
     close();
+}
+
+void MainWindow::on_readButton_clicked()
+{
+    bufferPos = 0;
+    bytesNeeded = 24;
+    state = WAIT_SETTINGS;
+    buffer[0] = GET_SETTINGS;
+    buffer[1] = GET_VOLTAGE;
+    port->write(buffer, 2);
+}
+
+void MainWindow::on_readyRead(void) {
+    int bytesReceived;
+    switch (state) {
+    case WAIT_SETTINGS:
+        bytesReceived = static_cast<int>(port->read(&buffer[bufferPos], bytesNeeded));
+        bytesNeeded -= bytesReceived;
+        bufferPos += bytesReceived;
+        if (bytesNeeded == 0) {
+            setSettingsButtons(reinterpret_cast<unsigned int *>(buffer));
+        }
+        break;
+    case WAIT_LOG:
+        break;
+    case IDLE:
+        break;
+    }
+    //Read any leftover data
+    while (port->bytesAvailable() > 0) {
+        port->read(buffer, 64);
+    }
+}
+
+void MainWindow::setSettingsButtons(unsigned int *values) {
+    ui->frame22RadioButton->setChecked(false);
+    ui->frame11RadioButton->setChecked(false);
+    if (values[0] == FRAME_22MS) {
+        ui->frame22RadioButton->setChecked(true);
+    } else if (values[0] == FRAME_11MS) {
+        ui->frame11RadioButton->setChecked(true);
+    }
+    ui->dsm2_1024radioButton->setChecked(false);
+    ui->dsm2_2048RadioButton->setChecked(false);
+    ui->dsmxRadioButton->setChecked(false);
+    if (values[1] == SYSTEM_TYPE_DSM2_1024) {
+        ui->dsm2_1024radioButton->setChecked(true);
+    } else if (values[1] == SYSTEM_TYPE_DSM2_2048) {
+        ui->dsm2_2048RadioButton->setChecked(true);
+    } else {
+        ui->dsmxRadioButton->setChecked(true);
+    }
+    ui->presetFailsafeRadioButton->setChecked(false);
+    ui->normalFailsafeRadioButton->setChecked(false);
+    if (values[2] == PRESET_FAILSAFE) {
+        ui->presetFailsafeRadioButton->setChecked(true);
+    } else {
+        ui->normalFailsafeRadioButton->setChecked(true);
+    }
+    ui->loggingEnabledRadioButton->setChecked(false);
+    ui->loggingDisabledRadioButton->setChecked(false);
+    if (values[3] == LOGGING_MAGIC_NUMBER) {
+        ui->loggingEnabledRadioButton->setChecked(true);
+    } else {
+        ui->loggingDisabledRadioButton->setChecked(true);
+    }
+    double voltage = calculateVoltage(values[4], values[5]);
+    ui->measuredVoltagelabel->setText(QString("%1").arg(voltage, 0, 'g', 2));
+}
+
+double MainWindow::calculateVoltage(unsigned int calibration, unsigned int value) {
+    double result;
+    result = value * 3.3 / 4096;
+    result *= (43.0/10.0);
+    return result;
 }

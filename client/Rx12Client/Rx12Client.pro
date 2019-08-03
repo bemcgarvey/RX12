@@ -29,6 +29,7 @@ SOURCES += \
         mainwindow.cpp
 
 HEADERS += \
+        commands.h \
         mainwindow.h
 
 FORMS += \

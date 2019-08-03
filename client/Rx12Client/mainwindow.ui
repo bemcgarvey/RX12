@@ -24,264 +24,247 @@
        <attribute name="title">
         <string>Settings</string>
        </attribute>
-       <widget class="QGroupBox" name="frameRateGroupBox">
-        <property name="geometry">
-         <rect>
-          <x>190</x>
-          <y>50</y>
-          <width>120</width>
-          <height>80</height>
-         </rect>
-        </property>
-        <property name="title">
-         <string>Frame Rate</string>
-        </property>
-        <widget class="QRadioButton" name="frame22RadioButton">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>20</y>
-           <width>95</width>
-           <height>20</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>22 ms</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-        <widget class="QRadioButton" name="frame11RadioButton">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>50</y>
-           <width>95</width>
-           <height>20</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>11 ms</string>
-         </property>
-        </widget>
-       </widget>
-       <widget class="QGroupBox" name="modulationGroupBox">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>50</y>
-          <width>120</width>
-          <height>80</height>
-         </rect>
-        </property>
-        <property name="title">
-         <string>Modulation</string>
-        </property>
-        <widget class="QRadioButton" name="dsmxRadioButton">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>20</y>
-           <width>95</width>
-           <height>20</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>DSMX</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-        <widget class="QRadioButton" name="dsm2RadioButton">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>50</y>
-           <width>95</width>
-           <height>20</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>DSM2</string>
-         </property>
-        </widget>
-       </widget>
-       <widget class="QGroupBox" name="failsageGroupBox">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>370</x>
-          <y>50</y>
-          <width>120</width>
-          <height>80</height>
-         </rect>
-        </property>
-        <property name="title">
-         <string>Failsafe</string>
-        </property>
-        <widget class="QRadioButton" name="normalFailsafeRadioButton">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>20</y>
-           <width>95</width>
-           <height>20</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Normal</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-        <widget class="QRadioButton" name="presetFailsafeRadioButton">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>50</y>
-           <width>95</width>
-           <height>20</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Preset</string>
-         </property>
-        </widget>
-       </widget>
-       <widget class="QGroupBox" name="loggingGroupBox">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>170</y>
-          <width>120</width>
-          <height>80</height>
-         </rect>
-        </property>
-        <property name="title">
-         <string>Logging</string>
-        </property>
-        <widget class="QRadioButton" name="loggingEnabledRadioButton">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>20</y>
-           <width>95</width>
-           <height>20</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Enabled</string>
-         </property>
-        </widget>
-        <widget class="QRadioButton" name="loggingDisabledRadioButton">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>50</y>
-           <width>95</width>
-           <height>20</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Disabled</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </widget>
-       <widget class="QGroupBox" name="voltageGroupBox">
-        <property name="geometry">
-         <rect>
-          <x>180</x>
-          <y>160</y>
-          <width>211</width>
-          <height>108</height>
-         </rect>
-        </property>
-        <property name="title">
-         <string>Voltage Calibration</string>
-        </property>
-        <layout class="QGridLayout" name="gridLayout">
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_10">
-           <property name="text">
-            <string>Measured Voltage</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="label_11">
-           <property name="text">
-            <string>Correct Voltage</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QDoubleSpinBox" name="correctVoltageSpinBox">
-           <property name="suffix">
-            <string>V</string>
-           </property>
-           <property name="minimum">
-            <double>4.000000000000000</double>
-           </property>
-           <property name="maximum">
-            <double>12.000000000000000</double>
-           </property>
-           <property name="singleStep">
-            <double>0.100000000000000</double>
-           </property>
-           <property name="stepType">
-            <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-           </property>
-           <property name="value">
-            <double>5.000000000000000</double>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLabel" name="measuredVoltagelabel">
-           <property name="text">
-            <string>0.00V</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="">
-        <property name="geometry">
-         <rect>
-          <x>150</x>
-          <y>320</y>
-          <width>195</width>
-          <height>30</height>
-         </rect>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <widget class="QPushButton" name="readButton">
-           <property name="text">
-            <string>Read</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="saveButton">
-           <property name="text">
-            <string>Save</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout_8">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QGroupBox" name="modulationGroupBox">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="title">
+             <string>Modulation</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <item>
+              <widget class="QRadioButton" name="dsmxRadioButton">
+               <property name="text">
+                <string>DSMX</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="dsm2_2048RadioButton">
+               <property name="text">
+                <string>DSM2/2048</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="dsm2_1024radioButton">
+               <property name="text">
+                <string>DSM2/1024</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="frameRateGroupBox">
+            <property name="title">
+             <string>Frame Rate</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <item>
+              <widget class="QRadioButton" name="frame22RadioButton">
+               <property name="text">
+                <string>22 ms</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="frame11RadioButton">
+               <property name="text">
+                <string>11 ms</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="failsageGroupBox">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="title">
+             <string>Failsafe</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_5">
+             <item>
+              <widget class="QRadioButton" name="normalFailsafeRadioButton">
+               <property name="text">
+                <string>Normal</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="presetFailsafeRadioButton">
+               <property name="text">
+                <string>Preset</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QGroupBox" name="loggingGroupBox">
+            <property name="title">
+             <string>Logging</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_6">
+             <item>
+              <widget class="QRadioButton" name="loggingEnabledRadioButton">
+               <property name="text">
+                <string>Enabled</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="loggingDisabledRadioButton">
+               <property name="text">
+                <string>Disabled</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="voltageGroupBox">
+            <property name="title">
+             <string>Voltage Calibration</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_7">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_2">
+               <item>
+                <widget class="QLabel" name="label_10">
+                 <property name="text">
+                  <string>Measured Voltage</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="measuredVoltagelabel">
+                 <property name="text">
+                  <string>0.00V</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_3">
+               <item>
+                <widget class="QLabel" name="label_11">
+                 <property name="text">
+                  <string>Correct Voltage</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QDoubleSpinBox" name="correctVoltageSpinBox">
+                 <property name="suffix">
+                  <string>V</string>
+                 </property>
+                 <property name="minimum">
+                  <double>4.000000000000000</double>
+                 </property>
+                 <property name="maximum">
+                  <double>12.000000000000000</double>
+                 </property>
+                 <property name="singleStep">
+                  <double>0.100000000000000</double>
+                 </property>
+                 <property name="stepType">
+                  <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
+                 </property>
+                 <property name="value">
+                  <double>5.000000000000000</double>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QPushButton" name="readButton">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>Read</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="saveButton">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>Save</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="dataTab">
        <attribute name="title">
