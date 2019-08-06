@@ -31,6 +31,7 @@ void initSerial(void) {
     IEC2bits.U4RXIE = 1;
     U4STAbits.OERR = 0;
     state = WAIT_COMMAND;
+    U4MODEbits.ON = 1;
     initADCSingleSample();
 }
     
@@ -87,7 +88,7 @@ void postProcessCommand(void) {
 void __ISR(_UART4_RX_VECTOR, IPL1SOFT) uart4Isr(void) {
     uint8_t rxByte;
     while (U4STAbits.URXDA == 1) {
-        rxByte = U1RXREG;
+        rxByte = U4RXREG;
         if (state == WAIT_COMMAND) {
             command = rxByte;
             processCommand();
@@ -123,6 +124,12 @@ void transmitSettings(void) {
     readEEPROM(ADDRESS_LOGGING_ACTIVE, (uint32_t *)&buffer[12]);
     readEEPROM(ADDRESS_ADC_CALIBRATION, (uint32_t *)&buffer[16]);
     transmitData(20);
+    uint32_t sum = 0;
+    for (int i = 0; i < 16; ++i) {
+        sum += readADC();
+    }
+    *(uint32_t *)&buffer[0] = sum / 16;
+    transmitData(4);
 }
 
 void transmitLog(void) {
@@ -130,6 +137,10 @@ void transmitLog(void) {
 }
 
 void transmitVoltage(void) {
-    *(uint32_t *)&buffer[0] = readADC();
+    uint32_t sum = 0;
+    for (int i = 0; i < 16; ++i) {
+        sum += readADC();
+    }
+    *(uint32_t *)&buffer[0] = sum / 16;
     transmitData(4);
 }

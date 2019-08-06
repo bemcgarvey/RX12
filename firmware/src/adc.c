@@ -77,7 +77,7 @@ void initADCSingleSample(void) {
     ADCCON3bits.VREFSEL = 0; // Select AVDD and AVSS as reference source
     /* Select ADC sample time and conversion clock */
     ADC5TIMEbits.ADCDIV = 1; // ADC5 clock frequency is half of control clock = TAD0
-    ADC5TIMEbits.SAMC = 5; // ADC5 sampling time = 5 * TAD5
+    ADC5TIMEbits.SAMC = 18; // ADC5 sampling time = 20 * TAD5
     ADC5TIMEbits.SELRES = 3; // ADC5 resolution is 12 bits
     /* Select analog input for ADC modules, no presync trigger, not sync sampling */
     ADCTRGMODEbits.SH5ALT = 0b11; //AN25

@@ -56,6 +56,7 @@ void MainWindow::comPortSelected()
         port->setParity(QSerialPort::NoParity);
         port->setStopBits(QSerialPort::OneStop);
         portLabel->setText(action->text());
+        connectedLabel->setText("Connected");
         connect(port, &QSerialPort::readyRead, this, &MainWindow::on_readyRead);
         ui->readButton->setEnabled(true);
         ui->saveButton->setEnabled(true);
@@ -81,8 +82,7 @@ void MainWindow::on_readButton_clicked()
     bytesNeeded = 24;
     state = WAIT_SETTINGS;
     buffer[0] = GET_SETTINGS;
-    buffer[1] = GET_VOLTAGE;
-    port->write(buffer, 2);
+    port->write(buffer, 1);
 }
 
 void MainWindow::on_readyRead(void) {
@@ -93,7 +93,13 @@ void MainWindow::on_readyRead(void) {
         bytesNeeded -= bytesReceived;
         bufferPos += bytesReceived;
         if (bytesNeeded == 0) {
-            setSettingsButtons(reinterpret_cast<unsigned int *>(buffer));
+            if (buffer[0] == FRAME_11MS || buffer[0] == FRAME_22MS) {
+                setSettingsButtons(reinterpret_cast<unsigned int *>(buffer));
+                ui->statusBar->showMessage("Read from device successful", 2000);
+            } else {
+                ui->statusBar->showMessage("Error reading from device", 2000);
+            }
+            state = IDLE;
         }
         break;
     case WAIT_LOG:
@@ -140,7 +146,7 @@ void MainWindow::setSettingsButtons(unsigned int *values) {
         ui->loggingDisabledRadioButton->setChecked(true);
     }
     double voltage = calculateVoltage(values[4], values[5]);
-    ui->measuredVoltagelabel->setText(QString("%1").arg(voltage, 0, 'g', 2));
+    ui->measuredVoltagelabel->setText(QString("%1").arg(voltage, 0, 'f', 2));
 }
 
 double MainWindow::calculateVoltage(unsigned int calibration, unsigned int value) {
