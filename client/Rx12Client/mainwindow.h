@@ -35,6 +35,7 @@ private slots:
     void on_actionExit_triggered();
     void on_readButton_clicked();
     void on_readyRead(void);
+    void on_saveButton_clicked();
 };
 
 #endif // MAINWINDOW_H

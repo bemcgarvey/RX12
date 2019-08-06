@@ -39,18 +39,23 @@ void processCommand(void) {
     switch (command) {
         case ENABLE_LOGGING:
             enableLogging(true);
+            state = WAIT_COMMAND;
             break;
         case DISABLE_LOGGING:
             enableLogging(false);
+            state = WAIT_COMMAND;
             break;
         case SET_FRAME_11:
             writeEEPROM(ADDRESS_FRAME_RATE, FRAME_11MS);
+            state = WAIT_COMMAND;
             break;
         case SET_FRAME_22:
             writeEEPROM(ADDRESS_FRAME_RATE, FRAME_22MS);
+            state = WAIT_COMMAND;
             break;
         case GET_SETTINGS:
             transmitSettings();
+            state = WAIT_COMMAND;
             break;
         case SET_VOLTAGE_CALIBRATION:
             pData = buffer;
@@ -59,14 +64,17 @@ void processCommand(void) {
             break;
         case GET_LOG:
             transmitLog();
+            state = WAIT_COMMAND;
             break;
         case CLEAR_LOG:
             //TODO mark log as clear?
             break;
         case GET_VOLTAGE:
             transmitVoltage();
+            state = WAIT_COMMAND;
             break;
         default:
+            state = WAIT_COMMAND;
             break;            
     }
 }
@@ -97,7 +105,6 @@ void __ISR(_UART4_RX_VECTOR, IPL1SOFT) uart4Isr(void) {
             --rxCount;
             if (rxCount == 0) {
                 postProcessCommand();
-                state = WAIT_COMMAND;
             }
         } else {
             state = WAIT_COMMAND;

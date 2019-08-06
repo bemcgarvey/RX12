@@ -155,3 +155,19 @@ double MainWindow::calculateVoltage(unsigned int calibration, unsigned int value
     result *= (43.0/10.0);
     return result;
 }
+
+void MainWindow::on_saveButton_clicked()
+{
+    if (ui->frame11RadioButton->isChecked()) {
+        buffer[0] = SET_FRAME_11;
+    } else {
+        buffer[0] = SET_FRAME_22;
+    }
+    if (ui->loggingEnabledRadioButton->isChecked()) {
+        buffer[1] = ENABLE_LOGGING;
+    } else {
+        buffer[1] = DISABLE_LOGGING;
+    }
+    port->write(buffer, 2);
+    ui->statusBar->showMessage("Settings saved", 2000);
+}
