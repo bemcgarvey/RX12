@@ -32,7 +32,6 @@ extern "C" {
         STATUS_NONE = 0, STATUS_WDTO = 0x01, STATUS_CF = 0x02, STATUS_FAIL_SAFE = 0x04
     } StatusFlags;
 
-    extern uint32_t adcCalibration;
     extern LogData currentFlightLog;
     extern bool logging;
 

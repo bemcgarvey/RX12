@@ -17,6 +17,7 @@ static volatile uint8_t buffer[64]; //TODO adjust this to the best size
 static void transmitSettings(void);
 static void transmitLog(void);
 static void transmitVoltage(void);
+static void transmitCalibration(void);
 static void processCommand(void);
 static void postProcessCommand(void);
 
@@ -59,7 +60,7 @@ void processCommand(void) {
             break;
         case SET_VOLTAGE_CALIBRATION:
             pData = buffer;
-            rxCount = sizeof(uint32_t);
+            rxCount = 2 * sizeof(uint32_t);
             state = RX_DATA;
             break;
         case GET_LOG:
@@ -73,6 +74,8 @@ void processCommand(void) {
             transmitVoltage();
             state = WAIT_COMMAND;
             break;
+        case GET_VOLTAGE_CALIBRATION:
+            transmitCalibration();
         default:
             state = WAIT_COMMAND;
             break;            
@@ -82,8 +85,8 @@ void processCommand(void) {
 void postProcessCommand(void) {
     switch (command) {
         case SET_VOLTAGE_CALIBRATION:
-            adcCalibration = *(uint32_t *)buffer;
-            writeEEPROM(ADDRESS_ADC_CALIBRATION, adcCalibration);
+            writeEEPROM(ADDRESS_ADC_CALIBRATION1, *(uint32_t *)buffer);
+            writeEEPROM(ADDRESS_ADC_CALIBRATION2, *(uint32_t *)&buffer[4]);
             state = WAIT_COMMAND;
             break;
         default:
@@ -102,6 +105,7 @@ void __ISR(_UART4_RX_VECTOR, IPL1SOFT) uart4Isr(void) {
             processCommand();
         } else if (state == RX_DATA) {
             *pData = rxByte;
+            ++pData;
             --rxCount;
             if (rxCount == 0) {
                 postProcessCommand();
@@ -129,16 +133,16 @@ void transmitSettings(void) {
     readEEPROM(ADDRESS_DSM_TYPE, (uint32_t *)&buffer[4]);
     readEEPROM(ADDRESS_FAILSAFE_TYPE, (uint32_t *)&buffer[8]);
     readEEPROM(ADDRESS_LOGGING_ACTIVE, (uint32_t *)&buffer[12]);
-    readEEPROM(ADDRESS_ADC_CALIBRATION, (uint32_t *)&buffer[16]);
-    transmitData(20);
-    uint32_t sum = 0;
-    for (int i = 0; i < 16; ++i) {
-        sum += readADC();
-    }
-    *(uint32_t *)&buffer[0] = sum / 16;
-    transmitData(4);
+    transmitData(16);
+    transmitCalibration();
+    transmitVoltage();
 }
 
+void transmitCalibration(void) {
+    readEEPROM(ADDRESS_ADC_CALIBRATION1, (uint32_t *)&buffer[0]);
+    readEEPROM(ADDRESS_ADC_CALIBRATION2, (uint32_t *)&buffer[4]);
+    transmitData(8);
+}
 void transmitLog(void) {
     
 }

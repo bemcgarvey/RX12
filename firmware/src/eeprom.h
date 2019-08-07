@@ -19,14 +19,15 @@
 #define EEPROM_NOT_READY    4
 
 //Addresses
-#define EEPROM_SIZE             0x1000
-#define ADDRESS_FRAME_RATE      0x00
-#define ADDRESS_DSM_TYPE        0x04
-#define ADDRESS_FAILSAFE_TYPE   0x08
-#define ADDRESS_FAILSAFE_VALUES 0x0c
-#define ADDRESS_LOGGING_ACTIVE  0x10
-#define ADDRESS_ADC_CALIBRATION 0x14
-#define ADDRESS_RESERVED        0x18
+#define EEPROM_SIZE                 0x1000
+#define ADDRESS_FRAME_RATE          0x00
+#define ADDRESS_DSM_TYPE            0x04
+#define ADDRESS_FAILSAFE_TYPE       0x08
+#define ADDRESS_FAILSAFE_VALUES     0x0c
+#define ADDRESS_LOGGING_ACTIVE      0x10
+#define ADDRESS_ADC_CALIBRATION1    0x14
+#define ADDRESS_ADC_CALIBRATION2    0x18
+#define ADDRESS_RESERVED            0x1c
 //Start of log data, reserve 12 words
 #define ADDRESS_LOG             (ADDRESS_RESERVED + 12 * 4)
 

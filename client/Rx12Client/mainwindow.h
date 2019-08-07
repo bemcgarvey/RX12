@@ -22,12 +22,12 @@ private:
     QLabel *portLabel;
     QLabel *connectedLabel;
     QSerialPort *port;
-    enum {IDLE, WAIT_SETTINGS, WAIT_LOG} state;
+    enum {IDLE, WAIT_SETTINGS, WAIT_LOG, CALIBRATING} state;
     int bytesNeeded;
     char buffer[64];
     int bufferPos;
-    void setSettingsButtons(unsigned int *values);
-    double calculateVoltage(unsigned int calibration, unsigned int value);
+    void displaySettings(unsigned int *values);
+    double calculateVoltage(float calibration1, float calibration2, unsigned int value);
 
 private slots:
     void updatePortMenu(void);
@@ -36,6 +36,7 @@ private slots:
     void on_readButton_clicked();
     void on_readyRead(void);
     void on_saveButton_clicked();
+    void on_calibrateButton_clicked();
 };
 
 #endif // MAINWINDOW_H

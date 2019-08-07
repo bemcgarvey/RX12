@@ -25,14 +25,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        calibrationdialog.cpp \
         main.cpp \
         mainwindow.cpp
 
 HEADERS += \
+        calibrationdialog.h \
         commands.h \
         mainwindow.h
 
 FORMS += \
+        calibrationdialog.ui \
         mainwindow.ui
 
 # Default rules for deployment.

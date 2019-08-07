@@ -1,3 +1,4 @@
+#include "calibrationdialog.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -60,6 +61,7 @@ void MainWindow::comPortSelected()
         connect(port, &QSerialPort::readyRead, this, &MainWindow::on_readyRead);
         ui->readButton->setEnabled(true);
         ui->saveButton->setEnabled(true);
+        ui->calibrateButton->setEnabled(true);
     } else {
         delete port;
         port = nullptr;
@@ -67,6 +69,7 @@ void MainWindow::comPortSelected()
         connectedLabel->setText("Not Connected");
         ui->readButton->setEnabled(false);
         ui->saveButton->setEnabled(false);
+        ui->calibrateButton->setEnabled(false);
     }
 }
 
@@ -79,7 +82,7 @@ void MainWindow::on_actionExit_triggered()
 void MainWindow::on_readButton_clicked()
 {
     bufferPos = 0;
-    bytesNeeded = 24;
+    bytesNeeded = 28;
     state = WAIT_SETTINGS;
     buffer[0] = GET_SETTINGS;
     port->write(buffer, 1);
@@ -94,7 +97,7 @@ void MainWindow::on_readyRead(void) {
         bufferPos += bytesReceived;
         if (bytesNeeded == 0) {
             if (buffer[0] == FRAME_11MS || buffer[0] == FRAME_22MS) {
-                setSettingsButtons(reinterpret_cast<unsigned int *>(buffer));
+                displaySettings(reinterpret_cast<unsigned int *>(buffer));
                 ui->statusBar->showMessage("Read from device successful", 2000);
             } else {
                 ui->statusBar->showMessage("Error reading from device", 2000);
@@ -106,6 +109,8 @@ void MainWindow::on_readyRead(void) {
         break;
     case IDLE:
         break;
+    case CALIBRATING:
+        return;
     }
     //Read any leftover data
     while (port->bytesAvailable() > 0) {
@@ -113,7 +118,7 @@ void MainWindow::on_readyRead(void) {
     }
 }
 
-void MainWindow::setSettingsButtons(unsigned int *values) {
+void MainWindow::displaySettings(unsigned int *values) {
     ui->frame22RadioButton->setChecked(false);
     ui->frame11RadioButton->setChecked(false);
     if (values[0] == FRAME_22MS) {
@@ -145,15 +150,17 @@ void MainWindow::setSettingsButtons(unsigned int *values) {
     } else {
         ui->loggingDisabledRadioButton->setChecked(true);
     }
-    double voltage = calculateVoltage(values[4], values[5]);
+    float c1 = *(reinterpret_cast<float *>((&values[4])));
+    float c2 = *(reinterpret_cast<float *>((&values[5])));
+    double voltage = calculateVoltage(c1, c2, values[6]);
     ui->measuredVoltagelabel->setText(QString("%1").arg(voltage, 0, 'f', 2));
 }
 
-double MainWindow::calculateVoltage(unsigned int calibration, unsigned int value) {
-    double result;
-    result = value * 3.3 / 4096;
-    result *= (43.0/10.0);
-    return result;
+double MainWindow::calculateVoltage(float calibration1, float calibration2, unsigned int value) {
+    float result;
+    result = value * calibration1;
+    result += calibration2;
+    return static_cast<double>(result);
 }
 
 void MainWindow::on_saveButton_clicked()
@@ -170,4 +177,21 @@ void MainWindow::on_saveButton_clicked()
     }
     port->write(buffer, 2);
     ui->statusBar->showMessage("Settings saved", 2000);
+}
+
+void MainWindow::on_calibrateButton_clicked()
+{
+    state = CALIBRATING;
+    CalibrationDialog *dlg = new CalibrationDialog(port, this);
+    if (dlg->exec() == QDialog::Accepted) {
+        buffer[0] = SET_VOLTAGE_CALIBRATION;
+        port->write(buffer, 1);
+        unsigned int c1 = dlg->getCalibration1();
+        unsigned int c2 = dlg->getCalibration2();
+        *reinterpret_cast<unsigned int *>(&buffer[0]) = c1;
+        *reinterpret_cast<unsigned int *>(&buffer[4]) = c2;
+        port->write(buffer, 8);
+    }
+    delete dlg;
+    state = IDLE;
 }

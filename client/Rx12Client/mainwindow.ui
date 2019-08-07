@@ -159,7 +159,7 @@
                <item>
                 <widget class="QLabel" name="label_10">
                  <property name="text">
-                  <string>Measured Voltage</string>
+                  <string>Input Voltage</string>
                  </property>
                 </widget>
                </item>
@@ -175,31 +175,12 @@
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_3">
                <item>
-                <widget class="QLabel" name="label_11">
+                <widget class="QPushButton" name="calibrateButton">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
                  <property name="text">
-                  <string>Correct Voltage</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QDoubleSpinBox" name="correctVoltageSpinBox">
-                 <property name="suffix">
-                  <string>V</string>
-                 </property>
-                 <property name="minimum">
-                  <double>4.000000000000000</double>
-                 </property>
-                 <property name="maximum">
-                  <double>12.000000000000000</double>
-                 </property>
-                 <property name="singleStep">
-                  <double>0.100000000000000</double>
-                 </property>
-                 <property name="stepType">
-                  <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-                 </property>
-                 <property name="value">
-                  <double>5.000000000000000</double>
+                  <string>Calibrate</string>
                  </property>
                 </widget>
                </item>

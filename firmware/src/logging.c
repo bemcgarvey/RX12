@@ -9,7 +9,6 @@
 #define LOGGING_MAGIC_NUMBER    0x12398745
 
 LogData __attribute__((persistent)) currentFlightLog;
-uint32_t adcCalibration;
 bool logging = false;
 
 volatile uint32_t loggingTimer = 0;
