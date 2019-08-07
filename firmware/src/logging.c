@@ -49,14 +49,14 @@ void startLogging(void) {
     T5CONbits.TCKPS = 0b010; //1:4
     TMR5 = 0;
     PR5 = MS_COUNT / 4;
-    IPC6bits.T5IP = 3;
+    IPC6bits.T5IP = 5;
     IPC6bits.T5IS = 0;
     IFS0bits.T5IF = 0;
     IEC0bits.T5IE = 1;
     T5CONbits.ON = 1;
 }
 
-void __ISR(_TIMER_5_VECTOR, IPL3SOFT) Timer5Isr(void) {
+void __ISR(_TIMER_5_VECTOR, IPL5SOFT) Timer5Isr(void) {
     ++loggingTimer;
     if (loggingTimer >= LOGGING_INTERVAL) {
         loggingTimer = 0;

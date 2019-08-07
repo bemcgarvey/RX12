@@ -43,15 +43,14 @@ void startOCTimer(unsigned int period) {
     } else {
         PR2 = MS_COUNT * 22;
     }
-    //PRISSbits.PRI4SS = 1;
-    IPC2bits.T2IP = 4;
+    IPC2bits.T2IP = 6;
     IPC2bits.T2IS = 0;
     IFS0bits.T2IF = 0;
     IEC0bits.T2IE = 1;
     T2CONbits.ON = 1;
 }
 
-void __ISR(_TIMER_2_VECTOR, IPL4SOFT) Timer2Isr(void) {
+void __ISR(_TIMER_2_VECTOR, IPL6SOFT) Timer2Isr(void) {
     for (int i = 0; i < MAX_CHANNEL; ++i) {
         *pulseRegister[i] = outputPulses[i]; 
     }

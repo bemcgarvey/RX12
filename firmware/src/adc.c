@@ -27,8 +27,8 @@ void initADC(void) {
     ADCTRGMODEbits.SH5ALT = 0b11; //AN25
     /* Configure interrupt */
     ADCGIRQEN1bits.AGIEN5 = 1; //Enable AN5 interrupt
-    IPC27bits.AD1D5IP = 3; //TODO decide on the appropriate value here
-    IPC27bits.AD1D5IS = 0;
+    IPC27bits.AD1D5IP = 5;
+    IPC27bits.AD1D5IS = 3;
     IFS3bits.AD1D5IF = 0;
     IEC3bits.AD1D5IE = 1; //TODO check these flags to see if they are correct
     /* Set up the trigger sources */
@@ -47,7 +47,7 @@ void initADC(void) {
     ADCCON3bits.DIGEN5 = 1; // Enable ADC5
 }
 
-void __ISR(_ADC_DATA5_VECTOR, IPL3SOFT) ADC5Isr(void) {
+void __ISR(_ADC_DATA5_VECTOR, IPL5SOFT) ADC5Isr(void) {
     unsigned int result;
     result = ADCDATA5;
     if (result > currentFlightLog.rxHighVoltage) {

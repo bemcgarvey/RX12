@@ -34,11 +34,11 @@ void initUARTs(void) {
     U1BRG = 129; //115200 baud
     U1MODEbits.BRGH = 1;
     U1STAbits.URXEN = 1;
-    IPC9bits.U1RXIP = 1;
+    IPC9bits.U1RXIP = 3;
     IPC9bits.U1RXIS = 3;
     IFS1bits.U1RXIF = 0;
     IEC1bits.U1RXIE = 1;
-    IPC9bits.U1EIP = 2;
+    IPC9bits.U1EIP = 4;
     IPC9bits.U1EIS = 3;
     IFS1bits.U1EIF = 0;
     IEC1bits.U1EIE = 1;
@@ -48,11 +48,11 @@ void initUARTs(void) {
     U6BRG = 129; //115200 baud
     U6MODEbits.BRGH = 1;
     U6STAbits.URXEN = 1;
-    IPC41bits.U6RXIP = 1;
+    IPC41bits.U6RXIP = 3;
     IPC41bits.U6RXIS = 2;
     IFS5bits.U6RXIF = 0;
     IEC5bits.U6RXIE = 1;
-    IPC41bits.U6EIP = 2;
+    IPC41bits.U6EIP = 4;
     IPC41bits.U6EIS = 2;
     IFS5bits.U6EIF = 0;
     IEC5bits.U6EIE = 1;
@@ -62,23 +62,23 @@ void initUARTs(void) {
     U3BRG = 129; //115200 baud
     U3MODEbits.BRGH = 1;
     U3STAbits.URXEN = 1;
-    IPC15bits.U3RXIP = 1;
+    IPC15bits.U3RXIP = 3;
     IPC15bits.U3RXIS = 1;
     IFS1bits.U3RXIF = 0;
     IEC1bits.U3RXIE = 1;
-    IPC15bits.U3EIP = 2;
+    IPC15bits.U3EIP = 4;
     IPC15bits.U3EIS = 1;
     IFS1bits.U3EIF = 0;
     IEC1bits.U3EIE = 1;
     U3STAbits.OERR = 0;
 
-    PRISSbits.PRI1SS = 1;
+    PRISSbits.PRI3SS = 1;
     U1MODEbits.ON = 1;
     U6MODEbits.ON = 1;
     U3MODEbits.ON = 1;
 }
 
-void __ISR(_UART1_RX_VECTOR, IPL1SRS) uart1Isr(void) {
+void __ISR(_UART1_RX_VECTOR, IPL3SRS) uart1Isr(void) {
     uint8_t rxByte;
     unsigned int elapsedTime;
     elapsedTime = systemTickCount - lastRxTime[SAT1];
@@ -118,7 +118,7 @@ void __ISR(_UART1_RX_VECTOR, IPL1SRS) uart1Isr(void) {
     IFS1bits.U1RXIF = 0;
 }
 
-void __ISR(_UART1_FAULT_VECTOR, IPL2SOFT) uart1ErrorIsr(void) {
+void __ISR(_UART1_FAULT_VECTOR, IPL4SOFT) uart1ErrorIsr(void) {
     if (U1STAbits.OERR == 1) {
         U1STAbits.OERR = 0;
         uart1PacketGood = false;
@@ -126,7 +126,7 @@ void __ISR(_UART1_FAULT_VECTOR, IPL2SOFT) uart1ErrorIsr(void) {
     IFS1bits.U1EIF = 0;
 }
 
-void __ISR(_UART6_RX_VECTOR, IPL1SRS) uart6Isr(void) {
+void __ISR(_UART6_RX_VECTOR, IPL3SRS) uart6Isr(void) {
     uint8_t rxByte;
     unsigned int elapsedTime;
     elapsedTime = systemTickCount - lastRxTime[SAT2];
@@ -166,7 +166,7 @@ void __ISR(_UART6_RX_VECTOR, IPL1SRS) uart6Isr(void) {
     IFS5bits.U6RXIF = 0;
 }
 
-void __ISR(_UART6_FAULT_VECTOR, IPL2SOFT) uart6ErrorIsr(void) {
+void __ISR(_UART6_FAULT_VECTOR, IPL4SOFT) uart6ErrorIsr(void) {
     if (U6STAbits.OERR == 1) {
         U6STAbits.OERR = 0;
         uart6PacketGood = false;
@@ -174,7 +174,7 @@ void __ISR(_UART6_FAULT_VECTOR, IPL2SOFT) uart6ErrorIsr(void) {
     IFS5bits.U6EIF = 0;
 }
 
-void __ISR(_UART3_RX_VECTOR, IPL1SRS) uart3Isr(void) {
+void __ISR(_UART3_RX_VECTOR, IPL3SRS) uart3Isr(void) {
     uint8_t rxByte;
     unsigned int elapsedTime;
     elapsedTime = systemTickCount - lastRxTime[SAT3];
@@ -214,7 +214,7 @@ void __ISR(_UART3_RX_VECTOR, IPL1SRS) uart3Isr(void) {
     IFS1bits.U3RXIF = 0;
 }
 
-void __ISR(_UART3_FAULT_VECTOR, IPL2SOFT) uart3ErrorIsr(void) {
+void __ISR(_UART3_FAULT_VECTOR, IPL4SOFT) uart3ErrorIsr(void) {
     if (U3STAbits.OERR == 1) {
         U3STAbits.OERR = 0;
         uart3PacketGood = false;
