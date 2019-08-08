@@ -37,6 +37,7 @@ private slots:
     void on_readyRead(void);
     void on_saveButton_clicked();
     void on_calibrateButton_clicked();
+    void on_resetLogButton_clicked();
 };
 
 #endif // MAINWINDOW_H

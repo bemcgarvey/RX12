@@ -195,3 +195,9 @@ void MainWindow::on_calibrateButton_clicked()
     delete dlg;
     state = IDLE;
 }
+
+void MainWindow::on_resetLogButton_clicked()
+{
+    buffer[0] = CLEAR_LOG;
+    port->write(buffer, 1);
+}
