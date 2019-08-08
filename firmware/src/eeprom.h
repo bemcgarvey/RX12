@@ -39,6 +39,7 @@ extern "C" {
     int readEEPROM(unsigned int address, uint32_t *data);
     int writeEEPROM(unsigned int address, uint32_t data);
     bool readyEEPROM(void);
+    void startIntWrite(unsigned int address, uint32_t *data, int count);
 
 #ifdef	__cplusplus
 }

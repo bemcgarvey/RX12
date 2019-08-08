@@ -117,7 +117,10 @@ int main(void) {
                 startupMode = START_NORMAL;
             }
         }
+        __builtin_disable_interrupts();
         writeEEPROM(ADDRESS_DSM_TYPE, systemType);
+        __builtin_enable_interrupts();
+        while (!readyEEPROM()); //Wait for write to finish
     } else {
         systemType = SYSTEM_TYPE_DSMX_11;
         DSMSystemType savedSystemType;

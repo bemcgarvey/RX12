@@ -18,16 +18,12 @@ void saveLogData(const LogData *data, unsigned int eeAddress) {
 }
 
 bool loadLogData(LogData *data, unsigned int eeAddress) {
-    uint32_t *p = (uint32_t *) data;
-    for (int i = 0; i < sizeof (LogData) / sizeof (uint32_t); ++i) {
-        if (!readEEPROM(eeAddress, p)) {
-            return false;
-        } else {
-            ++p;
-            eeAddress += sizeof (uint32_t);
-        }
+    int result = 0;
+    for (int i = 0; i < 10; ++i) {
+        result |= readEEPROM(eeAddress, &(data->words[i]));
+        eeAddress += 4;
     }
-    return true;
+    return result == EEPROM_SUCCESS;
 }
 
 void startLogging(void) {
@@ -36,15 +32,18 @@ void startLogging(void) {
         currentFlightLog.statusFlags |= STATUS_WDTO;
     } else {
         currentFlightLog.duration = 0;
-        currentFlightLog.sat1Fades = 0xffff;
-        currentFlightLog.sat2Fades = 0xffff;
-        currentFlightLog.sat3Fades = 0xffff;
+        currentFlightLog.sat1Fades = 0xffffffff;
+        currentFlightLog.sat2Fades = 0xffffffff;
+        currentFlightLog.sat3Fades = 0xffffffff;
         currentFlightLog.statusFlags = 0;
         currentFlightLog.totalPackets = 0;
         currentFlightLog.rxHighVoltage = 0;
-        currentFlightLog.rxLowVoltage = 0xffff;
+        currentFlightLog.rxLowVoltage = 0xffffffff;
         currentFlightLog.sequenceNumber = 1; //TODO initialize this appropriately
+        currentFlightLog.reserved = 0;
     }  
+    //TODO setup address
+    //startIntWrite(ADDRESS_LOG, currentFlightLog.words, 10);
     T5CONbits.T32 = 0;
     T5CONbits.TCKPS = 0b010; //1:4
     TMR5 = 0;

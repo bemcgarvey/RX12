@@ -15,17 +15,21 @@
 extern "C" {
 #endif
 
-    typedef struct {
-        uint32_t sequenceNumber;
-        uint32_t totalPackets;
-        uint32_t rxLowVoltage;
-        uint32_t rxHighVoltage;
-        uint32_t duration;
-        uint32_t sat1Fades;
-        uint32_t sat2Fades;
-        uint32_t sat3Fades;
-        uint32_t statusFlags;
-        uint32_t reserved;
+    typedef union {
+
+        struct {
+            uint32_t sequenceNumber;
+            uint32_t totalPackets;
+            uint32_t rxLowVoltage;
+            uint32_t rxHighVoltage;
+            uint32_t duration;
+            uint32_t sat1Fades;
+            uint32_t sat2Fades;
+            uint32_t sat3Fades;
+            uint32_t statusFlags;
+            uint32_t reserved;
+        };
+        unsigned int words[10];
     } LogData;
 
     typedef enum {
@@ -42,7 +46,7 @@ extern "C" {
     void checkLoggingActive(void);
 
 #define LOGGING_INTERVAL    5000
-    
+
 #ifdef	__cplusplus
 }
 #endif
