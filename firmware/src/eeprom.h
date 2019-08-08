@@ -27,9 +27,9 @@
 #define ADDRESS_LOGGING_ACTIVE      0x10
 #define ADDRESS_ADC_CALIBRATION1    0x14
 #define ADDRESS_ADC_CALIBRATION2    0x18
-#define ADDRESS_RESERVED            0x1c
-//Start of log data, reserve 12 words
-#define ADDRESS_LOG             (ADDRESS_RESERVED + 12 * 4)
+#define ADDRESS_CURRENT_LOG         0x1c
+#define ADDRESS_LOG_SEQUENCE        0x20
+#define ADDRESS_LOG_START           0x100
 
 #ifdef	__cplusplus
 extern "C" {

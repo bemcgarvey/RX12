@@ -36,7 +36,8 @@ int main(void) {
         DetectConnectedSatellites();
         SendBindPulses(bindType);
         writeEEPROM(ADDRESS_FRAME_RATE, frameMode);
-        while (!readyEEPROM()); //Wait for write to finish
+        //TODO should be able to remove all of these waits
+        //while (!readyEEPROM()); //Wait for write to finish
     }
     setPPS();
     if (startupMode == START_SERIAL) {
@@ -53,7 +54,7 @@ int main(void) {
             frameMode = savedFrameMode;
         } else {
             writeEEPROM(ADDRESS_FRAME_RATE, frameMode);
-            while (!readyEEPROM()); //Wait for write to finish
+            //while (!readyEEPROM()); //Wait for write to finish
         }
     }
     FailsafeType savedFailsafeType = HOLD_FAILSAFE;
@@ -63,7 +64,7 @@ int main(void) {
             failsafeType = savedFailsafeType;
         } else {
             writeEEPROM(ADDRESS_FAILSAFE_TYPE, failsafeType);
-            while (!readyEEPROM()); //Wait for write to finish
+            //while (!readyEEPROM()); //Wait for write to finish
         }
     }
     if (failsafeType == PRESET_FAILSAFE) {
@@ -117,10 +118,8 @@ int main(void) {
                 startupMode = START_NORMAL;
             }
         }
-        __builtin_disable_interrupts();
         writeEEPROM(ADDRESS_DSM_TYPE, systemType);
-        __builtin_enable_interrupts();
-        while (!readyEEPROM()); //Wait for write to finish
+        //while (!readyEEPROM()); //Wait for write to finish
     } else {
         systemType = SYSTEM_TYPE_DSMX_11;
         DSMSystemType savedSystemType;

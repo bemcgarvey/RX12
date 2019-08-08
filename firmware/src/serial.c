@@ -68,7 +68,8 @@ void processCommand(void) {
             state = WAIT_COMMAND;
             break;
         case CLEAR_LOG:
-            //TODO mark log as clear?
+            writeEEPROM(ADDRESS_CURRENT_LOG, ADDRESS_LOG_START - sizeof(LogData));
+            writeEEPROM(ADDRESS_LOG_SEQUENCE, 0);
             break;
         case GET_VOLTAGE:
             transmitVoltage();

@@ -15,6 +15,7 @@
 extern "C" {
 #endif
 
+#define LOG_WORDS   10
     typedef union {
 
         struct {
@@ -29,23 +30,23 @@ extern "C" {
             uint32_t statusFlags;
             uint32_t reserved;
         };
-        unsigned int words[10];
+        unsigned int words[LOG_WORDS];
     } LogData;
 
     typedef enum {
         STATUS_NONE = 0, STATUS_WDTO = 0x01, STATUS_CF = 0x02, STATUS_FAIL_SAFE = 0x04
     } StatusFlags;
 
-    extern LogData currentFlightLog;
+    extern volatile LogData currentFlightLog;
     extern bool logging;
+    extern unsigned int logAddress;
 
-    void saveLogData(const LogData *data, unsigned int eeAddress);
     bool loadLogData(LogData *data, unsigned int eeAddress);
     void startLogging(void);
     void enableLogging(bool enable);
     void checkLoggingActive(void);
 
-#define LOGGING_INTERVAL    5000
+#define LOGGING_INTERVAL    1000
 
 #ifdef	__cplusplus
 }

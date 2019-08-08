@@ -54,12 +54,16 @@ int writeEEPROM(unsigned int address, uint32_t data) {
 }
 
 void executeWrite(unsigned int addr, uint32_t data) {
+    unsigned int isrState;
     EECONbits.WREN = 1;
     EEADDR = addr & 0xffc;
     EEDATA = data;
+    isrState = __builtin_get_isr_state();
+    __builtin_disable_interrupts();
     EEKEY = 0xEDB7;
     EEKEY = 0x1248;
     EECONSET = _EECON_RW_MASK;
+    __builtin_set_isr_state(isrState);
     while (EECONbits.RW == 1);
 }
 

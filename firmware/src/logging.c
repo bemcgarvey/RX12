@@ -8,18 +8,15 @@
 
 #define LOGGING_MAGIC_NUMBER    0x12398745
 
-LogData __attribute__((persistent)) currentFlightLog;
+volatile LogData __attribute__((persistent)) currentFlightLog;
 bool logging = false;
+unsigned int logAddress = ADDRESS_LOG_START;
 
 volatile uint32_t loggingTimer = 0;
 
-void saveLogData(const LogData *data, unsigned int eeAddress) {
-
-}
-
 bool loadLogData(LogData *data, unsigned int eeAddress) {
     int result = 0;
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < LOG_WORDS; ++i) {
         result |= readEEPROM(eeAddress, &(data->words[i]));
         eeAddress += 4;
     }
@@ -27,10 +24,13 @@ bool loadLogData(LogData *data, unsigned int eeAddress) {
 }
 
 void startLogging(void) {
-    initADC();
     if (startupMode == START_WDTO) {
         currentFlightLog.statusFlags |= STATUS_WDTO;
     } else {
+        unsigned int seq;
+        readEEPROM(ADDRESS_LOG_SEQUENCE, &seq);
+        ++seq;
+        writeEEPROM(ADDRESS_LOG_SEQUENCE, seq);
         currentFlightLog.duration = 0;
         currentFlightLog.sat1Fades = 0xffffffff;
         currentFlightLog.sat2Fades = 0xffffffff;
@@ -39,11 +39,16 @@ void startLogging(void) {
         currentFlightLog.totalPackets = 0;
         currentFlightLog.rxHighVoltage = 0;
         currentFlightLog.rxLowVoltage = 0xffffffff;
-        currentFlightLog.sequenceNumber = 1; //TODO initialize this appropriately
+        currentFlightLog.sequenceNumber = seq;
         currentFlightLog.reserved = 0;
+        readEEPROM(ADDRESS_CURRENT_LOG, &logAddress);
+        logAddress += sizeof(LogData);
+        if (logAddress >= EEPROM_SIZE) {
+            logAddress = ADDRESS_LOG_START;
+        }
+        writeEEPROM(ADDRESS_CURRENT_LOG, logAddress);
     }  
-    //TODO setup address
-    //startIntWrite(ADDRESS_LOG, currentFlightLog.words, 10);
+    //initADC();
     T5CONbits.T32 = 0;
     T5CONbits.TCKPS = 0b010; //1:4
     TMR5 = 0;
@@ -59,7 +64,7 @@ void __ISR(_TIMER_5_VECTOR, IPL5SOFT) Timer5Isr(void) {
     ++loggingTimer;
     if (loggingTimer >= LOGGING_INTERVAL) {
         loggingTimer = 0;
-        saveLogData(&currentFlightLog, ADDRESS_LOG);
+        startIntWrite(logAddress, (unsigned int *)currentFlightLog.words, LOG_WORDS);
     }
     IFS0bits.T5IF = 0;
 }
