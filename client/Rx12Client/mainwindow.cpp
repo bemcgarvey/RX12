@@ -194,6 +194,7 @@ void MainWindow::on_calibrateButton_clicked()
     }
     delete dlg;
     state = IDLE;
+    on_readButton_clicked();
 }
 
 void MainWindow::on_resetLogButton_clicked()

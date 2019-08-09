@@ -18,7 +18,17 @@ CalibrationDialog::~CalibrationDialog()
 
 void CalibrationDialog::on_cancelButton_clicked()
 {
-    reject();
+    if (state == FIRST_VOLTAGE) {
+        reject();
+    } else {
+        //Single value calibration
+        actualVoltage2 = 0.0;
+        voltage2 = 0;
+        calculateCalibration();
+        state = DONE;
+        QMessageBox::information(this, "Success", "Single value calibration complete");
+        accept();
+    }
 }
 
 void CalibrationDialog::on_nextButton_clicked()
@@ -47,6 +57,7 @@ void CalibrationDialog::on_nextButton_clicked()
         ui->instructionLabel->setText("Second voltage (5.50 - 6.00 recommended)");
         ui->voltageSpinBox->setValue(6.0);
         state = SECOND_VOLTAGE;
+        ui->cancelButton->setText("Single Value");
     } else if (state == SECOND_VOLTAGE) {
         actualVoltage2 = static_cast<float>(ui->voltageSpinBox->value());
         buffer[0] = GET_VOLTAGE;
