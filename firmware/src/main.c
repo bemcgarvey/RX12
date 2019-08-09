@@ -186,16 +186,6 @@ int main(void) {
             }
         }
         WDTCONbits.WDTCLRKEY = 0x5743;
-        
-        //FIXME below is for testing only
-        if (logging && systemTickCount >= 15000) {
-            WDTCONbits.ON = 0;
-            __builtin_disable_interrupts();
-            LogData temp;
-            loadLogData(&temp, logAddress);
-            temp.fades[2] = 0;
-        }
-        // End of test section
     }
     return ( EXIT_FAILURE);
 }

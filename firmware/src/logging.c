@@ -48,7 +48,7 @@ void startLogging(void) {
         }
         writeEEPROM(ADDRESS_CURRENT_LOG, logAddress);
     }  
-    //initADC();
+    initADC();
     T5CONbits.T32 = 0;
     T5CONbits.TCKPS = 0b010; //1:4
     TMR5 = 0;
