@@ -36,8 +36,11 @@ int main(void) {
         DetectConnectedSatellites();
         SendBindPulses(bindType);
         writeEEPROM(ADDRESS_FRAME_RATE, frameMode);
-        //TODO should be able to remove all of these waits
-        //while (!readyEEPROM()); //Wait for write to finish
+    } else {
+        readEEPROM(ADDRESS_PRIMARY_SAT, &primarySatellite);
+        if (primarySatellite > SAT3) {
+            primarySatellite = SAT1;
+        }
     }
     setPPS();
     if (startupMode == START_SERIAL) {
@@ -54,7 +57,6 @@ int main(void) {
             frameMode = savedFrameMode;
         } else {
             writeEEPROM(ADDRESS_FRAME_RATE, frameMode);
-            //while (!readyEEPROM()); //Wait for write to finish
         }
     }
     FailsafeType savedFailsafeType = HOLD_FAILSAFE;
@@ -64,7 +66,6 @@ int main(void) {
             failsafeType = savedFailsafeType;
         } else {
             writeEEPROM(ADDRESS_FAILSAFE_TYPE, failsafeType);
-            //while (!readyEEPROM()); //Wait for write to finish
         }
     }
     if (failsafeType == PRESET_FAILSAFE) {
@@ -119,7 +120,6 @@ int main(void) {
             }
         }
         writeEEPROM(ADDRESS_DSM_TYPE, systemType);
-        //while (!readyEEPROM()); //Wait for write to finish
     } else {
         systemType = SYSTEM_TYPE_DSMX_11;
         DSMSystemType savedSystemType;
@@ -175,6 +175,7 @@ int main(void) {
                     disableThrottle();
                 }
                 servos[0] = 0xffff; //Mark throttle as inactive
+                currentFlightLog.statusFlags |= STATUS_FAILSAFE;
                 failsafeEngaged = true;
             }
             if (failsafeEngaged && servos[THROTTLE] != 0xffff) {
@@ -185,6 +186,16 @@ int main(void) {
             }
         }
         WDTCONbits.WDTCLRKEY = 0x5743;
+        
+        //FIXME below is for testing only
+        if (logging && systemTickCount >= 15000) {
+            WDTCONbits.ON = 0;
+            __builtin_disable_interrupts();
+            LogData temp;
+            loadLogData(&temp, logAddress);
+            temp.fades[2] = 0;
+        }
+        // End of test section
     }
     return ( EXIT_FAILURE);
 }
@@ -206,6 +217,7 @@ void _nmi_handler(void) {
         RNMICONbits.CF = 0;
         SYSKEY = 0x33333333;
         while (OSCCONbits.OSWEN == 1);
+        currentFlightLog.statusFlags |= STATUS_CF;
     }
     //Clear BEV flag
     _CP0_BIC_STATUS(_CP0_STATUS_BEV_MASK);

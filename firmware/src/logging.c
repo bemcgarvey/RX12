@@ -5,6 +5,7 @@
 #include <sys/attribs.h>
 #include "startup.h"
 #include "adc.h"
+#include "datapacket.h"
 
 #define LOGGING_MAGIC_NUMBER    0x12398745
 
@@ -32,15 +33,14 @@ void startLogging(void) {
         ++seq;
         writeEEPROM(ADDRESS_LOG_SEQUENCE, seq);
         currentFlightLog.duration = 0;
-        currentFlightLog.sat1Fades = 0xffffffff;
-        currentFlightLog.sat2Fades = 0xffffffff;
-        currentFlightLog.sat3Fades = 0xffffffff;
+        currentFlightLog.fades[0] = 0xffffffff;
+        currentFlightLog.fades[1] = 0xffffffff;
+        currentFlightLog.fades[2] = 0xffffffff;
         currentFlightLog.statusFlags = 0;
         currentFlightLog.totalPackets = 0;
         currentFlightLog.rxHighVoltage = 0;
         currentFlightLog.rxLowVoltage = 0xffffffff;
         currentFlightLog.sequenceNumber = seq;
-        currentFlightLog.reserved = 0;
         readEEPROM(ADDRESS_CURRENT_LOG, &logAddress);
         logAddress += sizeof(LogData);
         if (logAddress >= EEPROM_SIZE) {
@@ -64,6 +64,8 @@ void __ISR(_TIMER_5_VECTOR, IPL5SOFT) Timer5Isr(void) {
     ++loggingTimer;
     if (loggingTimer >= LOGGING_INTERVAL) {
         loggingTimer = 0;
+        currentFlightLog.duration = systemTickCount;
+        currentFlightLog.totalPackets = packetsReceived;
         startIntWrite(logAddress, (unsigned int *)currentFlightLog.words, LOG_WORDS);
     }
     IFS0bits.T5IF = 0;

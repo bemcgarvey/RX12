@@ -14,14 +14,19 @@
 #ifdef	__cplusplus
 extern "C" {
 #endif
-    
+
 #define PACKET_QUEUE_LENGTH 12
-    
+
     typedef struct {
         union {
             struct {
-                uint8_t system;
-                uint8_t fades;
+                union {
+                    struct {
+                        uint8_t system;
+                        uint8_t fades;
+                    };
+                    uint16_t fades16;
+                };
                 uint16_t servo[7];
             };
             uint32_t data[4];

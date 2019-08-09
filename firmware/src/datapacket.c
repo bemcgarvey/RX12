@@ -5,6 +5,7 @@
 #include "timers.h"
 #include "satellite.h"
 #include "startup.h"
+#include "logging.h"
 
 volatile DataPacket packetQueue[PACKET_QUEUE_LENGTH];
 volatile int packetQueueHead = 0;
@@ -12,6 +13,14 @@ volatile int packetQueueTail = 0;
 unsigned int packetsReceived = 0;
 
 void processCurrentPacket(void) {
+    if (logging) {
+        unsigned int sat = packetQueue[packetQueueTail].satellite;
+        if (sat == primarySatellite) {
+            currentFlightLog.fades[sat] = packetQueue[packetQueueTail].fades;
+        } else {
+            currentFlightLog.fades[sat] = packetQueue[packetQueueTail].fades16;
+        }
+    }
     for (int i = 0; i < 7; ++i) {
         int channel;
         if (systemType == SYSTEM_TYPE_DSM2_1024) {

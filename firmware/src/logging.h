@@ -15,7 +15,7 @@
 extern "C" {
 #endif
 
-#define LOG_WORDS   10
+#define LOG_WORDS   9
     typedef union {
 
         struct {
@@ -24,17 +24,14 @@ extern "C" {
             uint32_t rxLowVoltage;
             uint32_t rxHighVoltage;
             uint32_t duration;
-            uint32_t sat1Fades;
-            uint32_t sat2Fades;
-            uint32_t sat3Fades;
+            uint32_t fades[3];
             uint32_t statusFlags;
-            uint32_t reserved;
         };
         unsigned int words[LOG_WORDS];
     } LogData;
 
     typedef enum {
-        STATUS_NONE = 0, STATUS_WDTO = 0x01, STATUS_CF = 0x02, STATUS_FAIL_SAFE = 0x04
+        STATUS_NONE = 0, STATUS_WDTO = 0x01, STATUS_CF = 0x02, STATUS_FAILSAFE = 0x04
     } StatusFlags;
 
     extern volatile LogData currentFlightLog;

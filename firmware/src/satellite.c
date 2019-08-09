@@ -2,16 +2,17 @@
 #include "satellite.h"
 #include <stdbool.h>
 #include "timers.h"
+#include "eeprom.h"
 
 bool connectedSatellites[3] = {false, false, false};
 volatile unsigned int lastRxTime[3] = {0, 0, 0};
-unsigned int primarySatellite = SAT1;
+unsigned int primarySatellite;
 
 void DetectConnectedSatellites(void) {
     CNPDEbits.CNPDE14 = 1;
     CNPDBbits.CNPDB4 = 1;
     CNPDCbits.CNPDC0 = 1;
-    for (int i = 0; i < 1000000; ++i);
+    for (int i = 0; i < 1000000; ++i);  //TODO replace with appropriate delay_us()
     if (PORTEbits.RE14 == 1) {
         connectedSatellites[SAT1] = true;
     }
@@ -30,6 +31,7 @@ void DetectConnectedSatellites(void) {
             break;
         }
     }
+    writeEEPROM(ADDRESS_PRIMARY_SAT, primarySatellite);
 }
 
 void SendBindPulses(BindType type) {
