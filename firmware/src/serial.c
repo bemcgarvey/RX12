@@ -15,9 +15,10 @@ static volatile int rxCount;
 static volatile uint8_t buffer[64]; //TODO adjust this to the best size
 
 static void transmitSettings(void);
-static void transmitLog(void);
+static void transmitLog(unsigned int count);
 static void transmitVoltage(void);
 static void transmitCalibration(void);
+static void transmitLogCount(void);
 static void processCommand(void);
 static void postProcessCommand(void);
 
@@ -64,12 +65,14 @@ void processCommand(void) {
             state = RX_DATA;
             break;
         case GET_LOG:
-            transmitLog();
-            state = WAIT_COMMAND;
+            pData = buffer;
+            rxCount = 1;
+            state = RX_DATA;
             break;
         case CLEAR_LOG:
             writeEEPROM(ADDRESS_CURRENT_LOG, ADDRESS_LOG_START - sizeof(LogData));
             writeEEPROM(ADDRESS_LOG_SEQUENCE, 0);
+            state = WAIT_COMMAND;
             break;
         case GET_VOLTAGE:
             transmitVoltage();
@@ -77,6 +80,10 @@ void processCommand(void) {
             break;
         case GET_VOLTAGE_CALIBRATION:
             transmitCalibration();
+            state = WAIT_COMMAND;
+        case GET_LOG_COUNT:
+            transmitLogCount();
+            state = WAIT_COMMAND;
         default:
             state = WAIT_COMMAND;
             break;            
@@ -90,6 +97,9 @@ void postProcessCommand(void) {
             writeEEPROM(ADDRESS_ADC_CALIBRATION2, *(uint32_t *)&buffer[4]);
             state = WAIT_COMMAND;
             break;
+        case GET_LOG:
+            transmitLog(buffer[0]);
+            state = WAIT_COMMAND;
         default:
             state = WAIT_COMMAND;
             break;
@@ -144,8 +154,17 @@ void transmitCalibration(void) {
     readEEPROM(ADDRESS_ADC_CALIBRATION2, (uint32_t *)&buffer[4]);
     transmitData(8);
 }
-void transmitLog(void) {
-    
+void transmitLog(unsigned int count) {
+    unsigned int logAddress = 0;
+    readEEPROM(ADDRESS_CURRENT_LOG, &logAddress);
+    for (int i = 0; i < count; ++i) {
+        loadLogData((LogData *)buffer, logAddress);
+        transmitData(sizeof(LogData));
+        logAddress -= sizeof(LogData);
+        if (logAddress < ADDRESS_LOG_START) {
+            logAddress = EEPROM_SIZE - sizeof(LogData) - ((EEPROM_SIZE - ADDRESS_LOG_START) % sizeof(LogData));
+        }
+    }
 }
 
 void transmitVoltage(void) {
@@ -155,4 +174,25 @@ void transmitVoltage(void) {
     }
     *(uint32_t *)&buffer[0] = sum / 16;
     transmitData(4);
+}
+
+#define MAX_COUNT   ((EEPROM_SIZE - ADDRESS_LOG_START) / sizeof(LogData))
+
+void transmitLogCount(void) {
+    unsigned int logAddress = 0;
+    unsigned int seq = 0;
+    unsigned int count = 0;
+    readEEPROM(ADDRESS_CURRENT_LOG, &logAddress);
+    readEEPROM(ADDRESS_LOG_SEQUENCE, &seq);
+    if (seq == 0 || logAddress < ADDRESS_LOG_START) {
+        count = 0;
+    } else {
+        if (seq > MAX_COUNT) {
+            count = MAX_COUNT;
+        } else {
+            count = seq;
+        }
+    }
+    buffer[0] = count;
+    transmitData(1);
 }

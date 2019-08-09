@@ -1,15 +1,15 @@
 #include "calibrationdialog.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
 #include <QSerialPortInfo>
 #include <QDebug>
 #include "commands.h"
+#include "logdata.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    port(nullptr), state(IDLE)
+    port(nullptr), state(IDLE), logData(nullptr)
 {
     ui->setupUi(this);
     portLabel = new QLabel();
@@ -59,6 +59,7 @@ void MainWindow::comPortSelected()
         portLabel->setText(action->text());
         connectedLabel->setText("Connected");
         connect(port, &QSerialPort::readyRead, this, &MainWindow::on_readyRead);
+        ui->tabWidget->setEnabled(true);
         ui->readButton->setEnabled(true);
         ui->saveButton->setEnabled(true);
         ui->calibrateButton->setEnabled(true);
@@ -67,9 +68,10 @@ void MainWindow::comPortSelected()
         port = nullptr;
         portLabel->setText("----");
         connectedLabel->setText("Not Connected");
-        ui->readButton->setEnabled(false);
-        ui->saveButton->setEnabled(false);
-        ui->calibrateButton->setEnabled(false);
+        ui->tabWidget->setEnabled(false);
+        //ui->readButton->setEnabled(false);
+        //ui->saveButton->setEnabled(false);
+        //ui->calibrateButton->setEnabled(false);
     }
 }
 
@@ -105,7 +107,39 @@ void MainWindow::on_readyRead(void) {
             state = IDLE;
         }
         break;
+    case WAIT_LOG_COUNT:
+        bytesReceived = static_cast<int>(port->read(&buffer[bufferPos], bytesNeeded));
+        bytesNeeded -= bytesReceived;
+        bufferPos += bytesReceived;
+        if (bytesNeeded == 0) {
+            int count;
+            count = static_cast<int>(buffer[0]);
+            ui->flightsAvailableLabel->setText(QString().setNum(count));
+            if (count > 0) {
+                ui->loadButton->setEnabled(true);
+            } else {
+                ui->loadButton->setEnabled(false);
+            }
+            ui->countSpinBox->setMaximum(count);
+            state = IDLE;
+        }
+        break;
     case WAIT_LOG:
+        bytesReceived = static_cast<int>(port->read((reinterpret_cast<char *>(logData)) + bufferPos, bytesNeeded));
+        bytesNeeded -= bytesReceived;
+        bufferPos += bytesReceived;
+        if (bytesNeeded == 0) {
+            ui->statusBar->showMessage("Success", 2000);
+            currentLog = 0;
+            displayLog(0);
+            ui->prevButton->setEnabled(false);
+            if (numLogs > 1) {
+                ui->nextButton->setEnabled(true);
+            } else {
+                ui->nextButton->setEnabled(false);
+            }
+            state = IDLE;
+        }
         break;
     case IDLE:
         break;
@@ -163,6 +197,20 @@ double MainWindow::calculateVoltage(float calibration1, float calibration2, unsi
     return static_cast<double>(result);
 }
 
+void MainWindow::displayLog(int index)
+{
+    ui->sequenceLabel->setText(QString().setNum(logData[index].sequenceNumber));
+    ui->durationLabel->setText(QString().setNum(logData[index].duration));
+    ui->rx1FadesLabel->setText(QString().setNum(logData[index].fades[0]));
+    ui->rx2FadesLabel->setText(QString().setNum(logData[index].fades[1]));
+    ui->rx3FadesLabel->setText(QString().setNum(logData[index].fades[2]));
+    ui->totalPacketsLabel->setText(QString().setNum(logData[index].totalPackets));
+    //TODO calulate voltages - may need to get calibration values
+    ui->rxLowVoltageLabel->setText(QString().setNum(logData[index].rxLowVoltage));
+    ui->rxHighVoltageLabel->setText(QString().setNum(logData[index].rxHighVoltage));
+    ui->alertsLabel->setText(QString().setNum(logData[index].statusFlags, 16));
+}
+
 void MainWindow::on_saveButton_clicked()
 {
     if (ui->frame11RadioButton->isChecked()) {
@@ -201,4 +249,54 @@ void MainWindow::on_resetLogButton_clicked()
 {
     buffer[0] = CLEAR_LOG;
     port->write(buffer, 1);
+    ui->flightsAvailableLabel->setText("0");
+    ui->loadButton->setEnabled(false);
+    ui->statusBar->showMessage("Flight logs reset", 2000);
+}
+
+void MainWindow::on_tabWidget_currentChanged(int index)
+{
+    if (index == 1) {
+        bufferPos = 0;
+        bytesNeeded = 1;
+        state = WAIT_LOG_COUNT;
+        buffer[0] = GET_LOG_COUNT;
+        port->write(buffer, 1);
+    }
+}
+
+void MainWindow::on_loadButton_clicked()
+{
+    numLogs = ui->countSpinBox->value();
+    if (logData != nullptr) {
+        delete [] logData;
+    }
+    logData = new LogData[numLogs];
+    bufferPos = 0;
+    bytesNeeded = numLogs * sizeof(LogData);
+    state = WAIT_LOG;
+    buffer[0] = GET_LOG;
+    buffer[1] = static_cast<char>(numLogs);
+    port->write(buffer, 2);
+    ui->statusBar->showMessage("Loading ...", 0);
+}
+
+void MainWindow::on_prevButton_clicked()
+{
+    --currentLog;
+    displayLog(currentLog);
+    if (currentLog == 0) {
+        ui->prevButton->setEnabled(false);
+    }
+    ui->nextButton->setEnabled(true);
+}
+
+void MainWindow::on_nextButton_clicked()
+{
+    ++currentLog;
+    displayLog(currentLog);
+    if (currentLog == numLogs - 1) {
+        ui->nextButton->setEnabled(false);
+    }
+    ui->prevButton->setEnabled(true);
 }

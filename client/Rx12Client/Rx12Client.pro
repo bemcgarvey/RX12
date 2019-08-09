@@ -32,6 +32,7 @@ SOURCES += \
 HEADERS += \
         calibrationdialog.h \
         commands.h \
+        logdata.h \
         mainwindow.h
 
 FORMS += \
