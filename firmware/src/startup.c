@@ -38,21 +38,20 @@ void DetectStartupMode(void) {
             CNPUGbits.CNPUG6 = 0;
             TRISGbits.TRISG6 = 0;
             //Check for DSM2
-            TRISBbits.TRISB13 = 1;
-            CNPUBbits.CNPUB13 = 1;
+            TRISBbits.TRISB15 = 1;
+            CNPUBbits.CNPUB15 = 1;
             delay_us(1);
-            if (PORTBbits.RB13 == 0) {
+            if (PORTBbits.RB15 == 0) {
                 bindType = DSM2_11;
             }
-            CNPUBbits.CNPUB13 = 0;
-            TRISBbits.TRISB13 = 0;
+            CNPUBbits.CNPUB15 = 0;
+            TRISBbits.TRISB15 = 0;
         }
     }
     if (startupMode == START_BIND) {
         //Assume hold failsafe
         failsafeType = HOLD_FAILSAFE;
         writeEEPROM(ADDRESS_FAILSAFE_TYPE, failsafeType);
-        while (!readyEEPROM());
         //setup change notification on RB0 to check for preset failsafe
         CNCONBbits.ON = 1;
         PORTB;
@@ -84,7 +83,6 @@ void __ISR(_CHANGE_NOTICE_B_VECTOR, IPL6SOFT) ChangeBISR(void) {
         TRISBbits.TRISB0 = 0;
         failsafeType = PRESET_FAILSAFE;
         writeEEPROM(ADDRESS_FAILSAFE_TYPE, failsafeType);
-        while (!readyEEPROM());
         for (int i = 0; i < MAX_CHANNEL; ++i) {
             presetOutputPulses[i] = outputPulses[i];
         }
