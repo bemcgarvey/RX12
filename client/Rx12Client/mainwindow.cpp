@@ -28,6 +28,9 @@ MainWindow::~MainWindow()
         port->close();
         delete port;
     }
+    if (logData != nullptr) {
+        delete [] logData;
+    }
 }
 
 void MainWindow::updatePortMenu()
@@ -229,7 +232,7 @@ void MainWindow::displayLog(int index)
             status += "CF ";
         }
         if (logData[index].statusFlags & STATUS_WDTO) {
-            status += "WDTO ";
+            status += "WD ";
         }
         if (logData[index].statusFlags & STATUS_FAILSAFE) {
             status += "FS";
