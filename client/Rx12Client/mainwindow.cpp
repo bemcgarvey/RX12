@@ -61,6 +61,7 @@ void MainWindow::comPortSelected()
         port->setStopBits(QSerialPort::OneStop);
         portLabel->setText(action->text());
         connectedLabel->setText("Connected");
+        port->read(buffer, 64); //clear out extra bytes from device power on
         connect(port, &QSerialPort::readyRead, this, &MainWindow::on_readyRead);
         ui->tabWidget->setEnabled(true);
         ui->tabWidget->setTabEnabled(1, false);

@@ -22,3 +22,4 @@ PCB/Ultiboard Exports/RX12.zip
 /firmware/RX12.X/nbproject/private/configurations.xml
 /firmware/RX12.X/dist/default/debug/memoryfile.xml
 *.exe
+*users*appdata*
