@@ -46,7 +46,6 @@
       <itemPath>../src/main.c</itemPath>
       <itemPath>../src/startup.c</itemPath>
       <itemPath>../src/satellite.c</itemPath>
-      <itemPath>../src/led.c</itemPath>
       <itemPath>../src/timers.c</itemPath>
       <itemPath>../src/uart.c</itemPath>
       <itemPath>../src/datapacket.c</itemPath>
