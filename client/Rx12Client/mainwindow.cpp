@@ -60,6 +60,7 @@ void MainWindow::comPortSelected()
         connectedLabel->setText("Connected");
         connect(port, &QSerialPort::readyRead, this, &MainWindow::on_readyRead);
         ui->tabWidget->setEnabled(true);
+        ui->tabWidget->setTabEnabled(1, false);
         ui->readButton->setEnabled(true);
         ui->saveButton->setEnabled(true);
         ui->calibrateButton->setEnabled(true);
@@ -69,9 +70,6 @@ void MainWindow::comPortSelected()
         portLabel->setText("----");
         connectedLabel->setText("Not Connected");
         ui->tabWidget->setEnabled(false);
-        //ui->readButton->setEnabled(false);
-        //ui->saveButton->setEnabled(false);
-        //ui->calibrateButton->setEnabled(false);
     }
 }
 
@@ -101,8 +99,10 @@ void MainWindow::on_readyRead(void) {
             if (buffer[0] == FRAME_11MS || buffer[0] == FRAME_22MS) {
                 displaySettings(reinterpret_cast<unsigned int *>(buffer));
                 ui->statusBar->showMessage("Read from device successful", 2000);
+                ui->tabWidget->setTabEnabled(1, true);
             } else {
                 ui->statusBar->showMessage("Error reading from device", 2000);
+                ui->tabWidget->setTabEnabled(1, false);
             }
             state = IDLE;
         }
@@ -132,11 +132,11 @@ void MainWindow::on_readyRead(void) {
             ui->statusBar->showMessage("Success", 2000);
             currentLog = 0;
             displayLog(0);
-            ui->prevButton->setEnabled(false);
+            ui->nextButton->setEnabled(false);
             if (numLogs > 1) {
-                ui->nextButton->setEnabled(true);
+                ui->prevButton->setEnabled(true);
             } else {
-                ui->nextButton->setEnabled(false);
+                ui->prevButton->setEnabled(false);
             }
             state = IDLE;
         }
@@ -184,13 +184,13 @@ void MainWindow::displaySettings(unsigned int *values) {
     } else {
         ui->loggingDisabledRadioButton->setChecked(true);
     }
-    float c1 = *(reinterpret_cast<float *>((&values[4])));
-    float c2 = *(reinterpret_cast<float *>((&values[5])));
-    double voltage = calculateVoltage(c1, c2, values[6]);
-    ui->measuredVoltagelabel->setText(QString("%1").arg(voltage, 0, 'f', 2));
+    calibration1 = *(reinterpret_cast<float *>((&values[4])));
+    calibration2 = *(reinterpret_cast<float *>((&values[5])));
+    double voltage = calculateVoltage(values[6]);
+    ui->measuredVoltagelabel->setText(QString("%1V").arg(voltage, 0, 'f', 2));
 }
 
-double MainWindow::calculateVoltage(float calibration1, float calibration2, unsigned int value) {
+double MainWindow::calculateVoltage(unsigned int value) {
     float result;
     result = value * calibration1;
     result += calibration2;
@@ -200,15 +200,42 @@ double MainWindow::calculateVoltage(float calibration1, float calibration2, unsi
 void MainWindow::displayLog(int index)
 {
     ui->sequenceLabel->setText(QString().setNum(logData[index].sequenceNumber));
-    ui->durationLabel->setText(QString().setNum(logData[index].duration));
-    ui->rx1FadesLabel->setText(QString().setNum(logData[index].fades[0]));
-    ui->rx2FadesLabel->setText(QString().setNum(logData[index].fades[1]));
-    ui->rx3FadesLabel->setText(QString().setNum(logData[index].fades[2]));
+    ui->durationLabel->setText(QString("%1 sec").arg(logData[index].duration / 1000));
+    if (logData[index].fades[0] == 0xffffffff) {
+        ui->rx1FadesLabel->setText("NA");
+    } else {
+        ui->rx1FadesLabel->setText(QString().setNum(logData[index].fades[0]));
+    }
+    if (logData[index].fades[1] == 0xffffffff) {
+        ui->rx2FadesLabel->setText("NA");
+    } else {
+        ui->rx2FadesLabel->setText(QString().setNum(logData[index].fades[1]));
+    }
+    if (logData[index].fades[2] == 0xffffffff) {
+        ui->rx3FadesLabel->setText("NA");
+    } else {
+        ui->rx3FadesLabel->setText(QString().setNum(logData[index].fades[2]));
+    }
     ui->totalPacketsLabel->setText(QString().setNum(logData[index].totalPackets));
-    //TODO calulate voltages - may need to get calibration values
-    ui->rxLowVoltageLabel->setText(QString().setNum(logData[index].rxLowVoltage));
-    ui->rxHighVoltageLabel->setText(QString().setNum(logData[index].rxHighVoltage));
-    ui->alertsLabel->setText(QString().setNum(logData[index].statusFlags, 16));
+    double lowVoltage = calculateVoltage(logData[index].rxLowVoltage);
+    double highVoltage = calculateVoltage(logData[index].rxHighVoltage);
+    ui->rxLowVoltageLabel->setText(QString("%1V").arg(lowVoltage, 0, 'f', 2));
+    ui->rxHighVoltageLabel->setText(QString("%1V").arg(highVoltage, 0, 'f', 2));
+    QString status;
+    if (logData[index].statusFlags == STATUS_NONE) {
+        status = "--";
+    } else {
+        if (logData[index].statusFlags & STATUS_CF) {
+            status += "CF ";
+        }
+        if (logData[index].statusFlags & STATUS_WDTO) {
+            status += "WDTO ";
+        }
+        if (logData[index].statusFlags & STATUS_FAILSAFE) {
+            status += "FS";
+        }
+    }
+    ui->alertsLabel->setText(status);
 }
 
 void MainWindow::on_saveButton_clicked()
@@ -251,6 +278,8 @@ void MainWindow::on_resetLogButton_clicked()
     port->write(buffer, 1);
     ui->flightsAvailableLabel->setText("0");
     ui->loadButton->setEnabled(false);
+    ui->nextButton->setEnabled(false);
+    ui->prevButton->setEnabled(false);
     ui->statusBar->showMessage("Flight logs reset", 2000);
 }
 
@@ -273,7 +302,7 @@ void MainWindow::on_loadButton_clicked()
     }
     logData = new LogData[numLogs];
     bufferPos = 0;
-    bytesNeeded = numLogs * sizeof(LogData);
+    bytesNeeded = numLogs * static_cast<int>(sizeof(LogData));
     state = WAIT_LOG;
     buffer[0] = GET_LOG;
     buffer[1] = static_cast<char>(numLogs);
@@ -283,9 +312,9 @@ void MainWindow::on_loadButton_clicked()
 
 void MainWindow::on_prevButton_clicked()
 {
-    --currentLog;
+    ++currentLog;
     displayLog(currentLog);
-    if (currentLog == 0) {
+    if (currentLog == numLogs - 1) {
         ui->prevButton->setEnabled(false);
     }
     ui->nextButton->setEnabled(true);
@@ -293,9 +322,9 @@ void MainWindow::on_prevButton_clicked()
 
 void MainWindow::on_nextButton_clicked()
 {
-    ++currentLog;
+    --currentLog;
     displayLog(currentLog);
-    if (currentLog == numLogs - 1) {
+    if (currentLog == 0) {
         ui->nextButton->setEnabled(false);
     }
     ui->prevButton->setEnabled(true);

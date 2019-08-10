@@ -28,11 +28,13 @@ private:
     char buffer[64];
     int bufferPos;
     void displaySettings(unsigned int *values);
-    double calculateVoltage(float calibration1, float calibration2, unsigned int value);
+    double calculateVoltage(unsigned int value);
     LogData *logData;
     void displayLog(int index);
     int currentLog;
     int numLogs;
+    float calibration1;
+    float calibration2;
 
 private slots:
     void updatePortMenu(void);
