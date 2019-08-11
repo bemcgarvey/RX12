@@ -5,11 +5,12 @@
 #include <QDebug>
 #include "commands.h"
 #include "logdata.h"
+#include "aboutdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    port(nullptr), state(IDLE), logData(nullptr)
+    port(nullptr), state(IDLE), logData(nullptr), firmwareVersion(0)
 {
     ui->setupUi(this);
     portLabel = new QLabel();
@@ -86,10 +87,11 @@ void MainWindow::on_actionExit_triggered()
 void MainWindow::on_readButton_clicked()
 {
     bufferPos = 0;
-    bytesNeeded = 28;
+    bytesNeeded = 32;
     state = WAIT_SETTINGS;
     buffer[0] = GET_SETTINGS;
-    port->write(buffer, 1);
+    buffer[1] = GET_VERSION;
+    port->write(buffer, 2);
 }
 
 void MainWindow::on_readyRead(void) {
@@ -192,6 +194,7 @@ void MainWindow::displaySettings(unsigned int *values) {
     calibration2 = *(reinterpret_cast<float *>((&values[5])));
     double voltage = calculateVoltage(values[6]);
     ui->measuredVoltagelabel->setText(QString("%1V").arg(voltage, 0, 'f', 2));
+    firmwareVersion = values[7];
 }
 
 double MainWindow::calculateVoltage(unsigned int value) {
@@ -332,4 +335,11 @@ void MainWindow::on_nextButton_clicked()
         ui->nextButton->setEnabled(false);
     }
     ui->prevButton->setEnabled(true);
+}
+
+void MainWindow::on_actionAbout_triggered()
+{
+    AboutDialog *dlg = new AboutDialog(firmwareVersion, this);
+    dlg->exec();
+    delete dlg;
 }

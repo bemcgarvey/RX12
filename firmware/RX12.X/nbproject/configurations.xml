@@ -30,6 +30,7 @@
       <itemPath>../src/logging.h</itemPath>
       <itemPath>../src/adc.h</itemPath>
       <itemPath>../src/serial.h</itemPath>
+      <itemPath>../src/version.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -56,6 +57,7 @@
       <itemPath>../src/logging.c</itemPath>
       <itemPath>../src/adc.c</itemPath>
       <itemPath>../src/serial.c</itemPath>
+      <itemPath>../src/version.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

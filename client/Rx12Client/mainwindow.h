@@ -35,6 +35,7 @@ private:
     int numLogs;
     float calibration1;
     float calibration2;
+    unsigned int firmwareVersion;
 
 private slots:
     void updatePortMenu(void);
@@ -49,6 +50,7 @@ private slots:
     void on_loadButton_clicked();
     void on_prevButton_clicked();
     void on_nextButton_clicked();
+    void on_actionAbout_triggered();
 };
 
 #endif // MAINWINDOW_H

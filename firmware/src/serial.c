@@ -7,6 +7,7 @@
 #include "startup.h"
 #include "failsafe.h"
 #include "adc.h"
+#include "version.h"
 
 static volatile enum {WAIT_COMMAND = 0, RX_DATA = 1} state;
 static volatile int command;
@@ -14,6 +15,7 @@ static volatile uint8_t *pData;
 static volatile int rxCount;
 static volatile uint8_t buffer[64]; //TODO adjust this to the best size
 
+static void transmitData(int numBytes);
 static void transmitSettings(void);
 static void transmitLog(unsigned int count);
 static void transmitVoltage(void);
@@ -83,6 +85,10 @@ void processCommand(void) {
             state = WAIT_COMMAND;
         case GET_LOG_COUNT:
             transmitLogCount();
+            state = WAIT_COMMAND;
+        case GET_VERSION:
+            *(unsigned int *)buffer = firmwareVersion;
+            transmitData(4);
             state = WAIT_COMMAND;
         default:
             state = WAIT_COMMAND;
