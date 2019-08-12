@@ -12,7 +12,7 @@ void DetectConnectedSatellites(void) {
     CNPDEbits.CNPDE14 = 1;
     CNPDBbits.CNPDB4 = 1;
     CNPDCbits.CNPDC0 = 1;
-    for (int i = 0; i < 1000000; ++i);  //TODO replace with appropriate delay_us()
+    delay_us(50000);
     if (PORTEbits.RE14 == 1) {
         connectedSatellites[SAT1] = true;
     }
