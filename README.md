@@ -10,8 +10,8 @@ Has the following features:
 * PC client program with serial connection
 * Simple data logging of multiple flights
 
-User manual is [here](https://github.com/bemcgarvey/RX12/blob/master/docs/RX12%20Manual.docx)
+User manual is [here](https://github.com/bemcgarvey/RX12/blob/master/docs/RX12%20Manual.pdf)
 
-
+![image](https://github.com/bemcgarvey/RX12/blob/master/docs/image-small.jpg)  
 
 
