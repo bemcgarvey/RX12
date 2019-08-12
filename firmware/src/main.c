@@ -1,3 +1,13 @@
+/////////////////////////////////////////////////////
+// Project: RX12                                   //
+// File: main.c                                    //
+// Target: PIC32MKxxxGPD/E064                      // 
+// Compiler: XC32 (Tested with 2.10)               //
+// Author: Brad McGarvey                           //
+// License: GNU General Public License v3.0        //
+/////////////////////////////////////////////////////
+
+
 #include <xc.h>
 #include <stddef.h>                     // Defines NULL
 #include <stdbool.h>                    // Defines true
