@@ -13,7 +13,7 @@ static volatile enum {WAIT_COMMAND = 0, RX_DATA = 1} state;
 static volatile int command;
 static volatile uint8_t *pData;
 static volatile int rxCount;
-static volatile uint8_t buffer[64]; //TODO adjust this to the best size
+static volatile uint8_t buffer[64];
 
 static void transmitData(int numBytes);
 static void transmitSettings(void);

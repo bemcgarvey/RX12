@@ -30,7 +30,7 @@ void initADC(void) {
     IPC27bits.AD1D5IP = 5;
     IPC27bits.AD1D5IS = 3;
     IFS3bits.AD1D5IF = 0;
-    IEC3bits.AD1D5IE = 1; //TODO check these flags to see if they are correct
+    IEC3bits.AD1D5IE = 1;
     /* Set up the trigger sources */
     ADCTRGSNSbits.LVL0 = 0; // Edge trigger
     ADCTRG2bits.TRGSRC5 = 0b00111; // Set AN5 to trigger from TMR5.

@@ -131,7 +131,6 @@ void SYS_Initialize(void* data) {
     SYSKEY = 0xAA996655;
     SYSKEY = 0x556699AA;
     OSCCONbits.FRCDIV = 0;
-    //TODO Turn off PB6 clock?
     PB6DIVbits.PBDIV = 0b11; //See errata 
 
     PMD1SET = 0xffffffff;
