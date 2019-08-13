@@ -1,9 +1,12 @@
-/* 
- * File:   timers.h
- * Author: bemcg
- *
- * Created on July 18, 2019, 5:47 PM
- */
+/////////////////////////////////////////////////////
+// Project: RX12                                   //
+// File: timers.h                                  //
+// Target: PIC32MKxxxxGPD/E064                     // 
+// Compiler: XC32 (Tested with 2.10)               //
+// Author: Brad McGarvey                           //
+// License: GNU General Public License v3.0        //
+// Description: timers for output and system       //
+/////////////////////////////////////////////////////
 
 #ifndef TIMERS_H
 #define	TIMERS_H

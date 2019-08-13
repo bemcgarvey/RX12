@@ -1,9 +1,12 @@
-/* 
- * File:   led.h
- * Author: bemcg
- *
- * Created on July 18, 2019, 5:06 PM
- */
+/////////////////////////////////////////////////////
+// Project: RX12                                   //
+// File: led.h                                     //
+// Target: PIC32MKxxxxGPD/E064                     // 
+// Compiler: XC32 (Tested with 2.10)               //
+// Author: Brad McGarvey                           //
+// License: GNU General Public License v3.0        //
+// Description: LED macros                         //
+/////////////////////////////////////////////////////
 
 #ifndef LED_H
 #define	LED_H

@@ -1,9 +1,12 @@
-/* 
- * File:   output.h
- * Author: bemcg
- *
- * Created on July 20, 2019, 8:10 PM
- */
+/////////////////////////////////////////////////////
+// Project: RX12                                   //
+// File: output.h                                  //
+// Target: PIC32MKxxxxGPD/E064                     // 
+// Compiler: XC32 (Tested with 2.10)               //
+// Author: Brad McGarvey                           //
+// License: GNU General Public License v3.0        //
+// Description: servo output functions             //
+/////////////////////////////////////////////////////
 
 #ifndef OUTPUT_H
 #define	OUTPUT_H

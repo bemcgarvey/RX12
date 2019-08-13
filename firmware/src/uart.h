@@ -1,9 +1,12 @@
-/* 
- * File:   uart.h
- * Author: bemcg
- *
- * Created on July 19, 2019, 2:59 PM
- */
+/////////////////////////////////////////////////////
+// Project: RX12                                   //
+// File: uart.h                                    //
+// Target: PIC32MKxxxxGPD/E064                     // 
+// Compiler: XC32 (Tested with 2.10)               //
+// Author: Brad McGarvey                           //
+// License: GNU General Public License v3.0        //
+// Description: satellite uart functions           //
+/////////////////////////////////////////////////////
 
 #ifndef UART_H
 #define	UART_H

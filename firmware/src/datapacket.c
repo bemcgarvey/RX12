@@ -1,3 +1,12 @@
+/////////////////////////////////////////////////////
+// Project: RX12                                   //
+// File: datapacket.c                              //
+// Target: PIC32MKxxxxGPD/E064                     // 
+// Compiler: XC32 (Tested with 2.10)               //
+// Author: Brad McGarvey                           //
+// License: GNU General Public License v3.0        //
+// Description: rx data packet processing          //
+/////////////////////////////////////////////////////
 #include <xc.h>
 #include "datapacket.h"
 #include "led.h"

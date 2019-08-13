@@ -1,3 +1,12 @@
+/////////////////////////////////////////////////////
+// Project: RX12                                   //
+// File: pins.c                                    //
+// Target: PIC32MKxxxxGPD/E064                     // 
+// Compiler: XC32 (Tested with 2.10)               //
+// Author: Brad McGarvey                           //
+// License: GNU General Public License v3.0        //
+// Description: I/O pin configuration              //
+/////////////////////////////////////////////////////
 #include <xc.h>
 #include "pins.h"
 #include "startup.h"

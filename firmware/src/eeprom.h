@@ -1,9 +1,12 @@
-/* 
- * File:   eeprom.h
- * Author: bemcg
- *
- * Created on July 22, 2019, 9:17 AM
- */
+/////////////////////////////////////////////////////
+// Project: RX12                                   //
+// File: eeprom.h                                  //
+// Target: PIC32MKxxxxGPD/E064                     // 
+// Compiler: XC32 (Tested with 2.10)               //
+// Author: Brad McGarvey                           //
+// License: GNU General Public License v3.0        //
+// Description: EEPROM functions                   //
+/////////////////////////////////////////////////////
 
 #ifndef EEPROM_H
 #define	EEPROM_H

@@ -1,9 +1,12 @@
-/* 
- * File:   datapacket.h
- * Author: bemcg
- *
- * Created on July 20, 2019, 1:04 PM
- */
+/////////////////////////////////////////////////////
+// Project: RX12                                   //
+// File: datapacket.h                              //
+// Target: PIC32MKxxxxGPD/E064                     // 
+// Compiler: XC32 (Tested with 2.10)               //
+// Author: Brad McGarvey                           //
+// License: GNU General Public License v3.0        //
+// Description: rx data packet processing          //
+/////////////////////////////////////////////////////
 
 #ifndef DATAPACKET_H
 #define	DATAPACKET_H

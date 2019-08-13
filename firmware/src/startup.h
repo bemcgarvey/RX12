@@ -1,9 +1,12 @@
-/* 
- * File:   startup.h
- * Author: bemcg
- *
- * Created on July 18, 2019, 1:48 PM
- */
+/////////////////////////////////////////////////////
+// Project: RX12                                   //
+// File: startup.h                                 //
+// Target: PIC32MKxxxxGPD/E064                     // 
+// Compiler: XC32 (Tested with 2.10)               //
+// Author: Brad McGarvey                           //
+// License: GNU General Public License v3.0        //
+// Description: startup and detection routines     //
+/////////////////////////////////////////////////////
 
 #ifndef STARTUP_H
 #define	STARTUP_H

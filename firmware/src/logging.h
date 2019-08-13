@@ -1,9 +1,12 @@
-/* 
- * File:   logging.h
- * Author: bemcg
- *
- * Created on July 27, 2019, 7:33 PM
- */
+/////////////////////////////////////////////////////
+// Project: RX12                                   //
+// File: logging.h                                 //
+// Target: PIC32MKxxxxGPD/E064                     // 
+// Compiler: XC32 (Tested with 2.10)               //
+// Author: Brad McGarvey                           //
+// License: GNU General Public License v3.0        //
+// Description: data logging functions             //
+/////////////////////////////////////////////////////
 
 #ifndef LOGGING_H
 #define	LOGGING_H

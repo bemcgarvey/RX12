@@ -1,9 +1,12 @@
-/* 
- * File:   serial.h
- * Author: bemcg
- *
- * Created on August 2, 2019, 1:39 PM
- */
+/////////////////////////////////////////////////////
+// Project: RX12                                   //
+// File: serial.h                                  //
+// Target: PIC32MKxxxxGPD/E064                     // 
+// Compiler: XC32 (Tested with 2.10)               //
+// Author: Brad McGarvey                           //
+// License: GNU General Public License v3.0        //
+// Description: serial communication with client   //
+/////////////////////////////////////////////////////
 
 #ifndef SERIAL_H
 #define	SERIAL_H

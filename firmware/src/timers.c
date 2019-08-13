@@ -1,3 +1,12 @@
+/////////////////////////////////////////////////////
+// Project: RX12                                   //
+// File: timers.c                                  //
+// Target: PIC32MKxxxxGPD/E064                     // 
+// Compiler: XC32 (Tested with 2.10)               //
+// Author: Brad McGarvey                           //
+// License: GNU General Public License v3.0        //
+// Description: timers for output and system       //
+/////////////////////////////////////////////////////
 #include <xc.h>
 #include "timers.h"
 #include <sys/attribs.h>

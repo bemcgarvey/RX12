@@ -1,9 +1,12 @@
-/* 
- * File:   satellite.h
- * Author: bemcg
- *
- * Created on July 18, 2019, 3:04 PM
- */
+/////////////////////////////////////////////////////
+// Project: RX12                                   //
+// File: satellite.h                               //
+// Target: PIC32MKxxxxGPD/E064                     // 
+// Compiler: XC32 (Tested with 2.10)               //
+// Author: Brad McGarvey                           //
+// License: GNU General Public License v3.0        //
+// Description: satellite detection and bind       //
+/////////////////////////////////////////////////////
 
 #ifndef SATELLITE_H
 #define	SATELLITE_H

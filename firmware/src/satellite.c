@@ -1,3 +1,12 @@
+/////////////////////////////////////////////////////
+// Project: RX12                                   //
+// File: satellite.c                               //
+// Target: PIC32MKxxxxGPD/E064                     // 
+// Compiler: XC32 (Tested with 2.10)               //
+// Author: Brad McGarvey                           //
+// License: GNU General Public License v3.0        //
+// Description: satellite detection and bind       //
+/////////////////////////////////////////////////////
 #include <xc.h>
 #include "satellite.h"
 #include <stdbool.h>

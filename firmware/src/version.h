@@ -1,9 +1,12 @@
-/* 
- * File:   version.h
- * Author: bemcg
- *
- * Created on August 10, 2019, 10:48 PM
- */
+/////////////////////////////////////////////////////
+// Project: RX12                                   //
+// File: version.h                                 //
+// Target: PIC32MKxxxxGPD/E064                     // 
+// Compiler: XC32 (Tested with 2.10)               //
+// Author: Brad McGarvey                           //
+// License: GNU General Public License v3.0        //
+// Description: firmware version data              //
+/////////////////////////////////////////////////////
 
 #ifndef VERSION_H
 #define	VERSION_H

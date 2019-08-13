@@ -1,9 +1,12 @@
-/* 
- * File:   adc.h
- * Author: bemcg
- *
- * Created on July 29, 2019, 5:00 PM
- */
+/////////////////////////////////////////////////////
+// Project: RX12                                   //
+// File: adc.h                                     //
+// Target: PIC32MKxxxxGPD/E064                     // 
+// Compiler: XC32 (Tested with 2.10)               //
+// Author: Brad McGarvey                           //
+// License: GNU General Public License v3.0        //
+// Description: adc functions                      //
+/////////////////////////////////////////////////////
 
 #ifndef ADC_H
 #define	ADC_H
