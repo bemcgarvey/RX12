@@ -1,7 +1,7 @@
 # RX12  
 ## A 12 channel radio control receiver that uses one to three Spektrum compatible satellite receivers.
 
-Has the following features:
+### Features:  
 * Up to 12 channels
 * One to three satellite receivers for full diversity
 * Works with DSMX or DSM2 satellites
@@ -13,7 +13,7 @@ Has the following features:
 
 User manual is [here](https://github.com/bemcgarvey/RX12/blob/master/docs/RX12%20Manual.pdf)  
 Gerber files and schematics can be found in PCB and Schematic folders.  
-Firmware was written with XC32 2.10 and MPLAB X.  Client code is Qt 5.12  
+Firmware built with XC32 2.10 and MPLAB X.  Client code built with Qt 5.12  
 
 ![image](https://github.com/bemcgarvey/RX12/blob/master/docs/image-small.jpg)  
 
