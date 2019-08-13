@@ -9,8 +9,11 @@ Has the following features:
 * Preset or hold failsafe modes
 * PC client program with serial connection
 * Simple data logging of multiple flights
+* 32 bit microcontroller at 120MHz
 
-User manual is [here](https://github.com/bemcgarvey/RX12/blob/master/docs/RX12%20Manual.pdf)
+User manual is [here](https://github.com/bemcgarvey/RX12/blob/master/docs/RX12%20Manual.pdf)  
+Gerber files and schematics can be found in PCB and Schematic folders.  
+Firmware was written with XC32 2.10 and MPLAB X.  Client code is Qt 5.12  
 
 ![image](https://github.com/bemcgarvey/RX12/blob/master/docs/image-small.jpg)  
 
