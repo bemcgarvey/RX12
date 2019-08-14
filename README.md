@@ -11,6 +11,8 @@
 * Simple data logging of multiple flights
 * 32 bit microcontroller at 120MHz
 
+Note: This is not a Spektrum DSMX or DSM2 product, nor is it a copy of a Spektrum DSM2 or DSMX product. The Spektrum, DSMX and DSM2 brand is a trademark of Horizon Hobby, Inc.
+
 User manual is [here](https://github.com/bemcgarvey/RX12/blob/master/docs/RX12%20Manual.pdf)  
 Gerber files and schematics can be found in PCB and Schematic folders.  
 Firmware built with XC32 2.10 and MPLAB X.  Client code built with Qt 5.12  
