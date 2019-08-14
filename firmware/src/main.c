@@ -34,6 +34,7 @@ int main(void) {
     startupMode = START_NORMAL;
     if (RCONbits.WDTO == 1) {
         startupMode = START_WDTO;
+        RCONbits.WDTO = 0;
     }
     SYS_Initialize(NULL);
     initPins();
