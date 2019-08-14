@@ -143,6 +143,14 @@ int main(void) {
         }
         checkLoggingActive();
         if (logging) {
+            if (startupMode != START_WDTO) {
+                for (unsigned int i = 0; i < 2; ++i) {
+                    LED1On();
+                    delay_us(100000);
+                    LED1Off();
+                    delay_us(100000);
+                }
+            }
             startLogging();
         }
     }
