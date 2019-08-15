@@ -37,7 +37,7 @@ extern "C" {
         STATUS_NONE = 0, STATUS_WDTO = 0x01, STATUS_CF = 0x02, STATUS_FAILSAFE = 0x04
     } StatusFlags;
 
-    extern volatile LogData currentFlightLog;
+    extern volatile LogData __attribute__((persistent)) currentFlightLog;
     extern bool logging;
     extern unsigned int logAddress;
 

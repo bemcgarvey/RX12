@@ -90,12 +90,6 @@ int main(void) {
     if (startupMode == START_BIND) {
         blinks = 10;
     }
-
-    //FIXME For test purposes.  Remove when tested
-    if (startupMode == START_WDTO) {
-        blinks = 30;
-    }
-
     for (unsigned int i = 0; i < blinks; ++i) {
         LED3On();
         delay_us(100000);

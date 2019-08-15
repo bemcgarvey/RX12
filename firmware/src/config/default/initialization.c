@@ -76,7 +76,8 @@ void SYS_Initialize(void* data) {
     SYSKEY = 0xAA996655;
     SYSKEY = 0x556699AA;
     OSCCONbits.FRCDIV = 0;
-    PB6DIVbits.PBDIV = 0b11; //See errata 
+    //PB6DIVbits.PBDIV = 0b11; //See errata
+    PB6DIVbits.ON = 0;  //Don't need PB6
 
     PMD1SET = 0xffffffff;
     PMD1bits.ADCMD = 0;

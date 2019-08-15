@@ -96,5 +96,6 @@ void __ISR(_CHANGE_NOTICE_B_VECTOR, IPL6SOFT) ChangeBISR(void) {
             presetOutputPulses[i] = outputPulses[i];
         }
         saveFailsafePresets();
+        WDTCONbits.WDTCLRKEY = 0x5743;
         WDTCONbits.ON = temp;
 }
