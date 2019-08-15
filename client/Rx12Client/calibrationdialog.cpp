@@ -86,8 +86,8 @@ void CalibrationDialog::on_nextButton_clicked()
 void CalibrationDialog::calculateCalibration() {
     float m = static_cast<float>(actualVoltage1 - actualVoltage2) / static_cast<float>(voltage1 - voltage2);
     float b = static_cast<float>(actualVoltage1 - (m * voltage1));
-    calibration1 = *(reinterpret_cast<unsigned int *>(&m));
-    calibration2 = *(reinterpret_cast<unsigned int *>(&b));
+    memcpy(&calibration1, &m, 4);
+    memcpy(&calibration2, &b, 4);
 }
 
 bool CalibrationDialog::isDone() const
