@@ -15,7 +15,7 @@
 
 bool connectedSatellites[3] = {false, false, false};
 volatile unsigned int lastRxTime[3] = {0, 0, 0};
-unsigned int primarySatellite;
+unsigned int primarySatellite = SAT1;
 
 void DetectConnectedSatellites(void) {
     CNPDEbits.CNPDE14 = 1;
