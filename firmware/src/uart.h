@@ -14,11 +14,8 @@
 #ifdef	__cplusplus
 extern "C" {
 #endif
-
-    extern volatile unsigned int uart1PacketCount;
     
     void initUARTs(void);
-
 
 #ifdef	__cplusplus
 }

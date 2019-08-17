@@ -28,15 +28,12 @@ UartPacket uart3Packet;
 
 int uart1Pos = 0;
 volatile bool uart1PacketGood = true;
-volatile unsigned int uart1PacketCount = 0;
 
 int uart6Pos = 0;
 volatile bool uart6PacketGood = true;
-volatile unsigned int uart6PacketCount = 0;
 
 int uart3Pos = 0;
 volatile bool uart3PacketGood = true;
-volatile unsigned int uart3PacketCount = 0;
 
 void initUARTs(void) {
     //SAT1 = UART1
@@ -109,7 +106,6 @@ void __ISR(_UART1_RX_VECTOR, IPL3SRS) uart1Isr(void) {
         ++uart1Pos;
         if (uart1Pos == 16) {
             if (uart1PacketGood) {
-                ++uart1PacketCount;
                 for (int i = 0; i < 4; ++i) {
                     packetQueue[packetQueueHead].data[i] = uart1Packet.packet[i]; 
                 }
@@ -157,7 +153,6 @@ void __ISR(_UART6_RX_VECTOR, IPL3SRS) uart6Isr(void) {
         ++uart6Pos;
         if (uart6Pos == 16) {
             if (uart6PacketGood) {
-                ++uart6PacketCount;
                 for (int i = 0; i < 4; ++i) {
                     packetQueue[packetQueueHead].data[i] = uart6Packet.packet[i]; 
                 }
@@ -205,7 +200,6 @@ void __ISR(_UART3_RX_VECTOR, IPL3SRS) uart3Isr(void) {
         ++uart3Pos;
         if (uart3Pos == 16) {
             if (uart3PacketGood) {
-                ++uart3PacketCount;
                 for (int i = 0; i < 4; ++i) {
                     packetQueue[packetQueueHead].data[i] = uart3Packet.packet[i]; 
                 }
