@@ -160,9 +160,15 @@ int main(void) {
             outputsActivated = true;
         }
         if (systemTickCount > 100) {
-            lastSat1 = systemTickCount - lastRxTime[SAT1];
-            lastSat2 = systemTickCount - lastRxTime[SAT2];
-            lastSat3 = systemTickCount - lastRxTime[SAT3];
+            unsigned int temp;
+            //Need to aquire lastRxTime first to avoid problems with an interrupt
+            // during the subtraction that makes lastSat == -1
+            temp = lastRxTime[SAT1];
+            lastSat1 = systemTickCount - temp;
+            temp = lastRxTime[SAT2];
+            lastSat2 = systemTickCount - temp;
+            temp = lastRxTime[SAT3];
+            lastSat3 = systemTickCount - temp;
             if (lastSat1 < 100) {
                 LED1On();
             } else {
