@@ -24,9 +24,7 @@ void initPins(void) {
     ANSELA = 0;
     ANSELB = 0;
     ANSELC = 0;
-    ANSELD = 0;
     ANSELE = 0;
-    ANSELF = 0;
     ANSELG = 0;
     TRISA = 0;
     TRISB = 0;
