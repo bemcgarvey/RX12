@@ -127,6 +127,7 @@ void MainWindow::on_readyRead(void) {
                 ui->loadButton->setEnabled(false);
             }
             ui->countSpinBox->setMaximum(count);
+            ui->countSpinBox->setValue(count);
             state = IDLE;
         }
         break;
@@ -288,6 +289,8 @@ void MainWindow::on_resetLogButton_clicked()
     ui->nextButton->setEnabled(false);
     ui->prevButton->setEnabled(false);
     ui->statusBar->showMessage("Flight logs reset", 2000);
+    ui->countSpinBox->setValue(0);
+    ui->countSpinBox->setMaximum(0);
 }
 
 void MainWindow::on_tabWidget_currentChanged(int index)
