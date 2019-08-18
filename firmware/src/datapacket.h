@@ -42,6 +42,7 @@ extern "C" {
     extern volatile int packetQueueHead;
     extern volatile int packetQueueTail;
     extern unsigned int packetsReceived;
+    extern unsigned int lastPacket[3];
 
     void processCurrentPacket(void);
     DSMSystemType checkPacketType(unsigned int primary);

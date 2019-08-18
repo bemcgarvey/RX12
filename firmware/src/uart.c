@@ -22,18 +22,20 @@ typedef union {
     uint32_t packet[4];
 } UartPacket;
 
-UartPacket uart1Packet;
-UartPacket uart6Packet;
-UartPacket uart3Packet;
+static volatile UartPacket uart1Packet;
+static volatile UartPacket uart6Packet;
+static volatile UartPacket uart3Packet;
 
-int uart1Pos = 0;
-volatile bool uart1PacketGood = true;
+static volatile int uart1Pos = 0;
+static volatile bool uart1PacketGood = true;
 
-int uart6Pos = 0;
-volatile bool uart6PacketGood = true;
+static volatile int uart6Pos = 0;
+static volatile bool uart6PacketGood = true;
 
-int uart3Pos = 0;
-volatile bool uart3PacketGood = true;
+static volatile int uart3Pos = 0;
+static volatile bool uart3PacketGood = true;
+
+static volatile unsigned int lastRx[3] = {0, 0, 0};
 
 void initUARTs(void) {
     //SAT1 = UART1
@@ -87,8 +89,8 @@ void initUARTs(void) {
 void __ISR(_UART1_RX_VECTOR, IPL3SRS) uart1Isr(void) {
     uint8_t rxByte;
     unsigned int elapsedTime;
-    elapsedTime = systemTickCount - lastRxTime[SAT1];
-    lastRxTime[SAT1] = systemTickCount;
+    elapsedTime = systemTickCount - lastRx[SAT1];
+    lastRx[SAT1] = systemTickCount;
     while (U1STAbits.URXDA == 1) {
         if (elapsedTime > 2) {
             uart1Pos = 0;
@@ -134,8 +136,8 @@ void __ISR(_UART1_FAULT_VECTOR, IPL4SOFT) uart1ErrorIsr(void) {
 void __ISR(_UART6_RX_VECTOR, IPL3SRS) uart6Isr(void) {
     uint8_t rxByte;
     unsigned int elapsedTime;
-    elapsedTime = systemTickCount - lastRxTime[SAT2];
-    lastRxTime[SAT2] = systemTickCount;
+    elapsedTime = systemTickCount - lastRx[SAT2];
+    lastRx[SAT2] = systemTickCount;
     while (U6STAbits.URXDA == 1) {
         if (elapsedTime > 2) {
             uart6Pos = 0;
@@ -181,8 +183,8 @@ void __ISR(_UART6_FAULT_VECTOR, IPL4SOFT) uart6ErrorIsr(void) {
 void __ISR(_UART3_RX_VECTOR, IPL3SRS) uart3Isr(void) {
     uint8_t rxByte;
     unsigned int elapsedTime;
-    elapsedTime = systemTickCount - lastRxTime[SAT3];
-    lastRxTime[SAT3] = systemTickCount;
+    elapsedTime = systemTickCount - lastRx[SAT3];
+    lastRx[SAT3] = systemTickCount;
     while (U3STAbits.URXDA == 1) {
         if (elapsedTime > 2) {
             uart3Pos = 0;

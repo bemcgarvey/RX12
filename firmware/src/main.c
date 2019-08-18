@@ -26,9 +26,9 @@
 #include "logging.h"
 #include "serial.h"
 
-unsigned int lastSat1;
-unsigned int lastSat2;
-unsigned int lastSat3;
+static unsigned int lastSat1;
+static unsigned int lastSat2;
+static unsigned int lastSat3;
 
 int main(void) {
     startupMode = START_NORMAL;
@@ -160,15 +160,9 @@ int main(void) {
             outputsActivated = true;
         }
         if (systemTickCount > 100) {
-            unsigned int temp;
-            //Need to aquire lastRxTime first to avoid problems with an interrupt
-            // during the subtraction that makes lastSat == -1
-            temp = lastRxTime[SAT1];
-            lastSat1 = systemTickCount - temp;
-            temp = lastRxTime[SAT2];
-            lastSat2 = systemTickCount - temp;
-            temp = lastRxTime[SAT3];
-            lastSat3 = systemTickCount - temp;
+            lastSat1 = systemTickCount - lastPacket[SAT1];
+            lastSat2 = systemTickCount - lastPacket[SAT2];
+            lastSat3 = systemTickCount - lastPacket[SAT3];
             if (lastSat1 < 100) {
                 LED1On();
             } else {

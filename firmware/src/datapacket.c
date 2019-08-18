@@ -20,10 +20,11 @@ volatile DataPacket packetQueue[PACKET_QUEUE_LENGTH];
 volatile int packetQueueHead = 0;
 volatile int packetQueueTail = 0;
 unsigned int packetsReceived = 0;
+unsigned int lastPacket[3] = {0, 0, 0};
 
 void processCurrentPacket(void) {
+    unsigned int sat = packetQueue[packetQueueTail].satellite;
     if (logging) {
-        unsigned int sat = packetQueue[packetQueueTail].satellite;
         if (sat == primarySatellite) {
             currentFlightLog.fades[sat] = packetQueue[packetQueueTail].fades;
         } else {
@@ -47,6 +48,7 @@ void processCurrentPacket(void) {
             }
         }
     }
+    lastPacket[sat] = packetQueue[packetQueueTail].timeStamp;
     ++packetQueueTail;
     if (packetQueueTail == PACKET_QUEUE_LENGTH) {
         packetQueueTail = 0;
@@ -56,18 +58,19 @@ void processCurrentPacket(void) {
 
 DSMSystemType checkPacketType(unsigned int primary) {
     DSMSystemType type = SYSTEM_TYPE_NONE;
-    if (packetQueue[packetQueueTail].satellite == primary) {
+    unsigned int sat = packetQueue[packetQueueTail].satellite;
+    if (sat == primary) {
         if (packetQueue[packetQueueTail].system == SYSTEM_TYPE_DSM2_1024 ||
                 packetQueue[packetQueueTail].system == SYSTEM_TYPE_DSM2_2048 ||
                 packetQueue[packetQueueTail].system == SYSTEM_TYPE_DSMX_11 ||
                 packetQueue[packetQueueTail].system == SYSTEM_TYPE_DSMX_22) {
             type = packetQueue[packetQueueTail].system;
         }
-        ++packetQueueTail;
-        if (packetQueueTail == PACKET_QUEUE_LENGTH) {
-            packetQueueTail = 0;
-        }
-        ++packetsReceived;
+    }
+    lastPacket[sat] = packetQueue[packetQueueTail].timeStamp;
+    ++packetQueueTail;
+    if (packetQueueTail == PACKET_QUEUE_LENGTH) {
+        packetQueueTail = 0;
     }
     return type;
 }

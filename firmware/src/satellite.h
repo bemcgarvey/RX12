@@ -38,7 +38,6 @@ extern "C" {
     } DSMSystemType;
 
     extern bool connectedSatellites[3];
-    extern volatile unsigned int lastRxTime[3];
     extern unsigned int primarySatellite;
 
     void DetectConnectedSatellites(void);
