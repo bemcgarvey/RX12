@@ -571,17 +571,10 @@
     </property>
     <addaction name="actionExit"/>
    </widget>
-   <widget class="QMenu" name="menuConnection">
+   <widget class="QMenu" name="menuPort">
     <property name="title">
-     <string>Connection</string>
+     <string>Port</string>
     </property>
-    <widget class="QMenu" name="menuPort">
-     <property name="title">
-      <string>Port</string>
-     </property>
-     <addaction name="actionCOM1"/>
-    </widget>
-    <addaction name="menuPort"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -590,7 +583,7 @@
     <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuConnection"/>
+   <addaction name="menuPort"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
