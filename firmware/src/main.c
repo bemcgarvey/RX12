@@ -187,7 +187,9 @@ int main(void) {
                     disableThrottle();
                 }
                 servos[THROTTLE] = 0xffff; //Mark throttle as inactive
-                currentFlightLog.statusFlags |= STATUS_FAILSAFE;
+                if (outputsActivated) {
+                    currentFlightLog.statusFlags |= STATUS_FAILSAFE;
+                }
                 failsafeEngaged = true;
             }
             if (failsafeEngaged && servos[THROTTLE] != 0xffff) {
