@@ -83,9 +83,23 @@ int main(void) {
             failsafeType = HOLD_FAILSAFE;
         }
     }
+    result = readEEPROM(ADDRESS_OUTPUT_TYPE, &outputType);
+    if (result == EEPROM_SUCCESS) {
+        if (outputType != OUTPUT_TYPE_PWM && outputType != OUTPUT_TYPE_PPM) {
+            outputType = OUTPUT_TYPE_PWM;
+            writeEEPROM(ADDRESS_OUTPUT_TYPE, outputType);
+        }
+    } else {
+        outputType = OUTPUT_TYPE_PWM;
+    }
     unsigned int blinks = 0;
-    if (frameMode == FRAME_11MS && startupMode != START_WDTO) {
-        blinks = 2;
+    if (startupMode != START_WDTO) {
+        if (frameMode == FRAME_11MS) {
+            blinks = 2;
+        }
+        if (outputType == OUTPUT_TYPE_PPM) {
+            blinks = 3;
+        }
     }
     if (startupMode == START_BIND) {
         blinks = 10;
@@ -108,7 +122,7 @@ int main(void) {
     __builtin_enable_interrupts();
     startSystemTickTimer();
     initOutputs();
-    if (frameMode == FRAME_22MS) {
+    if (frameMode == FRAME_22MS || outputType == OUTPUT_TYPE_PPM) {
         startOCTimer(PERIOD_22MS);
     } else {
         startOCTimer(PERIOD_11MS);

@@ -37,14 +37,14 @@ void processCurrentPacket(void) {
             channel = packetQueue[packetQueueTail].servo[i] >> 10;
             if (channel < MAX_CHANNEL) {
                 servos[channel] = packetQueue[packetQueueTail].servo[i] & 0x000003ff;
-                outputPulses[channel] = pulseOffsets[channel] + ((1194 * US_COUNT) * servos[channel]) / 1024;
+                outputPulses[channel] = ((1194 * US_COUNT) * servos[channel]) / 1024;
             }
         } else {
             channel = packetQueue[packetQueueTail].servo[i] >> 11;
             channel &= 0x0000000f;
             if (channel < MAX_CHANNEL) {
                 servos[channel] = packetQueue[packetQueueTail].servo[i] & 0x000007ff;
-                outputPulses[channel] = pulseOffsets[channel] + ((1194 * US_COUNT) * servos[channel]) / 2048;
+                outputPulses[channel] = ((1194 * US_COUNT) * servos[channel]) / 2048;
             }
         }
     }

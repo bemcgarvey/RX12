@@ -31,6 +31,7 @@
       <itemPath>../src/adc.h</itemPath>
       <itemPath>../src/serial.h</itemPath>
       <itemPath>../src/version.h</itemPath>
+      <itemPath>../src/ppm.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -58,6 +59,7 @@
       <itemPath>../src/adc.c</itemPath>
       <itemPath>../src/serial.c</itemPath>
       <itemPath>../src/version.c</itemPath>
+      <itemPath>../src/ppm.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -82,7 +84,7 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC32MK-GP_DFP" vendor="Microchip" version="1.0.21"/>
+        <pack name="PIC32MK-GP_DFP" vendor="Microchip" version="1.2.80"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -158,6 +160,9 @@
         <property key="preprocessor-macros" value=""/>
         <property key="warning-level" value=""/>
       </C32-AS>
+      <C32-CO>
+        <property key="coverage-enable" value=""/>
+      </C32-CO>
       <C32-LD>
         <property key="additional-options-use-response-files" value="false"/>
         <property key="additional-options-write-sla" value="false"/>

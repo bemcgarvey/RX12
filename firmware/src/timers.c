@@ -21,7 +21,6 @@ void delay_us(unsigned int us) {
     while (_CP0_GET_COUNT() < delay);
 }
 
-
 void startSystemTickTimer(void) {
     //Timer 8
     T8CONbits.T32 = 0;
@@ -34,7 +33,7 @@ void startSystemTickTimer(void) {
     IEC2bits.T8IE = 1;
     T8CONbits.ON = 1;
 }
-    
+
 void __ISR(_TIMER_8_VECTOR, IPL7SOFT) Timer8Isr(void) {
     ++systemTickCount;
     IFS2bits.T8IF = 0;
@@ -60,8 +59,12 @@ void startOCTimer(unsigned int period) {
 }
 
 void __ISR(_TIMER_2_VECTOR, IPL6SOFT) Timer2Isr(void) {
-    for (int i = 0; i < MAX_CHANNEL; ++i) {
-        *pulseRegister[i] = outputPulses[i]; 
+    if (outputType == OUTPUT_TYPE_PWM) {
+        for (int i = 0; i < MAX_CHANNEL; ++i) {
+            *pulseRegister[i] = outputPulses[i] + pulseOffsets[i];
+        }
+    } else if (outputType == OUTPUT_TYPE_PPM) {
+        
     }
     IFS0bits.T2IF = 0;
 }

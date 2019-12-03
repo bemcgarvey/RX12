@@ -39,63 +39,78 @@ volatile unsigned int* const OCxCONCLRRegister[MAX_CHANNEL] = {&OC11CONCLR, &OC1
     &OC13CONCLR, &OC2CONCLR, &OC6CONCLR, &OC8CONCLR, &OC5CONCLR, &OC4CONCLR, &OC3CONCLR, &OC1CONCLR, &OC7CONCLR};
 
 bool outputsActivated = false;
+unsigned int outputType = OUTPUT_TYPE_PWM;
 
 void initOutputs(void) {
-    //Ch 0
-    OC11CONbits.OC32 = 1;
-    OC11CONbits.OCM = 0b101;
-    //Ch 1
-    OC10CONbits.OC32 = 1;
-    OC10CONbits.OCM = 0b101;
-    //Ch 2
-    OC9CONbits.OC32 = 1;
-    OC9CONbits.OCM = 0b101;
-    //Ch 3
-    OC13CONbits.OC32 = 1;
-    OC13CONbits.OCM = 0b101;
-    //Ch 4
-    OC2CONbits.OC32 = 1;
-    OC2CONbits.OCM = 0b101;
-    //Ch 5
-    OC6CONbits.OC32 = 1;
-    OC6CONbits.OCM = 0b101;
-    //Ch 6
-    OC8CONbits.OC32 = 1;
-    OC8CONbits.OCM = 0b101;
-    //Ch 7
-    OC5CONbits.OC32 = 1;
-    OC5CONbits.OCM = 0b101;
-    //Ch 8
-    OC4CONbits.OC32 = 1;
-    OC4CONbits.OCM = 0b101;
-    //Ch 9
-    OC3CONbits.OC32 = 1;
-    OC3CONbits.OCM = 0b101;
-    //Ch 10
-    OC1CONbits.OC32 = 1;
-    OC1CONbits.OCM = 0b101;
-    //Ch 11
-    OC7CONbits.OC32 = 1;
-    OC7CONbits.OCM = 0b101;
-    for (int i = 0; i < MAX_CHANNEL; ++i) {
-        *startRegister[i] = startOffsets[i];
-        outputPulses[i] = pulseOffsets[i] + ((1194 * US_COUNT) * 1024) / 2048;  //Mid
-        *pulseRegister[i] = outputPulses[i];
+    if (outputType == OUTPUT_TYPE_PWM) {
+        //Ch 0 (zero based so this is actually Ch 1 on the Rx board)
+        OC11CONbits.OC32 = 1;
+        OC11CONbits.OCM = 0b101;
+        //Ch 1
+        OC10CONbits.OC32 = 1;
+        OC10CONbits.OCM = 0b101;
+        //Ch 2
+        OC9CONbits.OC32 = 1;
+        OC9CONbits.OCM = 0b101;
+        //Ch 3
+        OC13CONbits.OC32 = 1;
+        OC13CONbits.OCM = 0b101;
+        //Ch 4
+        OC2CONbits.OC32 = 1;
+        OC2CONbits.OCM = 0b101;
+        //Ch 5
+        OC6CONbits.OC32 = 1;
+        OC6CONbits.OCM = 0b101;
+        //Ch 6
+        OC8CONbits.OC32 = 1;
+        OC8CONbits.OCM = 0b101;
+        //Ch 7
+        OC5CONbits.OC32 = 1;
+        OC5CONbits.OCM = 0b101;
+        //Ch 8
+        OC4CONbits.OC32 = 1;
+        OC4CONbits.OCM = 0b101;
+        //Ch 9
+        OC3CONbits.OC32 = 1;
+        OC3CONbits.OCM = 0b101;
+        //Ch 10
+        OC1CONbits.OC32 = 1;
+        OC1CONbits.OCM = 0b101;
+        //Ch 11
+        OC7CONbits.OC32 = 1;
+        OC7CONbits.OCM = 0b101;
+        for (int i = 0; i < MAX_CHANNEL; ++i) {
+            *startRegister[i] = startOffsets[i];
+            outputPulses[i] = pulseOffsets[i] + ((1194 * US_COUNT) * 1024) / 2048; //Mid
+            *pulseRegister[i] = outputPulses[i];
+        }
+    } else if (outputType == OUTPUT_TYPE_PPM) {
+        //Ch 11  - Need to change this if PPM channel is changed
+        OC7CONbits.OC32 = 1;
+        OC7CONbits.OCM = 0b101;
     }
 }
 
 void enableActiveOutputs(void) {
-    for (int i = 0; i < MAX_CHANNEL; ++i) {
-        if (servos[i] != 0xffff) {
-            *OCxCONSETRegister[i] = 0x8000;  //ON bit
-        } 
+    if (outputType == OUTPUT_TYPE_PWM) {
+        for (int i = 0; i < MAX_CHANNEL; ++i) {
+            if (servos[i] != 0xffff) {
+                *OCxCONSETRegister[i] = 0x8000; //ON bit
+            }
+        }
+    } else if (outputType == OUTPUT_TYPE_PPM) {
+        *OCxCONSETRegister[PPM_OUT - 1] = 0x8000; //ON bit
     }
 }
 
 void disableThrottle(void) {
-    *OCxCONCLRRegister[THROTTLE] = 0x8000; //clear ON bit
+    if (outputType == OUTPUT_TYPE_PWM) {
+        *OCxCONCLRRegister[THROTTLE] = 0x8000; //clear ON bit
+    }
 }
 
 void enableThrottle(void) {
-    *OCxCONSETRegister[THROTTLE] = 0x8000; //clear ON bit
+    if (outputType == OUTPUT_TYPE_PWM) {
+        *OCxCONSETRegister[THROTTLE] = 0x8000; //set ON bit
+    }
 }
