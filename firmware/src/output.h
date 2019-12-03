@@ -27,7 +27,7 @@ extern "C" {
     };
 
     enum {
-        OUTPUT_TYPE_PWM = 0, OUTPUT_TYPE_PPM = 1
+        OUTPUT_TYPE_PWM = 0x37, OUTPUT_TYPE_PPM = 0x92
     };
 
     extern unsigned int outputType;

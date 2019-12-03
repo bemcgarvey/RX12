@@ -17,8 +17,11 @@
 #include "failsafe.h"
 #include "adc.h"
 #include "version.h"
+#include "output.h"
 
-static volatile enum {WAIT_COMMAND = 0, RX_DATA = 1} state;
+static volatile enum {
+    WAIT_COMMAND = 0, RX_DATA = 1
+} state;
 static volatile int command;
 static volatile uint8_t *pData;
 static volatile int rxCount;
@@ -47,7 +50,7 @@ void initSerial(void) {
     U4MODEbits.ON = 1;
     initADCSingleSample();
 }
-    
+
 void processCommand(void) {
     switch (command) {
         case ENABLE_LOGGING:
@@ -72,7 +75,7 @@ void processCommand(void) {
             break;
         case SET_VOLTAGE_CALIBRATION:
             pData = buffer;
-            rxCount = 2 * sizeof(uint32_t);
+            rxCount = 2 * sizeof (uint32_t);
             state = RX_DATA;
             break;
         case GET_LOG:
@@ -81,7 +84,7 @@ void processCommand(void) {
             state = RX_DATA;
             break;
         case CLEAR_LOG:
-            writeEEPROM(ADDRESS_CURRENT_LOG, ADDRESS_LOG_START - sizeof(LogData));
+            writeEEPROM(ADDRESS_CURRENT_LOG, ADDRESS_LOG_START - sizeof (LogData));
             writeEEPROM(ADDRESS_LOG_SEQUENCE, 0);
             state = WAIT_COMMAND;
             break;
@@ -96,20 +99,28 @@ void processCommand(void) {
             transmitLogCount();
             state = WAIT_COMMAND;
         case GET_VERSION:
-            *(unsigned int *)buffer = firmwareVersion;
+            *(unsigned int *) buffer = firmwareVersion;
             transmitData(4);
             state = WAIT_COMMAND;
+        case SET_OUTPUT_PWM:
+            writeEEPROM(ADDRESS_OUTPUT_TYPE, OUTPUT_TYPE_PWM);
+            state = WAIT_COMMAND;
+            break;
+        case SET_OUTPUT_PPM:
+            writeEEPROM(ADDRESS_OUTPUT_TYPE, OUTPUT_TYPE_PPM);
+            state = WAIT_COMMAND;
+            break;
         default:
             state = WAIT_COMMAND;
-            break;            
+            break;
     }
 }
 
 void postProcessCommand(void) {
     switch (command) {
         case SET_VOLTAGE_CALIBRATION:
-            writeEEPROM(ADDRESS_ADC_CALIBRATION1, *(uint32_t *)buffer);
-            writeEEPROM(ADDRESS_ADC_CALIBRATION2, *(uint32_t *)&buffer[4]);
+            writeEEPROM(ADDRESS_ADC_CALIBRATION1, *(uint32_t *) buffer);
+            writeEEPROM(ADDRESS_ADC_CALIBRATION2, *(uint32_t *) & buffer[4]);
             state = WAIT_COMMAND;
             break;
         case GET_LOG:
@@ -120,7 +131,6 @@ void postProcessCommand(void) {
             break;
     }
 }
-
 
 void __ISR(_UART4_RX_VECTOR, IPL1SOFT) uart4Isr(void) {
     uint8_t rxByte;
@@ -145,7 +155,7 @@ void __ISR(_UART4_RX_VECTOR, IPL1SOFT) uart4Isr(void) {
 
 void transmitData(int numBytes) {
     uint8_t *tx;
-    tx = (uint8_t *)buffer;
+    tx = (uint8_t *) buffer;
     while (numBytes > 0) {
         while (U4STAbits.UTXBF);
         U4TXREG = *tx;
@@ -155,29 +165,31 @@ void transmitData(int numBytes) {
 }
 
 void transmitSettings(void) {
-    readEEPROM(ADDRESS_FRAME_RATE, (uint32_t *)&buffer[0]);
-    readEEPROM(ADDRESS_DSM_TYPE, (uint32_t *)&buffer[4]);
-    readEEPROM(ADDRESS_FAILSAFE_TYPE, (uint32_t *)&buffer[8]);
-    readEEPROM(ADDRESS_LOGGING_ACTIVE, (uint32_t *)&buffer[12]);
-    transmitData(16);
+    readEEPROM(ADDRESS_FRAME_RATE, (uint32_t *) & buffer[0]);
+    readEEPROM(ADDRESS_DSM_TYPE, (uint32_t *) & buffer[4]);
+    readEEPROM(ADDRESS_FAILSAFE_TYPE, (uint32_t *) & buffer[8]);
+    readEEPROM(ADDRESS_LOGGING_ACTIVE, (uint32_t *) & buffer[12]);
+    readEEPROM(ADDRESS_OUTPUT_TYPE, (uint32_t *) & buffer[16]);
+    transmitData(20);
     transmitCalibration();
     transmitVoltage();
 }
 
 void transmitCalibration(void) {
-    readEEPROM(ADDRESS_ADC_CALIBRATION1, (uint32_t *)&buffer[0]);
-    readEEPROM(ADDRESS_ADC_CALIBRATION2, (uint32_t *)&buffer[4]);
+    readEEPROM(ADDRESS_ADC_CALIBRATION1, (uint32_t *) & buffer[0]);
+    readEEPROM(ADDRESS_ADC_CALIBRATION2, (uint32_t *) & buffer[4]);
     transmitData(8);
 }
+
 void transmitLog(unsigned int count) {
     unsigned int logAddress = 0;
     readEEPROM(ADDRESS_CURRENT_LOG, &logAddress);
     for (int i = 0; i < count; ++i) {
-        loadLogData((LogData *)buffer, logAddress);
-        transmitData(sizeof(LogData));
-        logAddress -= sizeof(LogData);
+        loadLogData((LogData *) buffer, logAddress);
+        transmitData(sizeof (LogData));
+        logAddress -= sizeof (LogData);
         if (logAddress < ADDRESS_LOG_START) {
-            logAddress = EEPROM_SIZE - sizeof(LogData) - ((EEPROM_SIZE - ADDRESS_LOG_START) % sizeof(LogData));
+            logAddress = EEPROM_SIZE - sizeof (LogData) - ((EEPROM_SIZE - ADDRESS_LOG_START) % sizeof (LogData));
         }
     }
 }
