@@ -87,16 +87,32 @@ void MainWindow::on_actionExit_triggered()
 void MainWindow::on_readButton_clicked()
 {
     bufferPos = 0;
-    bytesNeeded = 32;
-    state = WAIT_SETTINGS;
-    buffer[0] = GET_SETTINGS;
-    buffer[1] = GET_VERSION;
+    bytesNeeded = 4;
+    state = WAIT_VERSION;
+    buffer[0] = GET_VERSION;
     port->write(buffer, 2);
 }
 
 void MainWindow::on_readyRead(void) {
     int bytesReceived;
     switch (state) {
+    case WAIT_VERSION:
+        bytesReceived = static_cast<int>(port->read(&buffer[bufferPos], bytesNeeded));
+        bytesNeeded -= bytesReceived;
+        bufferPos += bytesReceived;
+        if (bytesNeeded == 0) {
+            firmwareVersion = buffer[1] + buffer[0] / 10.0;
+            if (firmwareVersion > 1.1) {
+                bytesNeeded = 32;
+            } else {
+                bytesNeeded = 28;
+            }
+            state = WAIT_SETTINGS;
+            bufferPos = 0;
+            buffer[0] = GET_SETTINGS;
+            port->write(buffer, 1);
+        }
+        break;
     case WAIT_SETTINGS:
         bytesReceived = static_cast<int>(port->read(&buffer[bufferPos], bytesNeeded));
         bytesNeeded -= bytesReceived;
@@ -162,10 +178,26 @@ void MainWindow::on_readyRead(void) {
 void MainWindow::displaySettings(unsigned int *values) {
     ui->frame22RadioButton->setChecked(false);
     ui->frame11RadioButton->setChecked(false);
-    if (values[0] == FRAME_22MS) {
-        ui->frame22RadioButton->setChecked(true);
-    } else if (values[0] == FRAME_11MS) {
-        ui->frame11RadioButton->setChecked(true);
+    ui->ppmRadioButton->setChecked(false);
+    if (firmwareVersion >= 1.2) {
+        ui->ppmRadioButton->setEnabled(true);
+        if (values[4] == OUTPUT_TYPE_PWM) {
+            if (values[0] == FRAME_22MS) {
+                ui->frame22RadioButton->setChecked(true);
+            } else if (values[0] == FRAME_11MS) {
+                ui->frame11RadioButton->setChecked(true);
+            }
+
+        } else if (values[4] == OUTPUT_TYPE_PPM) {
+           ui->ppmRadioButton->setChecked(true);
+        }
+    } else {
+        ui->ppmRadioButton->setEnabled(false);
+        if (values[0] == FRAME_22MS) {
+            ui->frame22RadioButton->setChecked(true);
+        } else if (values[0] == FRAME_11MS) {
+            ui->frame11RadioButton->setChecked(true);
+        }
     }
     ui->dsm2_1024radioButton->setChecked(false);
     ui->dsm2_2048RadioButton->setChecked(false);
@@ -191,11 +223,17 @@ void MainWindow::displaySettings(unsigned int *values) {
     } else {
         ui->loggingDisabledRadioButton->setChecked(true);
     }
-    calibration1 = *(reinterpret_cast<float *>((&values[4])));
-    calibration2 = *(reinterpret_cast<float *>((&values[5])));
-    double voltage = calculateVoltage(values[6]);
+    double voltage = 0.0;
+    if (firmwareVersion >= 1.2) {
+        calibration1 = *(reinterpret_cast<float *>((&values[5])));
+        calibration2 = *(reinterpret_cast<float *>((&values[6])));
+        voltage = calculateVoltage(values[7]);
+    } else {
+        calibration1 = *(reinterpret_cast<float *>((&values[4])));
+        calibration2 = *(reinterpret_cast<float *>((&values[5])));
+        voltage = calculateVoltage(values[6]);
+    }
     ui->measuredVoltagelabel->setText(QString("%1V").arg(voltage, 0, 'f', 2));
-    firmwareVersion = values[7];
 }
 
 double MainWindow::calculateVoltage(unsigned int value) {
@@ -258,7 +296,12 @@ void MainWindow::on_saveButton_clicked()
     } else {
         buffer[1] = DISABLE_LOGGING;
     }
-    port->write(buffer, 2);
+    if (ui->ppmRadioButton->isChecked()) {
+        buffer[2] = SET_OUTPUT_PPM;
+    } else {
+        buffer[2] = SET_OUTPUT_PWM;
+    }
+    port->write(buffer, 3);
     ui->statusBar->showMessage("Settings saved", 2000);
 }
 

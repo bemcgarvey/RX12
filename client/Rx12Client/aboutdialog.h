@@ -12,7 +12,7 @@ class AboutDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit AboutDialog(unsigned int firmwareVersion, QWidget *parent = nullptr);
+    explicit AboutDialog(double firmwareVersion, QWidget *parent = nullptr);
     ~AboutDialog();
 
 private slots:

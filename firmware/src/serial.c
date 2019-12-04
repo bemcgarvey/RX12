@@ -95,13 +95,16 @@ void processCommand(void) {
         case GET_VOLTAGE_CALIBRATION:
             transmitCalibration();
             state = WAIT_COMMAND;
+            break;
         case GET_LOG_COUNT:
             transmitLogCount();
             state = WAIT_COMMAND;
+            break;
         case GET_VERSION:
             *(unsigned int *) buffer = firmwareVersion;
             transmitData(4);
             state = WAIT_COMMAND;
+            break;
         case SET_OUTPUT_PWM:
             writeEEPROM(ADDRESS_OUTPUT_TYPE, OUTPUT_TYPE_PWM);
             state = WAIT_COMMAND;

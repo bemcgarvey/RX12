@@ -89,6 +89,13 @@
                </property>
               </widget>
              </item>
+             <item>
+              <widget class="QRadioButton" name="ppmRadioButton">
+               <property name="text">
+                <string>PPM</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
