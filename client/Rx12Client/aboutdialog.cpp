@@ -8,8 +8,8 @@ AboutDialog::AboutDialog(double firmwareVersion, QWidget *parent) :
 {
     setWindowFlags(Qt::Dialog | Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint | Qt::MSWindowsFixedSizeDialogHint);
     ui->setupUi(this);
-    ui->clientVersionLabel->setText(QString("%1.%2").arg(MAJOR_VERSION).arg(MINOR_VERSION, 2, 10, QChar('0')));
-    ui->firmwareVersionLabel->setText(QString("%1").arg(firmwareVersion, 0, 'g', 1));
+    ui->clientVersionLabel->setText(QString("%1.%2").arg(MAJOR_VERSION).arg(MINOR_VERSION));
+    ui->firmwareVersionLabel->setText(QString("%1").arg(firmwareVersion));
 }
 
 AboutDialog::~AboutDialog()

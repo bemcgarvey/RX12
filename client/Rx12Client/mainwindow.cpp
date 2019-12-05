@@ -101,7 +101,13 @@ void MainWindow::on_readyRead(void) {
         bytesNeeded -= bytesReceived;
         bufferPos += bytesReceived;
         if (bytesNeeded == 0) {
-            firmwareVersion = buffer[1] + buffer[0] / 10.0;
+            double minor;
+            if (buffer[0] < 10) {
+                minor = buffer[0] / 10.0;
+            } else {
+                minor = buffer[0] / 100.0;
+            }
+            firmwareVersion = buffer[1] + minor;
             if (firmwareVersion > 1.1) {
                 bytesNeeded = 32;
             } else {
