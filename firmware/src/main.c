@@ -83,32 +83,46 @@ int main(void) {
             failsafeType = HOLD_FAILSAFE;
         }
     }
+    result = readEEPROM(ADDRESS_OUTPUT_TYPE, &outputType);
+    if (result == EEPROM_SUCCESS) {
+        if (outputType != OUTPUT_TYPE_PWM && outputType != OUTPUT_TYPE_PPM) {
+            outputType = OUTPUT_TYPE_PWM;
+            writeEEPROM(ADDRESS_OUTPUT_TYPE, outputType);
+        }
+    } else {
+        outputType = OUTPUT_TYPE_PWM;
+    }
     unsigned int blinks = 0;
-    if (frameMode == FRAME_11MS && startupMode != START_WDTO) {
-        blinks = 2;
+    if (startupMode != START_WDTO) {
+        if (frameMode == FRAME_11MS) {
+            blinks = 2;
+        }
+        if (outputType == OUTPUT_TYPE_PPM) {
+            blinks = 4;
+        }
     }
     if (startupMode == START_BIND) {
         blinks = 10;
     }
     for (unsigned int i = 0; i < blinks; ++i) {
         LED3On();
-        delay_us(100000);
+        delay_us(200000);
         LED3Off();
-        delay_us(100000);
+        delay_us(200000);
     }
     if (failsafeType == PRESET_FAILSAFE && startupMode != START_WDTO) {
         for (unsigned int i = 0; i < 2; ++i) {
             LED2On();
-            delay_us(100000);
+            delay_us(200000);
             LED2Off();
-            delay_us(100000);
+            delay_us(200000);
         }
     }
     __builtin_set_isr_state(0);
     __builtin_enable_interrupts();
     startSystemTickTimer();
     initOutputs();
-    if (frameMode == FRAME_22MS) {
+    if (frameMode == FRAME_22MS || outputType == OUTPUT_TYPE_PPM) {
         startOCTimer(PERIOD_22MS);
     } else {
         startOCTimer(PERIOD_11MS);
@@ -140,9 +154,9 @@ int main(void) {
             if (startupMode != START_WDTO) {
                 for (unsigned int i = 0; i < 2; ++i) {
                     LED1On();
-                    delay_us(100000);
+                    delay_us(200000);
                     LED1Off();
-                    delay_us(100000);
+                    delay_us(200000);
                 }
             }
             startLogging();

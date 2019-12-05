@@ -33,6 +33,7 @@
 #define ADDRESS_CURRENT_LOG         0x1c
 #define ADDRESS_LOG_SEQUENCE        0x20
 #define ADDRESS_PRIMARY_SAT         0x24
+#define ADDRESS_OUTPUT_TYPE         0x28
 #define ADDRESS_LOG_START           0x100
 
 #ifdef	__cplusplus
