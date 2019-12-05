@@ -185,8 +185,10 @@ void MainWindow::displaySettings(unsigned int *values) {
     ui->frame22RadioButton->setChecked(false);
     ui->frame11RadioButton->setChecked(false);
     ui->ppmRadioButton->setChecked(false);
+    ui->sbusRadioButton->setChecked(false);
     if (firmwareVersion >= 1.2) {
         ui->ppmRadioButton->setEnabled(true);
+        ui->sbusRadioButton->setEnabled(true);
         if (values[4] == OUTPUT_TYPE_PWM) {
             if (values[0] == FRAME_22MS) {
                 ui->frame22RadioButton->setChecked(true);
@@ -195,10 +197,13 @@ void MainWindow::displaySettings(unsigned int *values) {
             }
 
         } else if (values[4] == OUTPUT_TYPE_PPM) {
-           ui->ppmRadioButton->setChecked(true);
+            ui->ppmRadioButton->setChecked(true);
+        } else if (values[4] == OUTPUT_TYPE_SBUS) {
+            ui->sbusRadioButton->setChecked(true);
         }
     } else {
         ui->ppmRadioButton->setEnabled(false);
+        ui->sbusRadioButton->setEnabled(false);
         if (values[0] == FRAME_22MS) {
             ui->frame22RadioButton->setChecked(true);
         } else if (values[0] == FRAME_11MS) {
@@ -304,6 +309,8 @@ void MainWindow::on_saveButton_clicked()
     }
     if (ui->ppmRadioButton->isChecked()) {
         buffer[2] = SET_OUTPUT_PPM;
+    } else if (ui->sbusRadioButton->isChecked()) {
+        buffer[2] = SET_OUTPUT_SBUS;
     } else {
         buffer[2] = SET_OUTPUT_PWM;
     }

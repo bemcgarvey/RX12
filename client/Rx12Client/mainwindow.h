@@ -24,7 +24,7 @@ private:
     QLabel *connectedLabel;
     QSerialPort *port;
     enum {IDLE, WAIT_SETTINGS, WAIT_LOG, CALIBRATING, WAIT_LOG_COUNT, WAIT_VERSION} state;
-    enum {OUTPUT_TYPE_PWM = 0x37, OUTPUT_TYPE_PPM = 0x92};
+    enum {OUTPUT_TYPE_PWM = 0x37, OUTPUT_TYPE_PPM = 0x92, OUTPUT_TYPE_SBUS = 0xA9};
     int bytesNeeded;
     char buffer[64];
     int bufferPos;
