@@ -98,7 +98,7 @@ int main(void) {
             blinks = 2;
         }
         if (outputType == OUTPUT_TYPE_PPM) {
-            blinks = 3;
+            blinks = 4;
         }
     }
     if (startupMode == START_BIND) {
@@ -106,16 +106,16 @@ int main(void) {
     }
     for (unsigned int i = 0; i < blinks; ++i) {
         LED3On();
-        delay_us(100000);
+        delay_us(200000);
         LED3Off();
-        delay_us(100000);
+        delay_us(200000);
     }
     if (failsafeType == PRESET_FAILSAFE && startupMode != START_WDTO) {
         for (unsigned int i = 0; i < 2; ++i) {
             LED2On();
-            delay_us(100000);
+            delay_us(200000);
             LED2Off();
-            delay_us(100000);
+            delay_us(200000);
         }
     }
     __builtin_set_isr_state(0);
@@ -154,9 +154,9 @@ int main(void) {
             if (startupMode != START_WDTO) {
                 for (unsigned int i = 0; i < 2; ++i) {
                     LED1On();
-                    delay_us(100000);
+                    delay_us(200000);
                     LED1Off();
-                    delay_us(100000);
+                    delay_us(200000);
                 }
             }
             startLogging();

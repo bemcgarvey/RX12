@@ -12,6 +12,7 @@
 #define	OUTPUT_H
 
 #include <stdbool.h>
+#include <stdint.h>
 
 #ifdef	__cplusplus
 extern "C" {
@@ -42,7 +43,8 @@ extern "C" {
     void enableActiveOutputs(void);
     void disableThrottle(void);
     void enableThrottle(void);
-
+    void initPPM(void);
+    void startPPM(void);
 
 #ifdef	__cplusplus
 }
