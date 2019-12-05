@@ -5,7 +5,7 @@
 * Up to 12 channels
 * One to three satellite receivers for full diversity
 * Works with DSMX or DSM2 satellites
-* 22ms or 11ms output rate
+* 22ms or 11ms output rate or PPM output on one set of pins (up to 8 channels)
 * Preset or hold failsafe modes
 * PC client program with serial connection
 * Simple data logging of multiple flights
