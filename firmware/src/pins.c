@@ -10,6 +10,7 @@
 #include <xc.h>
 #include "pins.h"
 #include "startup.h"
+#include "output.h"
 
 void initPins(void) {
     //Set all pins to digital output low level
@@ -64,7 +65,11 @@ void setPPS(void) {
     RPA7R = 5;
     RPB14R = 5;
     RPB15R = 5;
-    RPG6R = 6;
+    if (outputType == OUTPUT_TYPE_SBUS) {
+        RPG6R = 1;  //U1TX
+    } else {
+        RPG6R = 6;  //OC7
+    }
     RPB9R = 9;
     RPC6R = 9;
     RPC8R = 8;

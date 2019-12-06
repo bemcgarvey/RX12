@@ -19,8 +19,8 @@ extern "C" {
 #endif
 
 #define MAX_CHANNEL     12
-#define MAX_PPM_CHANNEL 8
-#define PPM_OUT         12  //Channel for PPM output
+#define OFFSET  (2097 * US_COUNT)
+#define PULSE   (903 * US_COUNT)
 
     enum {
         THROTTLE = 0, AILERON = 1, ELEVATOR = 2, RUDDER = 3, GEAR = 4, AUX1 = 5,
@@ -28,23 +28,23 @@ extern "C" {
     };
 
     enum {
-        OUTPUT_TYPE_PWM = 0x37, OUTPUT_TYPE_PPM = 0x92
+        OUTPUT_TYPE_PWM = 0x37, OUTPUT_TYPE_PPM = 0x92, OUTPUT_TYPE_SBUS = 0xa9
     };
 
-    extern unsigned int outputType;
+    extern unsigned int outputType __attribute__((persistent));
     extern uint16_t servos[MAX_CHANNEL];
     extern uint32_t outputPulses[MAX_CHANNEL];
     extern const unsigned int startOffsets[MAX_CHANNEL];
     extern const unsigned int pulseOffsets[MAX_CHANNEL];
     extern volatile unsigned int* const pulseRegister[MAX_CHANNEL];
+    extern volatile unsigned int* const startRegister[MAX_CHANNEL];
+    extern volatile unsigned int* const OCxCONSETRegister[MAX_CHANNEL];
     extern bool outputsActivated;
 
     void initOutputs(void);
     void enableActiveOutputs(void);
     void disableThrottle(void);
     void enableThrottle(void);
-    void initPPM(void);
-    void startPPM(void);
 
 #ifdef	__cplusplus
 }
