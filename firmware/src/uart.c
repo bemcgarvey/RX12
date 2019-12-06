@@ -22,12 +22,12 @@ typedef union {
     uint32_t packet[4];
 } UartPacket;
 
-static volatile UartPacket uart1Packet;
+static volatile UartPacket uart5Packet;
 static volatile UartPacket uart6Packet;
 static volatile UartPacket uart3Packet;
 
-static volatile int uart1Pos = 0;
-static volatile bool uart1PacketGood = true;
+static volatile int uart5Pos = 0;
+static volatile bool uart5PacketGood = true;
 
 static volatile int uart6Pos = 0;
 static volatile bool uart6PacketGood = true;
@@ -38,19 +38,19 @@ static volatile bool uart3PacketGood = true;
 static volatile unsigned int lastRx[3] = {0, 0, 0};
 
 void initUARTs(void) {
-    //SAT1 = UART1
-    U1BRG = 129; //115200 baud
-    U1MODEbits.BRGH = 1;
-    U1STAbits.URXEN = 1;
-    IPC9bits.U1RXIP = 3;
-    IPC9bits.U1RXIS = 3;
-    IFS1bits.U1RXIF = 0;
-    IEC1bits.U1RXIE = 1;
-    IPC9bits.U1EIP = 4;
-    IPC9bits.U1EIS = 3;
-    IFS1bits.U1EIF = 0;
-    IEC1bits.U1EIE = 1;
-    U1STAbits.OERR = 0;
+    //SAT1 = UART5
+    U5BRG = 129; //115200 baud
+    U5MODEbits.BRGH = 1;
+    U5STAbits.URXEN = 1;
+    IPC17bits.U5RXIP = 3;
+    IPC17bits.U5RXIS = 3;
+    IFS2bits.U5RXIF = 0;
+    IEC2bits.U5RXIE = 1;
+    IPC17bits.U5EIP = 4;
+    IPC17bits.U5EIS = 3;
+    IFS2bits.U5EIF = 0;
+    IEC2bits.U5EIE = 1;
+    U5STAbits.OERR = 0;
 
     //SAT2 = UART6
     U6BRG = 129; //115200 baud
@@ -81,35 +81,35 @@ void initUARTs(void) {
     U3STAbits.OERR = 0;
 
     PRISSbits.PRI3SS = 1;
-    U1MODEbits.ON = 1;
+    U5MODEbits.ON = 1;
     U6MODEbits.ON = 1;
     U3MODEbits.ON = 1;
 }
 
-void __ISR(_UART1_RX_VECTOR, IPL3SRS) uart1Isr(void) {
+void __ISR(_UART5_RX_VECTOR, IPL3SRS) uart5Isr(void) {
     uint8_t rxByte;
     unsigned int elapsedTime;
     elapsedTime = systemTickCount - lastRx[SAT1];
     lastRx[SAT1] = systemTickCount;
-    while (U1STAbits.URXDA == 1) {
+    while (U5STAbits.URXDA == 1) {
         if (elapsedTime > 2) {
-            uart1Pos = 0;
-            uart1PacketGood = true;
+            uart5Pos = 0;
+            uart5PacketGood = true;
         }
-        if (U1STAbits.FERR == 1) {
-            uart1PacketGood = false;
+        if (U5STAbits.FERR == 1) {
+            uart5PacketGood = false;
         }
-        rxByte = U1RXREG;
-        if ((uart1Pos & 1) == 0) {
-            uart1Packet.buffer[uart1Pos + 1] = rxByte;
+        rxByte = U5RXREG;
+        if ((uart5Pos & 1) == 0) {
+            uart5Packet.buffer[uart5Pos + 1] = rxByte;
         } else {
-            uart1Packet.buffer[uart1Pos - 1] = rxByte;
+            uart5Packet.buffer[uart5Pos - 1] = rxByte;
         }
-        ++uart1Pos;
-        if (uart1Pos == 16) {
-            if (uart1PacketGood) {
+        ++uart5Pos;
+        if (uart5Pos == 16) {
+            if (uart5PacketGood) {
                 for (int i = 0; i < 4; ++i) {
-                    packetQueue[packetQueueHead].data[i] = uart1Packet.packet[i]; 
+                    packetQueue[packetQueueHead].data[i] = uart5Packet.packet[i]; 
                 }
                 packetQueue[packetQueueHead].timeStamp = systemTickCount;
                 packetQueue[packetQueueHead].satellite = SAT1;
@@ -118,19 +118,19 @@ void __ISR(_UART1_RX_VECTOR, IPL3SRS) uart1Isr(void) {
                     packetQueueHead = 0;
                 }
             }
-            uart1PacketGood = false;
-            uart1Pos = 0;
+            uart5PacketGood = false;
+            uart5Pos = 0;
         }
     }
-    IFS1bits.U1RXIF = 0;
+    IFS2bits.U5RXIF = 0;
 }
 
-void __ISR(_UART1_FAULT_VECTOR, IPL4SOFT) uart1ErrorIsr(void) {
-    if (U1STAbits.OERR == 1) {
-        U1STAbits.OERR = 0;
-        uart1PacketGood = false;
+void __ISR(_UART5_FAULT_VECTOR, IPL4SOFT) uart5ErrorIsr(void) {
+    if (U5STAbits.OERR == 1) {
+        U5STAbits.OERR = 0;
+        uart5PacketGood = false;
     }
-    IFS1bits.U1EIF = 0;
+    IFS2bits.U5EIF = 0;
 }
 
 void __ISR(_UART6_RX_VECTOR, IPL3SRS) uart6Isr(void) {

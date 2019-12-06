@@ -57,7 +57,7 @@ void setPPS(void) {
     
     /* PPS Input Remapping */
     U3RXR = 6;
-    U1RXR = 8;
+    U5RXR = 8;
     U6RXR = 2;
 
     /* PPS Output Remapping */

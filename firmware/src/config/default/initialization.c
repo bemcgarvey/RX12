@@ -85,7 +85,7 @@ void SYS_Initialize(void* data) {
     PMD2SET = 0xffffffff;
     PMD3SET = 0x0000ffff;
     PMD4SET = 0xffffff69;
-    PMD5SET = 0xffffffd2;
+    PMD5SET = 0xffffffc2;
     PMD6SET = 0xffffffff;
     PMD7SET = 0xffffffff;
 
