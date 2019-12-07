@@ -1,9 +1,12 @@
-/* 
- * File:   sbus.h
- * Author: bemcg
- *
- * Created on December 5, 2019, 10:32 PM
- */
+/////////////////////////////////////////////////////
+// Project: RX12                                   //
+// File: sbus.h                                    //
+// Target: PIC32MKxxxxGPD/E064                     // 
+// Compiler: XC32 (Tested with 2.10)               //
+// Author: Brad McGarvey                           //
+// License: GNU General Public License v3.0        //
+// Description: S.Bus output code                  //
+/////////////////////////////////////////////////////
 
 #ifndef SBUS_H
 #define	SBUS_H

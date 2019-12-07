@@ -1,9 +1,12 @@
-/* 
- * File:   ppm.h
- * Author: bemcg
- *
- * Created on December 5, 2019, 10:35 PM
- */
+/////////////////////////////////////////////////////
+// Project: RX12                                   //
+// File: ppm.h                                     //
+// Target: PIC32MKxxxxGPD/E064                     // 
+// Compiler: XC32 (Tested with 2.10)               //
+// Author: Brad McGarvey                           //
+// License: GNU General Public License v3.0        //
+// Description: PPM output code                    //
+/////////////////////////////////////////////////////
 
 #ifndef PPM_H
 #define	PPM_H

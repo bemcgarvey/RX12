@@ -1,10 +1,19 @@
-//TODO add header comments
+/////////////////////////////////////////////////////
+// Project: RX12                                   //
+// File: sbus.c                                    //
+// Target: PIC32MKxxxxGPD/E064                     // 
+// Compiler: XC32 (Tested with 2.10)               //
+// Author: Brad McGarvey                           //
+// License: GNU General Public License v3.0        //
+// Description: S.Bus output code                  //
+/////////////////////////////////////////////////////
 
 #include <xc.h>
 #include "sbus.h"
 #include "output.h"
 #include <sys/attribs.h>
 #include <stdint.h>
+#include "failsafe.h"
 
 #define SBUS_HEADER 0x0f;
 #define SBUS_FOOTER 0x00;
@@ -17,12 +26,12 @@ static unsigned int activeChannels = 0;
 
 void initSBus(void) {
     //Setup UART1
-    //100000 baud, 8E2S, inverted polarity
+    //100000 baud, 8E2, inverted polarity
     U1MODEbits.CLKSEL = 0b01; //SYSCLOCK
     U1BRG = 75; //100000 baud
     U1MODEbits.BRGH = 0;
     U1MODEbits.PDSEL = 0b01; //8E
-    U1MODEbits.STSEL = 1; //2S
+    U1MODEbits.STSEL = 1; //2 stop bits
     U1STAbits.UTXINV = 1; //invert
     U1STAbits.UTXISEL = 0b10; //interrupt when tx buffer empty
     IPC10bits.U1TXIP = 6;
@@ -75,7 +84,11 @@ void transmitSBusPacket(void) {
     sbusPacket.channels[14] = (servos[10] >> 2);
     sbusPacket.channels[15] = (servos[10] >> 10) | (servos[11] << 1);
     sbusPacket.channels[16] = (servos[11] >> 7);
-    //TODO Set failsafe bit
+    if (failsafeEngaged) {
+        sbusPacket.failsafe = 1;
+    } else {
+        sbusPacket.failsafe = 0;
+    }
     //load first 8 bytes
     for (int i = 0; i < 8; ++i) {
         U1TXREG = sbusPacket.bytes[i];
