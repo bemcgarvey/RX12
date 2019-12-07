@@ -113,6 +113,10 @@ void processCommand(void) {
             writeEEPROM(ADDRESS_OUTPUT_TYPE, OUTPUT_TYPE_PPM);
             state = WAIT_COMMAND;
             break;
+        case SET_OUTPUT_SBUS:
+            writeEEPROM(ADDRESS_OUTPUT_TYPE, OUTPUT_TYPE_SBUS);
+            state = WAIT_COMMAND;
+            break;
         default:
             state = WAIT_COMMAND;
             break;

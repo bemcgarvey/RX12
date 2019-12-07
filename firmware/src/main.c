@@ -60,7 +60,7 @@ int main(void) {
         result = readEEPROM(ADDRESS_OUTPUT_TYPE, &savedOutputType);
         if (result == EEPROM_SUCCESS) {
             if (savedOutputType == OUTPUT_TYPE_PWM || savedOutputType == OUTPUT_TYPE_PPM
-                    || outputType == OUTPUT_TYPE_SBUS) {
+                    || savedOutputType == OUTPUT_TYPE_SBUS) {
                 outputType = savedOutputType;
             } else {
                 writeEEPROM(ADDRESS_OUTPUT_TYPE, outputType);
@@ -98,22 +98,16 @@ int main(void) {
             failsafeType = HOLD_FAILSAFE;
         }
     }
-    result = readEEPROM(ADDRESS_OUTPUT_TYPE, &outputType);
-    if (result == EEPROM_SUCCESS) {
-        if (outputType != OUTPUT_TYPE_PWM && outputType != OUTPUT_TYPE_PPM) {
-            outputType = OUTPUT_TYPE_PWM;
-            writeEEPROM(ADDRESS_OUTPUT_TYPE, outputType);
-        }
-    } else {
-        outputType = OUTPUT_TYPE_PWM;
-    }
     unsigned int blinks = 0;
     if (startupMode != START_WDTO) {
         if (frameMode == FRAME_11MS) {
-            blinks = 2;
+            blinks = 1;
         }
         if (outputType == OUTPUT_TYPE_PPM) {
-            blinks = 4;
+            blinks = 2;
+        }
+        if (outputType == OUTPUT_TYPE_SBUS) {
+            blinks = 3;
         }
     }
     if (startupMode == START_BIND) {
@@ -137,7 +131,9 @@ int main(void) {
     __builtin_enable_interrupts();
     startSystemTickTimer();
     initOutputs();
-    if (frameMode == FRAME_22MS || outputType == OUTPUT_TYPE_PPM) {
+    if (outputType == OUTPUT_TYPE_SBUS) {
+        startOCTimer(PERIOD_SBUS);
+    } else if (frameMode == FRAME_22MS || outputType == OUTPUT_TYPE_PPM) {
         startOCTimer(PERIOD_22MS);
     } else {
         startOCTimer(PERIOD_11MS);
