@@ -163,7 +163,7 @@ int main(void) {
         checkLoggingActive();
         if (logging) {
             if (startupMode != START_WDTO) {
-                for (unsigned int i = 0; i < 2; ++i) {
+                for (unsigned int i = 0; i < 4; ++i) {
                     LED1On();
                     delay_us(200000);
                     LED1Off();
