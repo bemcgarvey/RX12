@@ -20,11 +20,11 @@ extern "C" {
             uint8_t header;
             uint8_t channels[22];
             struct {
-                int channel17 : 1;
-                int channel18 : 1;
-                int frameLost : 1;
-                int failsafe : 1;
                 int : 4;
+                int failsafe : 1;
+                int frameLost : 1;
+                int channel18 : 1;
+                int channel17 : 1;
             };
             uint8_t footer;
         };

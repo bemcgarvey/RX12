@@ -61,7 +61,7 @@ void startSBus(void) {
 
 void transmitSBusPacket(void) {
     //build packet - Use Futaba AETR order
-    uint8_t throttle;
+    uint16_t throttle;
     if (servos[0] == 0xffff) {
         throttle = 0;
     } else {
