@@ -53,10 +53,16 @@ void __ISR(_OUTPUT_COMPARE_7_VECTOR, IPL6SOFT) OC7Isr(void) {
         *pulseRegister[PPM_OUT - 1] = PPM_SPACE;
     } else {
         unsigned int start;
-        if (servos[0] == 0xffff && currentPPMChannel == 0) {
+        if (servos[0] == 0xffff && currentPPMChannel == 2) {
             start = *startRegister[PPM_OUT - 1] + PULSE;
         } else {
-            start = *startRegister[PPM_OUT - 1] + outputPulses[currentPPMChannel] + PULSE;
+            if (currentPPMChannel < 2) {
+                start = *startRegister[PPM_OUT - 1] + outputPulses[currentPPMChannel + 1] + PULSE;
+            } else if (currentPPMChannel == 2) {
+                start = *startRegister[PPM_OUT - 1] + outputPulses[0] + PULSE;
+            } else {
+                start = *startRegister[PPM_OUT - 1] + outputPulses[currentPPMChannel] + PULSE;
+            }
         }
         *startRegister[PPM_OUT - 1] = start;
         *pulseRegister[PPM_OUT - 1] = start + PPM_SPACE;
