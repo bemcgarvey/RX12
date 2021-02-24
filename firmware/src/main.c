@@ -131,9 +131,8 @@ int main(void) {
     __builtin_enable_interrupts();
     startSystemTickTimer();
     initOutputs();
-    if (outputType == OUTPUT_TYPE_SBUS) {
-        startOCTimer(PERIOD_SBUS);
-    } else if (frameMode == FRAME_22MS || outputType == OUTPUT_TYPE_PPM) {
+    if (frameMode == FRAME_22MS || outputType == OUTPUT_TYPE_PPM ||
+            outputType == OUTPUT_TYPE_SBUS) {
         startOCTimer(PERIOD_22MS);
     } else {
         startOCTimer(PERIOD_11MS);

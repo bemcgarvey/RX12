@@ -41,7 +41,7 @@ bool outputsActivated = false;
 unsigned int outputType __attribute__((persistent));
 
 void initOutputs(void) {
-    if (outputType == OUTPUT_TYPE_PWM) {
+    if (outputType == OUTPUT_TYPE_PWM || outputType == OUTPUT_TYPE_SBUS) {
         //Ch 0 (zero based so this is actually Ch 1 on the Rx board)
         OC11CONbits.OC32 = 1;
         OC11CONbits.OCM = 0b101;
@@ -83,23 +83,27 @@ void initOutputs(void) {
             outputPulses[i] = pulseOffsets[i] + ((1194 * US_COUNT) * 1024) / 2048; //Mid
             *pulseRegister[i] = outputPulses[i];
         }
-    } else if (outputType == OUTPUT_TYPE_PPM) {
-        initPPM();
-    } else if (outputType == OUTPUT_TYPE_SBUS) {
+    }
+    if (outputType == OUTPUT_TYPE_SBUS) {
         initSBus();
+    }
+    else if (outputType == OUTPUT_TYPE_PPM) {
+        initPPM();
     }
 }
 
 void enableActiveOutputs(void) {
-    if (outputType == OUTPUT_TYPE_PWM) {
+    if (outputType == OUTPUT_TYPE_PWM || outputType == OUTPUT_TYPE_SBUS) {
         for (int i = 0; i < MAX_CHANNEL; ++i) {
             if (servos[i] != 0xffff) {
                 *OCxCONSETRegister[i] = 0x8000; //ON bit
             }
         }
-    } else if (outputType == OUTPUT_TYPE_PPM) {
+    }
+    if (outputType == OUTPUT_TYPE_PPM) {
         startPPM();
-    } else if (outputType == OUTPUT_TYPE_SBUS) {
+    } 
+    if (outputType == OUTPUT_TYPE_SBUS) {
         startSBus();
     }
 }

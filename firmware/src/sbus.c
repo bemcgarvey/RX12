@@ -14,6 +14,7 @@
 #include <sys/attribs.h>
 #include <stdint.h>
 #include "failsafe.h"
+#include "timers.h"
 
 #define SBUS_HEADER 0x0f;
 #define SBUS_FOOTER 0x00;
@@ -45,7 +46,7 @@ void initSBus(void) {
 }
 
 void startSBus(void) {
-    activeChannels = 0;
+    activeChannels = 0;  //TODO Remove activeChannels, it is unused.  Needs to be tested
     for (int i = 0; i < MAX_CHANNEL; ++i) {
         if (servos[i] != 0xffff) {
             activeChannels = i + 1;
@@ -53,10 +54,20 @@ void startSBus(void) {
             servos[i] = 1024;  //set inactive channels to midpoint value;
         }
     }
+    //Timer 4/5 in 32bit mode 
+    T4CONbits.ON = 0;
+    Nop();
+    T4CONbits.T32 = 1; //32 bit
+    T4CONbits.TCKPS = 0; //1:1
+    TMR4 = 0;
+    PR4 = MS_COUNT * PERIOD_SBUS;
+    IPC4bits.T4IP = 6;
+    IPC4bits.T4IS = 0;
+    IFS0bits.T4IF = 0; 
     IFS1bits.U1TXIF = 0;
-    IEC1bits.U1TXIE = 1;
     U1MODEbits.ON = 1;
-    IEC0bits.T2IE = 1; //enable frame timer interrupt
+    IEC0bits.T4IE = 1; //enable frame timer interrupt
+    T4CONbits.ON = 1;
 }
 
 void transmitSBusPacket(void) {
@@ -112,4 +123,9 @@ void __ISR(_UART1_TX_VECTOR, IPL6SOFT) Uart1TxIsr(void) {
         U1TXREG = sbusPacket.bytes[24];
     }
     IFS1bits.U1TXIF = 0;
+}
+
+void __ISR(_TIMER_4_VECTOR, IPL6SOFT) Timer4Isr(void) {
+    transmitSBusPacket();
+    IFS0bits.T4IF = 0;
 }

@@ -58,18 +58,18 @@ void startLogging(void) {
         writeEEPROM(ADDRESS_CURRENT_LOG, logAddress);
     }  
     initADC();
-    T5CONbits.T32 = 0;
-    T5CONbits.TCKPS = 0b010; //1:4
-    TMR5 = 0;
-    PR5 = MS_COUNT / 4;
-    IPC6bits.T5IP = 5;
-    IPC6bits.T5IS = 0;
-    IFS0bits.T5IF = 0;
-    IEC0bits.T5IE = 1;
-    T5CONbits.ON = 1;
+    T9CONbits.T32 = 0;
+    T9CONbits.TCKPS = 0b010; //1:4
+    TMR9 = 0;
+    PR9 = MS_COUNT / 4;
+    IPC22bits.T9IP = 5;
+    IPC22bits.T9IS = 0;
+    IFS2bits.T9IF = 0;
+    IEC2bits.T9IE = 1;
+    T9CONbits.ON = 1;
 }
 
-void __ISR(_TIMER_5_VECTOR, IPL5SOFT) Timer5Isr(void) {
+void __ISR(_TIMER_9_VECTOR, IPL5SOFT) Timer9Isr(void) {
     ++loggingTimer;
     if (loggingTimer >= LOGGING_INTERVAL) {
         loggingTimer = 0;
@@ -77,7 +77,7 @@ void __ISR(_TIMER_5_VECTOR, IPL5SOFT) Timer5Isr(void) {
         currentFlightLog.totalPackets = packetsReceived;
         startIntWrite(logAddress, (unsigned int *)currentFlightLog.words, LOG_WORDS);
     }
-    IFS0bits.T5IF = 0;
+    IFS2bits.T9IF = 0;
 }
 
 void enableLogging(bool enable) {

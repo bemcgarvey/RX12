@@ -11,7 +11,6 @@
 #include "timers.h"
 #include <sys/attribs.h>
 #include "output.h"
-#include "sbus.h"
 
 volatile unsigned int systemTickCount = 0;
 
@@ -49,21 +48,17 @@ void startOCTimer(unsigned int msPeriod) {
     TMR2 = 0;
     PR2 = MS_COUNT * msPeriod;
     IPC2bits.T2IP = 6;
-    IPC2bits.T2IS = 0;
+    IPC2bits.T2IS = 3;
     IFS0bits.T2IF = 0;
-    if (outputType == OUTPUT_TYPE_PWM) {
+    if (outputType == OUTPUT_TYPE_PWM || outputType == OUTPUT_TYPE_SBUS) {
         IEC0bits.T2IE = 1;
     }
     T2CONbits.ON = 1;
 }
 
 void __ISR(_TIMER_2_VECTOR, IPL6SOFT) Timer2Isr(void) {
-    if (outputType == OUTPUT_TYPE_PWM) {
-        for (int i = 0; i < MAX_CHANNEL; ++i) {
-            *pulseRegister[i] = outputPulses[i] + pulseOffsets[i];
-        }
-    } else if (outputType == OUTPUT_TYPE_SBUS) {
-        transmitSBusPacket();
+    for (int i = 0; i < MAX_CHANNEL; ++i) {
+        *pulseRegister[i] = outputPulses[i] + pulseOffsets[i];
     }
     IFS0bits.T2IF = 0;
 }
