@@ -38,7 +38,7 @@ void MainWindow::updatePortMenu()
 {
     QList<QSerialPortInfo> portList = QSerialPortInfo::availablePorts();
     ui->menuPort->clear();
-    for (auto i : portList) {
+    for (auto&& i : portList) {
         QAction * action = ui->menuPort->addAction(i.portName(), this, &MainWindow::comPortSelected);
         action->setCheckable(true);
         if (i.portName() == portLabel->text()) {
@@ -61,13 +61,11 @@ void MainWindow::comPortSelected()
         port->setParity(QSerialPort::NoParity);
         port->setStopBits(QSerialPort::OneStop);
         portLabel->setText(action->text());
-        connectedLabel->setText("Connected");
         port->read(buffer, 64); //clear out extra bytes from device power on
         connect(port, &QSerialPort::readyRead, this, &MainWindow::on_readyRead);
         ui->tabWidget->setEnabled(true);
         ui->tabWidget->setTabEnabled(1, false);
         ui->readButton->setEnabled(true);
-        ui->saveButton->setEnabled(true);
         ui->calibrateButton->setEnabled(true);
     } else {
         delete port;
@@ -128,6 +126,8 @@ void MainWindow::on_readyRead(void) {
                 displaySettings(reinterpret_cast<unsigned int *>(buffer));
                 ui->statusBar->showMessage("Read from device successful", 2000);
                 ui->tabWidget->setTabEnabled(1, true);
+                connectedLabel->setText("Connected");
+                ui->saveButton->setEnabled(true);
             } else {
                 ui->statusBar->showMessage("Error reading from device", 2000);
                 ui->tabWidget->setTabEnabled(1, false);
