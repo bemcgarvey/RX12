@@ -19,6 +19,7 @@ StartupMode startupMode = START_NORMAL;
 FrameMode frameMode = FRAME_22MS;
 BindType bindType = DSMX_11;
 DSMSystemType systemType = SYSTEM_TYPE_NONE;
+bool wasInBind = false;
 
 void DetectStartupMode(void) {
     ANSELBbits.ANSB0 = 0;
@@ -36,6 +37,7 @@ void DetectStartupMode(void) {
         CNPUBbits.CNPUB0 = 1; //enable pull-up
         delay_us(1);
         if (PORTBbits.RB0 == 0) {
+            wasInBind = true;
             startupMode = START_BIND;
             //Check for 11ms frame
             TRISGbits.TRISG6 = 1;

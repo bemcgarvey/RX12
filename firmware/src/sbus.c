@@ -23,7 +23,6 @@ volatile SBusPacket sbusPacket;
 
 static volatile int bytesRemaining = 0;
 static volatile int currentPos = 0;
-static unsigned int activeChannels = 0;
 
 void initSBus(void) {
     //Setup UART1
@@ -46,11 +45,8 @@ void initSBus(void) {
 }
 
 void startSBus(void) {
-    activeChannels = 0;  //TODO Remove activeChannels, it is unused.  Needs to be tested
     for (int i = 0; i < MAX_CHANNEL; ++i) {
-        if (servos[i] != 0xffff) {
-            activeChannels = i + 1;
-        } else {
+        if (servos[i] == 0xffff) {
             servos[i] = 1024;  //set inactive channels to midpoint value;
         }
     }

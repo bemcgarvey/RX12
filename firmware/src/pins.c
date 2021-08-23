@@ -52,10 +52,10 @@ void setPPS(void) {
 
     if (startupMode == START_SERIAL) {
         TRISBbits.TRISB0 = 1;
-        U4RXR = 2;  //setup USART4
+        U4RXR = 2; //setup USART4
         RPA1R = 2;
     }
-    
+
     /* PPS Input Remapping */
     U3RXR = 6;
     U5RXR = 8;
@@ -64,11 +64,16 @@ void setPPS(void) {
     /* PPS Output Remapping */
     RPA7R = 5;
     RPB14R = 5;
-    RPB15R = 5;
-    if (outputType == OUTPUT_TYPE_SBUS) {
-        RPG6R = 1;  //U1TX
+    if (wasInBind) {
+        LATBbits.LATB15 = 0;
+        LATGbits.LATG6 = 0; //Make sure these are ground as they may have a bind plug on them.
     } else {
-        RPG6R = 6;  //OC7
+        RPB15R = 5;
+        if (outputType == OUTPUT_TYPE_SBUS) {
+            RPG6R = 1; //U1TX
+        } else {
+            RPG6R = 6; //OC7
+        }
     }
     RPB9R = 9;
     RPC6R = 9;
@@ -78,7 +83,7 @@ void setPPS(void) {
     RPB12R = 6;
     RPB13R = 6;
     RPD6R = 5;
-    
+
     /* Lock back the system after PPS configuration */
     SYSKEY = 0x00000000;
     SYSKEY = 0xAA996655;

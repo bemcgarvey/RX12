@@ -31,6 +31,7 @@ extern "C" {
     extern FrameMode frameMode;
     extern BindType bindType;
     extern DSMSystemType systemType;
+    extern bool wasInBind;
 
 #ifdef	__cplusplus
 }
