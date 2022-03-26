@@ -68,39 +68,50 @@
           </item>
           <item>
            <widget class="QGroupBox" name="frameRateGroupBox">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="title">
-             <string>Frame Rate</string>
+             <string>Output</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_4">
              <item>
-              <widget class="QRadioButton" name="frame22RadioButton">
-               <property name="text">
-                <string>22 ms</string>
+              <widget class="QComboBox" name="frameRateComboBox">
+               <property name="enabled">
+                <bool>false</bool>
                </property>
-               <property name="checked">
-                <bool>true</bool>
-               </property>
+               <item>
+                <property name="text">
+                 <string>22 ms</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>11 ms</string>
+                </property>
+               </item>
               </widget>
              </item>
              <item>
-              <widget class="QRadioButton" name="frame11RadioButton">
-               <property name="text">
-                <string>11 ms</string>
+              <widget class="QComboBox" name="outputTypeComboBox">
+               <property name="enabled">
+                <bool>false</bool>
                </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QRadioButton" name="ppmRadioButton">
-               <property name="text">
-                <string>PPM</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QRadioButton" name="sbusRadioButton">
-               <property name="text">
-                <string>S.Bus</string>
-               </property>
+               <item>
+                <property name="text">
+                 <string>PWM</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>PPM</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>S.Bus</string>
+                </property>
+               </item>
               </widget>
              </item>
             </layout>
@@ -576,7 +587,7 @@
      <x>0</x>
      <y>0</y>
      <width>362</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

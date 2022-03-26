@@ -109,13 +109,13 @@ void enableActiveOutputs(void) {
 }
 
 void disableThrottle(void) {
-    if (outputType == OUTPUT_TYPE_PWM) {
+    if (outputType == OUTPUT_TYPE_PWM || outputType == OUTPUT_TYPE_SBUS) {
         *OCxCONCLRRegister[THROTTLE] = 0x8000; //clear ON bit
     }
 }
 
 void enableThrottle(void) {
-    if (outputType == OUTPUT_TYPE_PWM) {
+    if (outputType == OUTPUT_TYPE_PWM || outputType == OUTPUT_TYPE_SBUS) {
         *OCxCONSETRegister[THROTTLE] = 0x8000; //set ON bit
     }
 }

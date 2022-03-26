@@ -182,34 +182,30 @@ void MainWindow::on_readyRead(void) {
 }
 
 void MainWindow::displaySettings(unsigned int *values) {
-    ui->frame22RadioButton->setChecked(false);
-    ui->frame11RadioButton->setChecked(false);
-    ui->ppmRadioButton->setChecked(false);
-    ui->sbusRadioButton->setChecked(false);
     if (firmwareVersion >= 1.2) {
-        ui->ppmRadioButton->setEnabled(true);
-        ui->sbusRadioButton->setEnabled(true);
+        ui->outputTypeComboBox->setEnabled(true);
+        if (values[0] == FRAME_22MS) {
+            ui->frameRateComboBox->setCurrentIndex(0);
+        } else if (values[0] == FRAME_11MS) {
+            ui->frameRateComboBox->setCurrentIndex(1);
+        }
         if (values[4] == OUTPUT_TYPE_PWM) {
-            if (values[0] == FRAME_22MS) {
-                ui->frame22RadioButton->setChecked(true);
-            } else if (values[0] == FRAME_11MS) {
-                ui->frame11RadioButton->setChecked(true);
-            }
-
+            ui->outputTypeComboBox->setCurrentIndex(0);
         } else if (values[4] == OUTPUT_TYPE_PPM) {
-            ui->ppmRadioButton->setChecked(true);
+            ui->outputTypeComboBox->setCurrentIndex(1);
+            ui->frameRateComboBox->setCurrentIndex(0);
         } else if (values[4] == OUTPUT_TYPE_SBUS) {
-            ui->sbusRadioButton->setChecked(true);
+            ui->outputTypeComboBox->setCurrentIndex(2);
         }
     } else {
-        ui->ppmRadioButton->setEnabled(false);
-        ui->sbusRadioButton->setEnabled(false);
+        ui->outputTypeComboBox->setEnabled(false);
         if (values[0] == FRAME_22MS) {
-            ui->frame22RadioButton->setChecked(true);
+            ui->frameRateComboBox->setCurrentIndex(0);
         } else if (values[0] == FRAME_11MS) {
-            ui->frame11RadioButton->setChecked(true);
+            ui->frameRateComboBox->setCurrentIndex(1);
         }
     }
+    ui->frameRateComboBox->setEnabled(true);
     ui->dsm2_1024radioButton->setChecked(false);
     ui->dsm2_2048RadioButton->setChecked(false);
     ui->dsmxRadioButton->setChecked(false);
@@ -297,19 +293,20 @@ void MainWindow::displayLog(int index)
 
 void MainWindow::on_saveButton_clicked()
 {
-    if (ui->frame11RadioButton->isChecked()) {
-        buffer[0] = SET_FRAME_11;
-    } else {
+    if (ui->frameRateComboBox->currentIndex() == 0) {
         buffer[0] = SET_FRAME_22;
+    } else {
+        buffer[0] = SET_FRAME_11;
     }
     if (ui->loggingEnabledRadioButton->isChecked()) {
         buffer[1] = ENABLE_LOGGING;
     } else {
         buffer[1] = DISABLE_LOGGING;
     }
-    if (ui->ppmRadioButton->isChecked()) {
+    if (ui->outputTypeComboBox->currentIndex() == 1) {
         buffer[2] = SET_OUTPUT_PPM;
-    } else if (ui->sbusRadioButton->isChecked()) {
+        buffer[0] = SET_FRAME_22;
+    } else if (ui->outputTypeComboBox->currentIndex() == 2) {
         buffer[2] = SET_OUTPUT_SBUS;
     } else {
         buffer[2] = SET_OUTPUT_PWM;

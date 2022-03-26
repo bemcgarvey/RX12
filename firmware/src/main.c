@@ -100,14 +100,15 @@ int main(void) {
     }
     unsigned int blinks = 0;
     if (startupMode != START_WDTO) {
-        if (frameMode == FRAME_11MS) {
+        if (outputType == OUTPUT_TYPE_PWM && frameMode == FRAME_11MS) {
             blinks = 1;
-        }
-        if (outputType == OUTPUT_TYPE_PPM) {
+        } else if (outputType == OUTPUT_TYPE_PPM) {
             blinks = 2;
-        }
-        if (outputType == OUTPUT_TYPE_SBUS) {
+        } else if (outputType == OUTPUT_TYPE_SBUS) {
             blinks = 3;
+            if (frameMode == FRAME_11MS) {
+                blinks = 4;
+            }
         }
     }
     if (startupMode == START_BIND) {
@@ -131,8 +132,7 @@ int main(void) {
     __builtin_enable_interrupts();
     startSystemTickTimer();
     initOutputs();
-    if (frameMode == FRAME_22MS || outputType == OUTPUT_TYPE_PPM ||
-            outputType == OUTPUT_TYPE_SBUS) {
+    if (frameMode == FRAME_22MS || outputType == OUTPUT_TYPE_PPM) {
         startOCTimer(PERIOD_22MS);
     } else {
         startOCTimer(PERIOD_11MS);
