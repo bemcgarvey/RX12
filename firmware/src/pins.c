@@ -68,11 +68,12 @@ void setPPS(void) {
         LATBbits.LATB15 = 0;
         LATGbits.LATG6 = 0; //Make sure these are ground as they may have a bind plug on them.
     } else {
-        RPB15R = 5;
         if (outputType == OUTPUT_TYPE_SBUS) {
-            RPG6R = 1; //U1TX
+            RPB15R = 1; //U1TX
+            RPG6R = 1;  //U1TX
         } else {
-            RPG6R = 6; //OC7
+            RPB15R = 5; //OC1
+            RPG6R = 6;  //OC7
         }
     }
     RPB9R = 9;

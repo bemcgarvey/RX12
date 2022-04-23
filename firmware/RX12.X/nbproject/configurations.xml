@@ -634,6 +634,10 @@
       <pk4hybrid>
         <property key="ADC" value="true"/>
         <property key="AutoSelectMemRanges" value="auto"/>
+        <property key="CAN1" value="true"/>
+        <property key="CAN2" value="true"/>
+        <property key="CAN3" value="true"/>
+        <property key="CAN4" value="true"/>
         <property key="CHANGE NOTICE A" value="true"/>
         <property key="CHANGE NOTICE B" value="true"/>
         <property key="CHANGE NOTICE C" value="true"/>
