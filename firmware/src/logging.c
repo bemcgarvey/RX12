@@ -71,6 +71,7 @@ void startLogging(void) {
 
 void __ISR(_TIMER_9_VECTOR, IPL5SOFT) Timer9Isr(void) {
     ++loggingTimer;
+    ADCCON3bits.GSWTRG = 1;   //Trigger an ADC conversion
     if (loggingTimer >= LOGGING_INTERVAL) {
         loggingTimer = 0;
         currentFlightLog.duration = systemTickCount;

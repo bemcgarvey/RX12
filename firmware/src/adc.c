@@ -43,7 +43,7 @@ void initADC(void) {
     IEC3bits.AD1DF1IE = 1;
     /* Set up the trigger sources */
     ADCTRGSNSbits.LVL0 = 0; // Edge trigger
-    ADCTRG2bits.TRGSRC5 = 0b00111; // Set AN5 to trigger from TMR5.
+    ADCTRG2bits.TRGSRC5 = 0b00001; // Set AN5 to software trigger.
     ADCCON1bits.ON = 1;
     while (!ADCCON2bits.BGVRRDY);
     while (ADCCON2bits.REFFLT);
