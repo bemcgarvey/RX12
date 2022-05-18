@@ -38,7 +38,7 @@ volatile unsigned int* const OCxCONCLRRegister[MAX_CHANNEL] = {&OC11CONCLR, &OC1
     &OC13CONCLR, &OC2CONCLR, &OC6CONCLR, &OC8CONCLR, &OC5CONCLR, &OC4CONCLR, &OC3CONCLR, &OC1CONCLR, &OC7CONCLR};
 
 bool outputsActivated = false;
-unsigned int outputType __attribute__((persistent));
+unsigned int outputType;
 
 void initOutputs(void) {
     if (outputType == OUTPUT_TYPE_PWM || outputType == OUTPUT_TYPE_SBUS) {

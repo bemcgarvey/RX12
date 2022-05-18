@@ -53,7 +53,7 @@
 #pragma config DSWDTOSC =   LPRC
 #pragma config DSWDTEN =    OFF
 #pragma config FDSEN =      OFF
-#pragma config BORSEL =     LOW
+#pragma config BORSEL =     HIGH
 #pragma config UPLLEN =     OFF
 
 /*** DEVCFG3 ***/

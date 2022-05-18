@@ -34,9 +34,16 @@ int main(void) {
     int result;
 
     startupMode = START_NORMAL;
-    if (RCONbits.WDTO == 1) {
+    if (RCONbits.POR == 1) {
+        //power on reset
+        RCONbits.POR = 0;
+        RCONbits.BOR = 0;
+    } else if (RCONbits.WDTO == 1) {
         startupMode = START_WDTO;
         RCONbits.WDTO = 0;
+    } else if (RCONbits.BOR == 1) {
+        startupMode = START_WDTO; //Treat a brown-out like a WDT reset - start quickly
+        RCONbits.BOR = 0;
     }
     SYS_Initialize(NULL);
     initPins();
@@ -54,17 +61,15 @@ int main(void) {
             primarySatellite = SAT1;
         }
     }
-    if (startupMode != START_WDTO) {
-        outputType = OUTPUT_TYPE_PWM;
-        unsigned int savedOutputType = 0;
-        result = readEEPROM(ADDRESS_OUTPUT_TYPE, &savedOutputType);
-        if (result == EEPROM_SUCCESS) {
-            if (savedOutputType == OUTPUT_TYPE_PWM || savedOutputType == OUTPUT_TYPE_PPM
-                    || savedOutputType == OUTPUT_TYPE_SBUS) {
-                outputType = savedOutputType;
-            } else {
-                writeEEPROM(ADDRESS_OUTPUT_TYPE, outputType);
-            }
+    outputType = OUTPUT_TYPE_PWM;
+    unsigned int savedOutputType = 0;
+    result = readEEPROM(ADDRESS_OUTPUT_TYPE, &savedOutputType);
+    if (result == EEPROM_SUCCESS) {
+        if (savedOutputType == OUTPUT_TYPE_PWM || savedOutputType == OUTPUT_TYPE_PPM
+                || savedOutputType == OUTPUT_TYPE_SBUS) {
+            outputType = savedOutputType;
+        } else {
+            writeEEPROM(ADDRESS_OUTPUT_TYPE, outputType);
         }
     }
     setPPS();

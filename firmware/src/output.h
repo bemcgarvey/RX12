@@ -31,7 +31,7 @@ extern "C" {
         OUTPUT_TYPE_PWM = 0x37, OUTPUT_TYPE_PPM = 0x92, OUTPUT_TYPE_SBUS = 0xa9
     };
 
-    extern unsigned int outputType __attribute__((persistent));
+    extern unsigned int outputType;
     extern uint16_t servos[MAX_CHANNEL];
     extern uint32_t outputPulses[MAX_CHANNEL];
     extern const unsigned int startOffsets[MAX_CHANNEL];
