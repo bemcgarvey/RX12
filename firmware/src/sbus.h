@@ -15,17 +15,11 @@
 extern "C" {
 #endif
 
-    typedef union {
-        struct {
+    typedef union __attribute__((packed)) {
+        struct __attribute__((packed)) {
             uint8_t header;
             uint8_t channels[22];
-            struct {
-                int : 4;
-                int failsafe : 1;
-                int frameLost : 1;
-                int channel18 : 1;
-                int channel17 : 1;
-            };
+            uint8_t flags;
             uint8_t footer;
         };
         uint8_t bytes[25];

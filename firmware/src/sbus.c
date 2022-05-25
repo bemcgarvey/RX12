@@ -19,7 +19,7 @@
 #define SBUS_HEADER 0x0f;
 #define SBUS_FOOTER 0x00;
 
-volatile SBusPacket sbusPacket;
+volatile SBusPacket __attribute__((aligned(4))) sbusPacket;
 
 static volatile int bytesRemaining = 0;
 static volatile int currentPos = 0;
@@ -37,7 +37,7 @@ void initSBus(void) {
     IPC10bits.U1TXIP = 6;
     IPC10bits.U1TXIS = 0;
     //initialize packet;
-    for (int i = 0; i < sizeof(SBusPacket); ++i) {
+    for (int i = 0; i < 25; ++i) {
         sbusPacket.bytes[i] = 0;
     }
     sbusPacket.header = SBUS_HEADER;
@@ -91,10 +91,9 @@ void transmitSBusPacket(void) {
     sbusPacket.channels[14] = (servos[10] >> 2);
     sbusPacket.channels[15] = (servos[10] >> 10) | (servos[11] << 1);
     sbusPacket.channels[16] = (servos[11] >> 7);
+    sbusPacket.flags = 0;
     if (failsafeEngaged) {
-        sbusPacket.failsafe = 1;
-    } else {
-        sbusPacket.failsafe = 0;
+        sbusPacket.flags = 0x08;
     }
     //load first 8 bytes
     for (int i = 0; i < 8; ++i) {
