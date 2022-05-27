@@ -25,3 +25,4 @@ PCB/Ultiboard Exports/RX12.zip
 *.exe
 # Qt Creator keeps creating temp files like this
 *users*appdata*
+**/.qtc*
