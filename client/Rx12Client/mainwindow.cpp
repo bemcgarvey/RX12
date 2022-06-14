@@ -106,11 +106,7 @@ void MainWindow::on_readyRead(void) {
                 minor = buffer[0] / 100.0;
             }
             firmwareVersion = buffer[1] + minor;
-            if (firmwareVersion > 1.1) {
-                bytesNeeded = 32;
-            } else {
-                bytesNeeded = 28;
-            }
+            bytesNeeded = 32;
             state = WAIT_SETTINGS;
             bufferPos = 0;
             buffer[0] = GET_SETTINGS;
@@ -123,9 +119,9 @@ void MainWindow::on_readyRead(void) {
         bufferPos += bytesReceived;
         if (bytesNeeded == 0) {
             if (buffer[0] == FRAME_11MS || buffer[0] == FRAME_22MS) {
+                ui->tabWidget->setTabEnabled(1, true);
                 displaySettings(reinterpret_cast<unsigned int *>(buffer));
                 ui->statusBar->showMessage("Read from device successful", 2000);
-                ui->tabWidget->setTabEnabled(1, true);
                 connectedLabel->setText("Connected");
                 ui->saveButton->setEnabled(true);
             } else {
@@ -182,7 +178,6 @@ void MainWindow::on_readyRead(void) {
 }
 
 void MainWindow::displaySettings(unsigned int *values) {
-    if (firmwareVersion >= 1.2) {
         ui->outputTypeComboBox->setEnabled(true);
         if (values[0] == FRAME_22MS) {
             ui->frameRateComboBox->setCurrentIndex(0);
@@ -197,14 +192,6 @@ void MainWindow::displaySettings(unsigned int *values) {
         } else if (values[4] == OUTPUT_TYPE_SBUS) {
             ui->outputTypeComboBox->setCurrentIndex(2);
         }
-    } else {
-        ui->outputTypeComboBox->setEnabled(false);
-        if (values[0] == FRAME_22MS) {
-            ui->frameRateComboBox->setCurrentIndex(0);
-        } else if (values[0] == FRAME_11MS) {
-            ui->frameRateComboBox->setCurrentIndex(1);
-        }
-    }
     ui->frameRateComboBox->setEnabled(true);
     ui->dsm2_1024radioButton->setChecked(false);
     ui->dsm2_2048RadioButton->setChecked(false);
@@ -231,15 +218,9 @@ void MainWindow::displaySettings(unsigned int *values) {
         ui->loggingDisabledRadioButton->setChecked(true);
     }
     double voltage = 0.0;
-    if (firmwareVersion >= 1.2) {
         calibration1 = *(reinterpret_cast<float *>((&values[5])));
         calibration2 = *(reinterpret_cast<float *>((&values[6])));
         voltage = calculateVoltage(values[7]);
-    } else {
-        calibration1 = *(reinterpret_cast<float *>((&values[4])));
-        calibration2 = *(reinterpret_cast<float *>((&values[5])));
-        voltage = calculateVoltage(values[6]);
-    }
     ui->measuredVoltagelabel->setText(QString("%1V").arg(voltage, 0, 'f', 2));
 }
 
@@ -348,7 +329,7 @@ void MainWindow::on_resetLogButton_clicked()
 
 void MainWindow::on_tabWidget_currentChanged(int index)
 {
-    if (index == 1) {
+    if (index == 1 && ui->tabWidget->widget(1)->isEnabled()) {
         bufferPos = 0;
         bytesNeeded = 1;
         state = WAIT_LOG_COUNT;
