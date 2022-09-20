@@ -26,7 +26,6 @@
 #define ADDRESS_FRAME_RATE          0x00
 #define ADDRESS_DSM_TYPE            0x04
 #define ADDRESS_FAILSAFE_TYPE       0x08
-#define ADDRESS_FAILSAFE_VALUES     0x0c
 #define ADDRESS_LOGGING_ACTIVE      0x10
 #define ADDRESS_ADC_CALIBRATION1    0x14
 #define ADDRESS_ADC_CALIBRATION2    0x18
@@ -34,6 +33,7 @@
 #define ADDRESS_LOG_SEQUENCE        0x20
 #define ADDRESS_PRIMARY_SAT         0x24
 #define ADDRESS_OUTPUT_TYPE         0x28
+#define ADDRESS_FAILSAFE_VALUES     0x40
 #define ADDRESS_LOG_START           0x100
 
 #ifdef	__cplusplus
