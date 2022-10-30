@@ -28,7 +28,7 @@ void initSBus(void) {
     //Setup UART1
     //100000 baud, 8E2, inverted polarity
     U1MODEbits.CLKSEL = 0b01; //SYSCLOCK
-    U1BRG = 75; //100000 baud
+    U1BRG = 74; //100000 baud
     U1MODEbits.BRGH = 0;
     U1MODEbits.PDSEL = 0b01; //8E
     U1MODEbits.STSEL = 1; //2 stop bits
