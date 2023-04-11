@@ -36,7 +36,7 @@ private:
     int numLogs;
     float calibration1;
     float calibration2;
-    double firmwareVersion;
+    uint16_t firmwareVersion;
 private slots:
     void updatePortMenu(void);
     void comPortSelected(void);

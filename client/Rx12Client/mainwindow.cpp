@@ -99,13 +99,9 @@ void MainWindow::on_readyRead(void) {
         bytesNeeded -= bytesReceived;
         bufferPos += bytesReceived;
         if (bytesNeeded == 0) {
-            double minor;
-            if (buffer[0] < 10) {
-                minor = buffer[0] / 10.0;
-            } else {
-                minor = buffer[0] / 100.0;
-            }
-            firmwareVersion = buffer[1] + minor;
+            firmwareVersion = buffer[1];
+            firmwareVersion <<= 8;
+            firmwareVersion |= buffer[0];
             bytesNeeded = 32;
             state = WAIT_SETTINGS;
             bufferPos = 0;
